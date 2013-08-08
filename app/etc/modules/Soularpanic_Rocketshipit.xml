@@ -2,9 +2,12 @@
 
 <config>
   <modules>
-    <Soularpanic_Rocketshipit>
+    <Soularpanic_RocketShipIt>
       <active>true</active>
       <codePool>local</codePool>
-    </Soularpanic_Rocketshipit>
+      <depends>
+	<Mage_Adminhtml/>
+      </depends>
+    </Soularpanic_RocketShipIt>
   </modules>
 </config>

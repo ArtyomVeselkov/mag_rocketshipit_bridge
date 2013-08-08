@@ -1,3 +1,9 @@
 <?xml version="1.0"?>
 <config>
+  <tabs>
+    <soularpanic translate="label comment" module="rocketshipit">
+      <label>Soularpanic</label>
+      <sort_order>500</sort_order>
+    </soularpanic>
+  </tabs>
 </config>

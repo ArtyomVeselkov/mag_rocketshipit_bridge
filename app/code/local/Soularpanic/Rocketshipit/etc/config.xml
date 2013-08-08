@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <config>
   <modules>
-    <Soularpanic_Rocketshipit>
+    <Soularpanic_RocketShipIt>
       <version>0.0.1</version>
-    </Soularpanic_Rocketshipit>
+    </Soularpanic_RocketShipIt>
   </modules>
+
+  <global>
+    <models>
+      <rocketshipit>
+	<class>Soularpanic_RocketShipIt_Model</class>
+      </rocketshipit>
+    </models>
 </config>
