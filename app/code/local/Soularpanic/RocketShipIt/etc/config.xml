@@ -12,4 +12,24 @@
 	<class>Soularpanic_RocketShipIt_Model</class>
       </rocketshipit>
     </models>
+    
+    <resources>
+      <rocketshipit_setup>
+	<setup>
+	  <module>Soularpanic_RocketShipIt</module>
+	</setup>
+	<connection>
+	  <use>core_setup</use>
+	</connection>
+      </rocketshipit_setup>
+    </resources>
+  </global>
+
+  <default>
+    <carriers>
+      <rocketshipit>
+	<model>rocketshipit/carrier_shippingmethod</model>
+      </rocketshipit>
+    </carriers>
+  </default>
 </config>
