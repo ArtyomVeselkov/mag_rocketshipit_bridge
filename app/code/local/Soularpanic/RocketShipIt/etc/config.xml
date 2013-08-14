@@ -8,7 +8,9 @@
 
   <global>
     <models>
+      <!-- model group alias forthe module -->
       <rocketshipit>
+	<!-- base class name -->
 	<class>Soularpanic_RocketShipIt_Model</class>
       </rocketshipit>
     </models>
@@ -23,6 +25,31 @@
 	</connection>
       </rocketshipit_setup>
     </resources>
+
+    <events>
+      <sales_order_shipment_save_before>
+	<observers>
+	  <!--
+	      Unique id for event's observers node. By convention, the name of the
+	      module in lowercase, but since I expect that we'll have multiple 
+	      observers with our module, I'm adding some sort of functional 
+	      identifier thingy
+	  -->
+	  <rocketshipit_foo>
+	  <!-- <soularpanic_rocketshipit_ship_before> -->
+            <!--<namespace_modulename_ship_before>-->
+            <type>singleton</type>
+            <!-- <class>Namespace_Modulename_Model_Observer</class> -->
+	    <!-- 
+		 Model to be instantiated. I think the first part should be the alias
+		 defined above and the second part is the file name.
+	    -->
+	    <class>rocketshipit/observer</class>
+            <method>foo</method>
+	  </rocketshipit_foo>
+	</observers>
+      </sales_order_shipment_save_before>
+    </events>
   </global>
 
   <default>
