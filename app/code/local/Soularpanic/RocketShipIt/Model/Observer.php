@@ -65,12 +65,17 @@ class Soularpanic_RocketShipIt_Model_Observer
 
     $rsiTrackNo = $label['trk_main'];
     $track = Mage::getModel('sales/order_shipment_track');
-    $track->setTitle('Dat Track');
+    $track->setTitle($shipment->getOrder()->getShippingDescription());
     $track->setNumber($rsiTrackNo);
     $track->setOrderId($shipment->getOrderId());
     $track->setShipment($shipment);
-    $track->setCarrierCode('jkcustom');
-    $track->save();
+    $track->setCarrierCode($shipment->getOrder()->getShippingMethod());
+    /* $track->save(); */
+
+    $labelImg = $label['label_img'];
+    $labelImgDecoded = base64_decode($labelImg);
+    $shipment->setShippingLabel($labelImgDecoded);
+    /* $shipment->save(); */
 
                  /* ->setData('title', 'Dat Track') */
                  /* ->setData('number', $rsiTrackNo) */
