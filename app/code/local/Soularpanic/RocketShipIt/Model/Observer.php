@@ -3,45 +3,25 @@ class Soularpanic_RocketShipIt_Model_Observer
 {
   protected $_code = 'rocketshipit';
 
-  public function foo(Varien_Event_Observer $observer)
+  function __construct() {
+    /* $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'/path'); */
+    /* require_once($rocketShipItPath.'/RocketShipIt.php'); */
+  
+  }
+
+  public function trackAndLabel(Varien_Event_Observer $observer)
   {
     Mage::log('rocketshipit observer firing',
 	      null,
 	      'rocketshipit_shipments.log');
 
-    $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'/path');
-    require_once($rocketShipItPath.'/RocketShipIt.php');
+    $helper = Mage::helper('rocketshipit');
     
     $shipment = $observer->getEvent()->getShipment();
 
     $destAddr = $shipment->getShippingAddress();
-    $rsiShipment = new RocketShipShipment('UPS');
+    $rsiShipment = $helper->asRSIShipment('UPS', $destAddr);
 
-    $toName = $destAddr->getName();
-    $rsiShipment->setParameter('toCompany', $toName);
-    
-    $toPhone = $destAddr->getTelephone();
-    $rsiShipment->setParameter('toPhone', $toPhone);
-
-    $toStreet1 = $destAddr->getStreet1();
-    $rsiShipment->setParameter('toAddr1', $toStreet1);
-
-    $toStreet2 = $destAddr->getStreet2();
-    $rsiShipment->setParameter('toAddr2', $toStreet2);
-
-    $toStreet3 = $destAddr->getStreet3();
-    $rsiShipment->setParameter('toAddr3', $toStreet3);
-
-    $toCity = $destAddr->getCity();
-    $rsiShipment->setParameter('toCity', $toCity);
-
-    $toState = $destAddr->getRegionCode();
-    $rsiShipment->setParameter('toState', $toState);
-
-    $toZip = $destAddr->getPostcode();
-    $rsiShipment->setParameter('toCode', $toZip);
-
-    //$rsiShipment->setParameter('residentialAddressIndicator','0');
 
     $rsiPackage = new RocketShipPackage('UPS');
     $rsiPackage->setParameter('length','6');
@@ -50,7 +30,6 @@ class Soularpanic_RocketShipIt_Model_Observer
     
     $weight = $shipment->getOrder()->getWeight();
     $rsiPackage->setParameter('weight', $weight);
-    //$rsiPackage->setParameter('signatureType','2');
     
     $rsiShipment->addPackageToShipment($rsiPackage);
     $label = $rsiShipment->submitShipment();
@@ -67,34 +46,12 @@ class Soularpanic_RocketShipIt_Model_Observer
     $track = Mage::getModel('sales/order_shipment_track');
     $track->setTitle($shipment->getOrder()->getShippingDescription());
     $track->setNumber($rsiTrackNo);
-    $track->setOrderId($shipment->getOrderId());
-    $track->setShipment($shipment);
     $track->setCarrierCode($shipment->getOrder()->getShippingMethod());
-    /* $track->save(); */
-
-    $labelImg = $label['label_img'];
+    $shipment->addTrack($track);
+    
+    $labelImg = $label['pkgs'][0]['label_img'];
     $labelImgDecoded = base64_decode($labelImg);
     $shipment->setShippingLabel($labelImgDecoded);
-    /* $shipment->save(); */
-
-                 /* ->setData('title', 'Dat Track') */
-                 /* ->setData('number', $rsiTrackNo) */
-                 /* ->setData('carrier_code', 'custom') */
-                 /* ->setData('order_id', $shipment->getData('order_id')) */
-                 /* ->save(); */
-
-    /*
-    $j = $observer->getEvent();
-    $j->getShipment();
-    $j->getOrder()->getAllItems();
-    $observer->getEvent()->getShipment()->getOrder()->getId(); // => "9"
-    $observer->getEvent()->getShipment()->getOrderId(); // =>"9"
-    $observer->getEvent()->getShipment()->getOrder()->getWeight();
-    $observer->getEvent()->getShipment()->getShippingAddress();
-    $observer->getEvent()->getShipment()->getItemsCollection();
-    $observer->getEvent()->getShipment()->getOrder()->getShippingMethod();
-    $observer->getEvent()->getShipment()->getOrder()->getShippingDescription();
-    */
   }
 }
 ?>

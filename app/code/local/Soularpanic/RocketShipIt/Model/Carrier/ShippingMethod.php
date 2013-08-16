@@ -29,8 +29,10 @@ class Soularpanic_RocketShipIt_Model_Carrier_ShippingMethod
      */
 
     // get necessary config values
-    $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'/path');
-    require_once($rocketShipItPath.'/RocketShipIt.php');
+    /* $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'/path'); */
+    /* require_once($rocketShipItPath.'/RocketShipIt.php'); */
+    
+    $helper = Mage::helper('rocketshipit');
 
     $handling = Mage::getStoreConfig('carriers/'.$this->_code.'/handling');
 
@@ -40,6 +42,7 @@ class Soularpanic_RocketShipIt_Model_Carrier_ShippingMethod
     //$rate = new \RocketShipIt\Rate('UPS');
     $rate = new RocketShipRate('UPS');
 
+    /* $rate = $helper->populateRsiAddress('UPS', $request, $rate); */
     $destZip = $request->getDestPostcode();
     $rate->setParameter('toCode', $destZip);
 

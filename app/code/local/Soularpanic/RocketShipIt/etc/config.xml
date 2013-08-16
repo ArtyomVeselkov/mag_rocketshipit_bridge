@@ -14,6 +14,12 @@
 	<class>Soularpanic_RocketShipIt_Model</class>
       </rocketshipit>
     </models>
+
+    <helpers>
+      <rocketshipit>
+	<class>Soularpanic_RocketShipIt_Helper</class>
+      </rocketshipit>
+    </helpers>
     
     <resources>
       <rocketshipit_setup>
@@ -35,7 +41,8 @@
 	      observers with our module, I'm adding some sort of functional 
 	      identifier thingy
 	  -->
-	  <rocketshipit_foo>
+	  <rocketshipit_track_and_label>
+	  <!-- <rocketshipit_foo> -->
 	  <!-- <soularpanic_rocketshipit_ship_before> -->
             <!--<namespace_modulename_ship_before>-->
             <type>singleton</type>
@@ -45,10 +52,19 @@
 		 defined above and the second part is the file name.
 	    -->
 	    <class>rocketshipit/observer</class>
-            <method>foo</method>
-	  </rocketshipit_foo>
+            <method>trackAndLabel</method>
+	  </rocketshipit_track_and_label>
 	</observers>
       </sales_order_shipment_save_before>
+      <!-- <sales_order_shipment_save_after> -->
+      <!-- 	<observers> -->
+      <!-- 	  <rocketshipit_track_and_label> -->
+      <!-- 	    <type>singleton</type> -->
+      <!-- 	    <class>rocketshipit/observer</class> -->
+      <!-- 	    <method>postsave</method> -->
+      <!-- 	  </rocketshipit_track_and_label> -->
+      <!-- 	</observers> -->
+      <!-- </sales_order_shipment_save_after> -->
     </events>
   </global>
 
