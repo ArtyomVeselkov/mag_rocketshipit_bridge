@@ -70,9 +70,15 @@
 
   <default>
     <carriers>
-      <rocketshipit>
-	<model>rocketshipit/carrier_shippingmethod</model>
-      </rocketshipit>
+      <!-- <rocketshipit> -->
+      <!-- 	<model>rocketshipit/carrier_shippingmethod</model> -->
+      <!-- </rocketshipit> -->
+      <rocketshipit_ups>
+	<model>rocketshipit/carrier_ups</model>
+      </rocketshipit_ups>
+      <rocketshipit_usps>
+      	<model>rocketshipit/carrier_usps</model>
+      </rocketshipit_usps>
     </carriers>
   </default>
 </config>

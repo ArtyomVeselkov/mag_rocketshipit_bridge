@@ -79,6 +79,7 @@ class Soularpanic_RocketShipIt_Model_Carrier_ShippingMethod
   }
 
   public function getAllowedMethods() {
-    return array($this->_code => $this->getConfigData('name'));
+    $allowedMethods = array($this->_code => $this->getConfigData('name'));
+    return $allowedMethods;
   }
 }
