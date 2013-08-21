@@ -8,6 +8,28 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     require_once($rocketShipItPath.'/RocketShipIt.php');
   }
 
+  public function getRSIRate($courier,
+			     Mage_Shipping_Model_Rate_Request $request)
+  {
+    $rsiRate = new RocketShipRate($courier);
+
+    $destZip = $request->getDestPostcode();
+    $rsiRate->setParameter('toCode', $destZip);
+
+    $destState = $request->getDestRegionCode();
+    $rsiRate->setParameter('toState', $destState);
+
+    $destCountry = $request->getCountryId();
+    $rsiRate->setParameter('toCountry', $destCountry);
+    
+    $packageWeight = $request->getPackageWeight();
+    $rsiRate->setParameter('weight', $packageWeight);
+
+    $rsiRate->setParameter('residentialAddressIndicator','0');
+
+    return $rsiRate;
+  }
+
   public function asRSIShipment($courier, Mage_Sales_Model_Order_Address $address) {
     $rsiShipment = new RocketShipShipment($courier);
 
