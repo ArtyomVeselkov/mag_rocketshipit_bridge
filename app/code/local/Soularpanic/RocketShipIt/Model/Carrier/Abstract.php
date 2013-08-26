@@ -44,7 +44,7 @@ abstract class Soularpanic_RocketShipIt_Model_Carrier_Abstract
       $method->setCarrier($carrierCode);
       $method->setCarrierTitle($carrierName);
 
-      $method->setMethod($rsiMethod['serviceCode']);
+      $method->setMethod($rsiMethod['service_code']);
       $method->setMethodTitle($rsiMethod['desc']);
 
       $method->setCost($rsiMethod[$rateKey]);
