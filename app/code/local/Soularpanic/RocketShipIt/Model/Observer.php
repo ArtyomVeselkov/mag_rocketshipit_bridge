@@ -9,6 +9,29 @@ class Soularpanic_RocketShipIt_Model_Observer
   
   }
 
+  public function addMassButtons($observer) {
+    if (
+	$observer->getEvent()->getBlock() instanceof Mage_Adminhtml_Block_Widget_Grid_Massaction
+	|| $observer->getEvent()->getBlock() instanceof Enterprise_SalesArchive_Block_Adminhtml_Sales_Order_Grid_Massaction
+	|| $observer->getEvent()->getBlock() instanceof Enterprise_SalesArchive_Block_Adminhtml_sales_orderManager_Grid_Massaction
+        ) {
+      $secure = Mage::app()->getStore()->isCurrentlySecure() ? 'true' : 'false';
+      if($observer->getEvent()->getBlock()->getRequest()->getControllerName() =='sales_order' ||
+	 $observer->getEvent()->getBlock()->getRequest()->getControllerName() =='adminhtml_sales_order') {
+	/* $observer->getEvent()->getBlock()->addItem('ordermanager_invoiceall', array( */
+	/* 									    'label'=> Mage::helper('ordermanager')->__('Invoice Selected'), */
+	/* 									    'url'  => Mage::helper('adminhtml')->getUrl('adminhtml/sales_orderManager/invoiceall',$secure ? array('_secure'=>1) : array()), */
+	/* 									    )); */
+	$observer->getEvent()->getBlock()->addItem('soularpanic_mass', array(
+									     'label' => 'Hi!',
+									     'url'   => Mage::helper('adminhtml')->getUrl('adminhtml/sales_rocketShipIt/mass',$secure ? array('_secure'=>1) : array()),
+									     ));
+
+      }
+    }
+  }
+
+
   public function trackAndLabel(Varien_Event_Observer $observer)
   {
     Mage::log('rocketshipit observer firing',

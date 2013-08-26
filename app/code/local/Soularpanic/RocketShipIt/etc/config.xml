@@ -33,6 +33,15 @@
     </resources>
 
     <events>
+      <core_block_abstract_prepare_layout_before>
+	<observers>
+	  <soularpanic_rocketshipit_addmassbutton>
+	    <type>model</type>
+	    <class>rocketshipit/observer</class>
+	    <method>addMassButtons</method>
+	  </soularpanic_rocketshipit_addmassbutton>
+	</observers>
+      </core_block_abstract_prepare_layout_before>
       <sales_order_shipment_save_before>
 	<observers>
 	  <!--
@@ -41,9 +50,9 @@
 	      observers with our module, I'm adding some sort of functional 
 	      identifier thingy
 	  -->
-	  <rocketshipit_track_and_label>
+	  <soularpanic_rocketshipit_track_and_label>
 	  <!-- <rocketshipit_foo> -->
-	  <!-- <soularpanic_rocketshipit_ship_before> -->
+	  <!-- <soularpaonic_rocketshipit_ship_before> -->
             <!--<namespace_modulename_ship_before>-->
             <type>singleton</type>
             <!-- <class>Namespace_Modulename_Model_Observer</class> -->
@@ -53,7 +62,7 @@
 	    -->
 	    <class>rocketshipit/observer</class>
             <method>trackAndLabel</method>
-	  </rocketshipit_track_and_label>
+	  </soularpanic_rocketshipit_track_and_label>
 	</observers>
       </sales_order_shipment_save_before>
       <!-- <sales_order_shipment_save_after> -->
@@ -67,6 +76,18 @@
       <!-- </sales_order_shipment_save_after> -->
     </events>
   </global>
+
+  <admin>
+    <routers>
+      <adminhtml>
+	<args>
+	  <modules>
+	    <Soularpanic_RocketShipIt before="Mage_Adminhtml">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt>
+	  </modules>
+	</args>
+      </adminhtml>
+    </routers>
+  </admin>
 
   <default>
     <carriers>
