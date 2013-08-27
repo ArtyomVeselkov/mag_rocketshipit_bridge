@@ -23,8 +23,12 @@ class Soularpanic_RocketShipIt_Model_Observer
 	/* 									    'url'  => Mage::helper('adminhtml')->getUrl('adminhtml/sales_orderManager/invoiceall',$secure ? array('_secure'=>1) : array()), */
 	/* 									    )); */
 	$observer->getEvent()->getBlock()->addItem('soularpanic_mass', array(
-									     'label' => 'Hi!',
+									     'label' => 'Josh - Hi!',
 									     'url'   => Mage::helper('adminhtml')->getUrl('adminhtml/sales_rocketShipIt/mass',$secure ? array('_secure'=>1) : array()),
+									     ));
+	$observer->getEvent()->getBlock()->addItem('soularpanic_shipall', array(
+									     'label' => 'Josh - Ship All',
+									     'url'   => Mage::helper('adminhtml')->getUrl('adminhtml/sales_rocketShipIt/shipall',$secure ? array('_secure'=>1) : array()),
 									     ));
 
       }
