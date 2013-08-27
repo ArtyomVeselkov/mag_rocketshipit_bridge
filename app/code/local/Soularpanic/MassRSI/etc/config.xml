@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Soularpanic_MassRSI>
+      <version>0.0.1</version>
+    </Soularpanic_MassRSI>
+  </modules>
+
+</config>

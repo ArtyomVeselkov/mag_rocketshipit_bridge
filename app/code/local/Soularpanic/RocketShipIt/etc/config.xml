@@ -82,6 +82,8 @@
       <adminhtml>
 	<args>
 	  <modules>
+	    <!-- <Soularpanic_RocketShipIt before="Fooman_OrderManager">Soularpanic_OrderManager</Soularpanic_RocketShipIt> -->
+	    <!-- <Soularpanic_OrderManager before="Fooman_OrderManager">Soularpanic_OrderManager</Soularpanic_OrderManager> -->
 	    <Soularpanic_RocketShipIt before="Fooman_OrderManager">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt>
 	    <!-- <Soularpanic_RocketShipIt before="Mage_Adminhtml">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt> -->
 	  </modules>

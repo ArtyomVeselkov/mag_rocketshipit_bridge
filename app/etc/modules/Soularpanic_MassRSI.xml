@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<config>
+  <modules>
+    <Soularpanic_MassRSI>
+      <active>true</active>
+      <codePool>local</codePool>
+      <depends>
+	<Mage_Adminhtml/>
+	<Fooman_OrderManager/>
+      </depends>
+    </Soularpanic_MassRSI>
+  </modules>
+</config>

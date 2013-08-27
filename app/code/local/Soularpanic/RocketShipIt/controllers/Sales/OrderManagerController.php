@@ -2,7 +2,7 @@
 
 require_once('Fooman/OrderManager/controllers/Sales/OrderManagerController.php');
 
-class Soularpanic_RocketShipIt_Sales_RocketShipItController 
+class Soularpanic_RocketShipIt_Sales_OrderManagerController 
 /* extends Mage_Adminhtml_Controller_Action { */
 extends Fooman_OrderManager_Sales_OrderManagerController {
   function massAction() {
@@ -13,7 +13,7 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
   }
 
   function shipallAction() {
-    Mage::log('rocketshipitcontroller catching shipallAction',
+    Mage::log('sp order manager controller catching shipallAction',
 	      null,
 	      'rocketshipit_shipments.log');
     /* $url = Mage::helper('adminhtml')->getUrl('adminhtml/sales_orderManager/shipall', array('_secure'=>1)); */
