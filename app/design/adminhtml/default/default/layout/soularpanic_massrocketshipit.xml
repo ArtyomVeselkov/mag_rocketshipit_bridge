@@ -1,27 +1,25 @@
 <?xml version="1.0"?>
 
 <layout>
-  <default>
-    <adminhtml_sales_order_index>
-      <update handle="soularpanic_massrocketshipit_extra_columns"/>
-    </adminhtml_sales_order_index>
-    <adminhtml_sales_order_grid>
-      <update handle="soularpanic_massrocketshipit_extra_columns"/>
-    </adminhtml_sales_order_grid>
-    <soularpanic_massrocketshipit_extra_columns>
-      <reference name="sales_order.grid">
-	<action method="addColumnAfter">
-	  <columnId>soularpanic_carrier</columnId>
-	  <arguments module="ordermanager" translate="header">
-	    <header>Carrier</header>
-	    <renderer>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_CarrierOverrideInput</renderer>
-	    <type>text</type>
-	    <sortable>false</sortable>
-	    <filter>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_CarrierOverrideInput</filter>
-	  </arguments>
-	  <after>entity_id</after>
-	</action>
-      </reference>
-    </soularpanic_massrocketshipit_extra_columns>
-  </default>
+  <adminhtml_sales_order_index>
+    <update handle="soularpanic_massrocketshipit_extra_columns"/>
+  </adminhtml_sales_order_index>
+  <adminhtml_sales_order_grid>
+    <update handle="soularpanic_massrocketshipit_extra_columns"/>
+  </adminhtml_sales_order_grid>
+  <soularpanic_massrocketshipit_extra_columns>
+    <reference name="sales_order.grid">
+      <action method="addColumnAfter">
+	<columnId>soularpanic_carrier</columnId>
+	<arguments module="ordermanager" translate="header">
+	  <header>Carrier</header>
+	  <renderer>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_CarrierOverrideInput</renderer>
+	  <type>text</type>
+	  <sortable>false</sortable>
+	  <filter>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_CarrierOverrideInput</filter>
+	</arguments>
+	<after>entity_id</after>
+      </action>
+    </reference>
+  </soularpanic_massrocketshipit_extra_columns>
 </layout>
