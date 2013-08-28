@@ -2,13 +2,14 @@
 
 <config>
   <modules>
-    <Soularpanic_MassRSI>
+    <Soularpanic_MassRocketShipIt>
       <active>true</active>
       <codePool>local</codePool>
       <depends>
 	<Mage_Adminhtml/>
 	<Fooman_OrderManager/>
+	<Soularpanic_RocketShipIt/>
       </depends>
-    </Soularpanic_MassRSI>
+    </Soularpanic_MassRocketShipIt>
   </modules>
 </config>

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <config>
   <modules>
     <Soularpanic_RocketShipIt>
@@ -8,7 +9,7 @@
 
   <global>
     <models>
-      <!-- model group alias forthe module -->
+      <!-- model group alias for the module -->
       <rocketshipit>
 	<!-- base class name -->
 	<class>Soularpanic_RocketShipIt_Model</class>
@@ -77,20 +78,17 @@
     </events>
   </global>
 
-  <admin>
-    <routers>
-      <adminhtml>
-	<args>
-	  <modules>
-	    <!-- <Soularpanic_RocketShipIt before="Fooman_OrderManager">Soularpanic_OrderManager</Soularpanic_RocketShipIt> -->
-	    <!-- <Soularpanic_OrderManager before="Fooman_OrderManager">Soularpanic_OrderManager</Soularpanic_OrderManager> -->
-	    <Soularpanic_RocketShipIt before="Fooman_OrderManager">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt>
-	    <!-- <Soularpanic_RocketShipIt before="Mage_Adminhtml">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt> -->
-	  </modules>
-	</args>
-      </adminhtml>
-    </routers>
-  </admin>
+  <!-- <admin> -->
+  <!--   <routers> -->
+  <!--     <adminhtml> -->
+  <!-- 	<args> -->
+  <!-- 	  <modules> -->
+  <!-- 	    <Soularpanic_RocketShipIt before="Fooman_OrderManager">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt> -->
+  <!-- 	  </modules> -->
+  <!-- 	</args> -->
+  <!--     </adminhtml> -->
+  <!--   </routers> -->
+  <!-- </admin> -->
 
   <default>
     <carriers>

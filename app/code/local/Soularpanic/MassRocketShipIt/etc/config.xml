@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<config>
+  <modules>
+    <Soularpanic_MassRocketShipIt>
+      <version>0.0.1</version>
+    </Soularpanic_MassRocketShipIt>
+  </modules>
+
+  <global>
+    <models>
+      <massrocketshipit>
+	<class>Soularpanic_MassRocketShipIt_Model</class>
+      </massrocketshipit>
+    </models>
+  </global>
+
+  <admin>
+    <routers>
+      <adminhtml>
+	<args>
+	  <modules>
+	    <Soularpanic_MassRocketShipIt before="Fooman_OrderManager">Soularpanic_MassRocketShipIt</Soularpanic_MassRocketShipIt>
+	  </modules>
+	</args>
+      </adminhtml>
+    </routers>
+  </admin>
+
+</config>
