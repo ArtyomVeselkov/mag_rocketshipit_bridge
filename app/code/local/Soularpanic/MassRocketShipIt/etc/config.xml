@@ -21,24 +21,13 @@
   </global>
 
   <adminhtml>
-    <!-- <events> -->
-    <!--   <core_block_abstract_to_html_after> -->
-    <!-- 	<observers> -->
-    <!-- 	  <soularpanic_massrocketshipit_changegridjs> -->
-    <!-- 	    <type>model</type> -->
-    <!-- 	    <class>Soularpanic_MassRocketShipIt_Model_Observer</class> -->
-    <!-- 	    <method>changeGridJSObjects</method> -->
-    <!-- 	  </soularpanic_massrocketshipit_changegridjs> -->
-    <!-- 	</observers> -->
-    <!--   </core_block_abstract_to_html_after> -->
-    <!-- </events> -->
     <layout>
       <updates>
 	<massrocketshipit>
 	  <file>soularpanic_massrocketshipit.xml</file>
 	</massrocketshipit>
       </updates>
-    </layout>p
+    </layout>
   </adminhtml>
 
   <admin>
