@@ -28,6 +28,17 @@
 	</massrocketshipit>
       </updates>
     </layout>
+    <events>
+      <sales_order_grid_collection_load_before>
+	<observers>
+	  <soulapanic_massrocketshipit>
+	    <type>model</type>
+	    <class>massrocketshipit/observer</class>
+	    <method>salesOrderGridCollectionLoadBefore</method>
+	  </soulapanic_massrocketshipit>
+	</observers>
+      </sales_order_grid_collection_load_before>
+    </events>
   </adminhtml>
 
   <admin>

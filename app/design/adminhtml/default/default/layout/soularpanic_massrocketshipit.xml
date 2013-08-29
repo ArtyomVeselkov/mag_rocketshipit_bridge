@@ -10,13 +10,13 @@
   <soularpanic_massrocketshipit_extra_columns>
     <reference name="sales_order.grid">
       <action method="addColumnAfter">
-	<columnId>soularpanic_carrier</columnId>
+	<columnId>soularpanic_shippingmethod</columnId>
 	<arguments module="ordermanager" translate="header">
-	  <header>Carrier</header>
-	  <renderer>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_CarrierOverrideInput</renderer>
+	  <header>Shipping Method</header>
+	  <renderer>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_ShippingOverrideInput</renderer>
 	  <type>text</type>
 	  <sortable>false</sortable>
-	  <filter>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_CarrierOverrideInput</filter>
+	  <filter>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_ShippingOverrideInput</filter>
 	</arguments>
 	<after>entity_id</after>
       </action>

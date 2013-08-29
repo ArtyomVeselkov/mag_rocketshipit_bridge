@@ -8,22 +8,51 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     require_once($rocketShipItPath.'/RocketShipIt.php');
   }
 
-  public function getRSIRate($courier,
-			     Mage_Shipping_Model_Rate_Request $request)
+  function _extractAddrFromMageShippingModelRateRequest(Mage_Shipping_Model_Rate_Request $request) {
+    $addr = array('zip' => $request->getDestPostcode(),
+		  'state' => $request->getDestRegionCode(),
+		  'country' => $request->getCountryId(),
+		  'weight' => $request->getPackageWeight());
+    return $addr;
+  }
+
+  function _extractAddrFromMageSalesModelOrderAddress(Mage_Sales_Model_Order_Address $addrObj) {
+    $addr = array('zip' => $addrObj->getPostcode(),
+		  'state' => $addrObj->getRegionCode(),
+		  'country' => $addrObj->getCountryId());
+    return $addr;
+  }
+
+  public function getRSIRate($courier, $addrObj)
   {
     $rsiRate = new RocketShipRate($courier);
 
-    $destZip = $request->getDestPostcode();
-    $rsiRate->setParameter('toCode', $destZip);
-
-    $destState = $request->getDestRegionCode();
-    $rsiRate->setParameter('toState', $destState);
-
-    $destCountry = $request->getCountryId();
-    $rsiRate->setParameter('toCountry', $destCountry);
+    $addr = nil;
     
-    $packageWeight = $request->getPackageWeight();
-    $rsiRate->setParameter('weight', $packageWeight);
+    if ($addrObj instanceof Mage_Shipping_Model_Rate_Request) {
+      $addr = $this->_extractAddrFromMageShippingModelRateRequest($addrObj);
+    }
+    if ($addrObj instanceof Mage_Sales_Model_Order_Address) {
+      $addr = $this->_extractAddrFromMageSalesModelOrderAddress($addrObj);
+    }
+
+    $rsiRate->setParameter('toCode', $addr['zip']);
+    $rsiRate->setParameter('toState', $addr['state']);
+    $rsiRate->setParameter('toCountry', $addr['country']);
+    $rsiRate->setParameter('weight', $addr['weight']);
+
+
+    /* $destZip = $request->getDestPostcode(); */
+    /* $rsiRate->setParameter('toCode', $destZip); */
+
+    /* $destState = $request->getDestRegionCode(); */
+    /* $rsiRate->setParameter('toState', $destState); */
+
+    /* $destCountry = $request->getCountryId(); */
+    /* $rsiRate->setParameter('toCountry', $destCountry); */
+    
+    /* $packageWeight = $request->getPackageWeight(); */
+    /* $rsiRate->setParameter('weight', $packageWeight); */
 
     $rsiRate->setParameter('residentialAddressIndicator','0');
 
@@ -59,36 +88,5 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
 
     return $rsiShipment;
   }
-
-  /* public function populateRsiAddress($courier, Mage_Sales_Model_Order_Address $address, $rsiObj) { */
-  /*   $toName = $address->getName(); */
-  /*   $rsiObj->setParameter('toCompany', $toName); */
-    
-  /*   $toPhone = $address->getTelephone(); */
-  /*   $rsiObj->setParameter('toPhone', $toPhone); */
-
-  /*   $toStreet1 = $address->getStreet1(); */
-  /*   $rsiObj->setParameter('toAddr1', $toStreet1); */
-
-  /*   $toStreet2 = $address->getStreet2(); */
-  /*   $rsiObj->setParameter('toAddr2', $toStreet2); */
-
-  /*   $toStreet3 = $address->getStreet3(); */
-  /*   $rsiObj->setParameter('toAddr3', $toStreet3); */
-
-  /*   $toCity = $address->getCity(); */
-  /*   $rsiObj->setParameter('toCity', $toCity); */
-
-  /*   $toState = $address->getRegionCode(); */
-  /*   $rsiObj->setParameter('toState', $toState); */
-
-  /*   $toZip = $address->getPostcode(); */
-  /*   $rsiObj->setParameter('toCode', $toZip); */
-
-  /*   $toCountry = $address->getCountryId(); */
-  /*   $rsiObj->setParameter('toCountry', $toCountry); */
-    
-  /*   return $rsiObj; */
-  /* } */
 }
 ?>
