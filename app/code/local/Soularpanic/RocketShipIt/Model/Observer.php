@@ -10,7 +10,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     Mage::log('rocketshipit observer firing',
 	      null,
 	      'rocketshipit_shipments.log');
-
+    die('hold up');
     $helper = Mage::helper('rocketshipit');
     
     $shipment = $observer->getEvent()->getShipment();

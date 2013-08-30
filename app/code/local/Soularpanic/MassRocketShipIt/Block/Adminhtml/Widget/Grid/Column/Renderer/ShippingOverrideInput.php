@@ -39,10 +39,15 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
 					$useNegotiatedRate,
 					$shippingWeight,
 					0);
-    $html = '<select>';
+    
+    $rowId = $order->getId();
+    $col = $this->getColumn();
+    $colId = $col->getName() ? $col->getName() : $col->getId();
+
+    $html = '<select name="'.$colId.'-'.$rowId.'" rel="'.$rowId.'" class="'.$colId.'">';
     foreach($rates->getAllRates() as $rate) {
       $selected = ($rate->getCarrier().'_'.$rate->getMethod() == $shippingMethod) ? 'selected="selected" ' : '';
-      $html.= '<option '.$selected.'value="'.$rate->getMethod().'">'.$rate->getMethodTitle().' -- '.$rate->getCost().'</option>';
+      $html.= '<option '.$selected.'value="'.$rate->getCarrier().'_'.$rate->getMethod().'">'.$rate->getMethodTitle().' -- '.$rate->getCost().'</option>';
     }
     $html.='</select>';
     return $html;
