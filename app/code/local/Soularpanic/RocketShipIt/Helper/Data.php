@@ -59,6 +59,53 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     return $rsiRate;
   }
 
+  public function getSimpleRates($courier,
+				 $addrObj,
+				 $useNegotiatedRate = false, 
+				 $weight = null,
+				 $handling = 0) {
+    $rsiRates = $this->getRSIRate($courier, $addrObj);
+    if ($weight != null) {
+      $rsiRates->setParameter('weight', $weight);
+    }
+    $response = $rsiRates->getSimpleRates();
+
+    $result = Mage::getModel('shipping/rate_result');
+
+    $errorMsg = $response['error'];
+    if ($errorMsg != null) {
+      $error = Mage::getModel('shipping/rate_result_error');
+      $error->addData(array('error_message' => $errorMsg));
+      $result->append($error);
+      return $result;
+    }
+    
+    $carrierName = Mage::getStoreConfig('carriers/'.$courier.'/title');
+    $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
+
+    foreach($response as $rsiMethod) {
+      if($useNegotiatedRate && $rsiMethod['negotiated_rate'] == null) {
+	continue;
+      }
+
+      $method = Mage::getModel('shipping/rate_result_method');
+
+      $method->setCarrier($carrierCode);
+      $method->setCarrierTitle($carrierName);
+
+      $method->setMethod($rsiMethod['service_code']);
+      $method->setMethodTitle($rsiMethod['desc']);
+
+      $method->setCost($rsiMethod[$rateKey]);
+      $method->setPrice($rsiMethod[$rateKey] + $handling);
+
+      $result->append($method);
+    }
+
+    return $result;
+    
+  }
+
   public function asRSIShipment($courier, Mage_Sales_Model_Order_Address $address) {
     $rsiShipment = new RocketShipShipment($courier);
 
