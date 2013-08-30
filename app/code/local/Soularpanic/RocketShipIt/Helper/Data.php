@@ -59,12 +59,12 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     return $rsiRate;
   }
 
-  public function getSimpleRates($courier,
+  public function getSimpleRates($carrierCode,
 				 $addrObj,
 				 $useNegotiatedRate = false, 
 				 $weight = null,
 				 $handling = 0) {
-    $rsiRates = $this->getRSIRate($courier, $addrObj);
+    $rsiRates = $this->getRSIRate($carrierCode, $addrObj);
     if ($weight != null) {
       $rsiRates->setParameter('weight', $weight);
     }
@@ -80,7 +80,7 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
       return $result;
     }
     
-    $carrierName = Mage::getStoreConfig('carriers/'.$courier.'/title');
+    $carrierName = Mage::getStoreConfig('carriers/'.$carrierCode.'/title');
     $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
 
     foreach($response as $rsiMethod) {
@@ -106,8 +106,8 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     
   }
 
-  public function asRSIShipment($courier, Mage_Sales_Model_Order_Address $address) {
-    $rsiShipment = new RocketShipShipment($courier);
+  public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
+    $rsiShipment = new RocketShipShipment($carrierCode);
 
     $toName = $address->getName();
     $rsiShipment->setParameter('toCompany', $toName);

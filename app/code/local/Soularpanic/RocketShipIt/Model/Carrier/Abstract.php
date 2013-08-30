@@ -12,48 +12,59 @@ abstract class Soularpanic_RocketShipIt_Model_Carrier_Abstract
       return false;
     }
 
+    $carrierCode = $this->getCarrierSubCode();
+    $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/useNegotiatedRates');
     $handling = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/handling');
 
     $helper = Mage::helper($this->_superCode);
-    $rsiRate = $helper->getRSIRate($this->getCarrierSubCode(),
-				   $request);
-    $response = $rsiRate->getSimpleRates();
 
-    $result = Mage::getModel('shipping/rate_result');
+    $simpleRates = $helper->getSimpleRates($carrierCode,
+					   $request,
+					   $useNegotiatedRate,
+					   null,
+					   $handling);
+					   
+    return $simpleRates;
 
-    $errorMsg = $response['error'];
-    if ($errorMsg != null) {
-      $error = Mage::getModel('shipping/rate_result_error');
-      $error->addData(array('error_message' => $errorMsg));
-      $result->append($error);
-      return $result;
-    }
+    /* $rsiRate = $helper->getRSIRate($this->getCarrierSubCode(), */
+    /* 				   $request); */
+    /* $response = $rsiRate->getSimpleRates(); */
+
+    /* $result = Mage::getModel('shipping/rate_result'); */
+
+    /* $errorMsg = $response['error']; */
+    /* if ($errorMsg != null) { */
+    /*   $error = Mage::getModel('shipping/rate_result_error'); */
+    /*   $error->addData(array('error_message' => $errorMsg)); */
+    /*   $result->append($error); */
+    /*   return $result; */
+    /* } */
     
-    $carrierCode = $this->getCarrierSubCode();
-    $carrierName = Mage::getStoreConfig('carriers/'.$carrierCode.'/title');
-    $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/useNegotiatedRates');
-    $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
+    /* $carrierCode = $this->getCarrierSubCode(); */
+    /* $carrierName = Mage::getStoreConfig('carriers/'.$carrierCode.'/title'); */
+    /* $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/useNegotiatedRates'); */
+    /* $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate'; */
 
-    foreach($response as $rsiMethod) {
-      if($useNegotiatedRate && $rsiMethod['negotiated_rate'] == null) {
-	continue;
-      }
+    /* foreach($response as $rsiMethod) { */
+    /*   if($useNegotiatedRate && $rsiMethod['negotiated_rate'] == null) { */
+    /* 	continue; */
+    /*   } */
 
-      $method = Mage::getModel('shipping/rate_result_method');
+    /*   $method = Mage::getModel('shipping/rate_result_method'); */
 
-      $method->setCarrier($carrierCode);
-      $method->setCarrierTitle($carrierName);
+    /*   $method->setCarrier($carrierCode); */
+    /*   $method->setCarrierTitle($carrierName); */
 
-      $method->setMethod($rsiMethod['service_code']);
-      $method->setMethodTitle($rsiMethod['desc']);
+    /*   $method->setMethod($rsiMethod['service_code']); */
+    /*   $method->setMethodTitle($rsiMethod['desc']); */
 
-      $method->setCost($rsiMethod[$rateKey]);
-      $method->setPrice($rsiMethod[$rateKey] + $handling);
+    /*   $method->setCost($rsiMethod[$rateKey]); */
+    /*   $method->setPrice($rsiMethod[$rateKey] + $handling); */
 
-      $result->append($method);
-    }
+    /*   $result->append($method); */
+    /* } */
 
-    return $result;
+    /* return $result; */
   }
 
   public function getAllowedMethods() {
