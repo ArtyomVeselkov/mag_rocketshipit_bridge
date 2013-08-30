@@ -1,8 +1,8 @@
 <?php
 
 abstract class Soularpanic_RocketShipIt_Model_Carrier_Abstract
-  extends Mage_Shipping_Model_Carrier_Abstract
-  implements Mage_Shipping_Model_Carrier_Interface
+extends Mage_Shipping_Model_Carrier_Abstract
+implements Mage_Shipping_Model_Carrier_Interface
 {
   protected $_superCode = 'rocketshipit';
 
@@ -23,48 +23,8 @@ abstract class Soularpanic_RocketShipIt_Model_Carrier_Abstract
 					   $useNegotiatedRate,
 					   null,
 					   $handling);
-					   
-    return $simpleRates;
-
-    /* $rsiRate = $helper->getRSIRate($this->getCarrierSubCode(), */
-    /* 				   $request); */
-    /* $response = $rsiRate->getSimpleRates(); */
-
-    /* $result = Mage::getModel('shipping/rate_result'); */
-
-    /* $errorMsg = $response['error']; */
-    /* if ($errorMsg != null) { */
-    /*   $error = Mage::getModel('shipping/rate_result_error'); */
-    /*   $error->addData(array('error_message' => $errorMsg)); */
-    /*   $result->append($error); */
-    /*   return $result; */
-    /* } */
     
-    /* $carrierCode = $this->getCarrierSubCode(); */
-    /* $carrierName = Mage::getStoreConfig('carriers/'.$carrierCode.'/title'); */
-    /* $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/useNegotiatedRates'); */
-    /* $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate'; */
-
-    /* foreach($response as $rsiMethod) { */
-    /*   if($useNegotiatedRate && $rsiMethod['negotiated_rate'] == null) { */
-    /* 	continue; */
-    /*   } */
-
-    /*   $method = Mage::getModel('shipping/rate_result_method'); */
-
-    /*   $method->setCarrier($carrierCode); */
-    /*   $method->setCarrierTitle($carrierName); */
-
-    /*   $method->setMethod($rsiMethod['service_code']); */
-    /*   $method->setMethodTitle($rsiMethod['desc']); */
-
-    /*   $method->setCost($rsiMethod[$rateKey]); */
-    /*   $method->setPrice($rsiMethod[$rateKey] + $handling); */
-
-    /*   $result->append($method); */
-    /* } */
-
-    /* return $result; */
+    return $simpleRates;
   }
 
   public function getAllowedMethods() {
