@@ -23,6 +23,12 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     return $addr;
   }
 
+  public function parseShippingMethod($shippingMethod) {
+    $split = explode('_', $shippingMethod);
+    return array('carrier' => $split[0],
+		 'service' => $split[1]);
+  }
+
   public function getRSIRate($courier, $addrObj)
   {
     $rsiRate = new RocketShipRate($courier);
@@ -40,19 +46,6 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     $rsiRate->setParameter('toState', $addr['state']);
     $rsiRate->setParameter('toCountry', $addr['country']);
     $rsiRate->setParameter('weight', $addr['weight']);
-
-
-    /* $destZip = $request->getDestPostcode(); */
-    /* $rsiRate->setParameter('toCode', $destZip); */
-
-    /* $destState = $request->getDestRegionCode(); */
-    /* $rsiRate->setParameter('toState', $destState); */
-
-    /* $destCountry = $request->getCountryId(); */
-    /* $rsiRate->setParameter('toCountry', $destCountry); */
-    
-    /* $packageWeight = $request->getPackageWeight(); */
-    /* $rsiRate->setParameter('weight', $packageWeight); */
 
     $rsiRate->setParameter('residentialAddressIndicator','0');
 
