@@ -4,7 +4,7 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
   protected $_code = 'rocketshipit';
 
   function __construct() {
-    $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'/path');
+    $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'_global'.'/path');
     require_once($rocketShipItPath.'/RocketShipIt.php');
   }
 

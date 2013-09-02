@@ -12,4 +12,29 @@ class Soularpanic_MassRocketShipIt_Model_Observer {
 		      array('shipping_method'=>'shipping_method',
 			    'shipping_weight'=>'weight'));
   }
+
+  public function changeGridJSObject($observer) {
+    $transport = $observer->getTransport();
+    if ($observer->getEvent()->getBlock()->getRequest()->getControllerName() == 'sales_order'
+	|| $observer->getEvent()->getBlock()->getRequest()->getControllerName() == 'adminhtml_sales_order'
+        ) {
+      $html = $transport->getHtml();
+      $html = str_replace(
+			  array(
+				'sales_order_grid_massactionJsObject = new varienGridMassaction',
+				'sales_order_grid_massactionJsObject = new foomanGridMassaction',
+				'sales_order_gridJsObject = new varienGrid',
+				'sales_order_gridJsObject = new foomanGrid'
+				),
+			  array(
+				'sales_order_grid_massactionJsObject = new soularpanicGridMassaction',
+				'sales_order_grid_massactionJsObject = new soularpanicGridMassaction',
+				'sales_order_gridJsObject = new soularpanicGrid',
+				'sales_order_gridJsObject = new soularpanicGrid'
+				),
+			  $html
+			  );
+      $transport->setHtml($html);
+    }
+  }
 }

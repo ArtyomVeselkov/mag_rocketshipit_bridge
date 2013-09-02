@@ -1,13 +1,21 @@
-var soularpanicGridMassaction = Class.create(foomanGridMassaction, {
-    apply: function(super) {
+var soularpanicGridMassaction = Class.create(foomanGridMassaction || varienGridMassaction, {
+    apply: function($super) {
 	var shippingOverrides = [];
 	$('sales_order_grid_table').getElementsBySelector('.soularpanic_shippingmethod').each(function(s) {
-	    shippingOverrides.push(s.readAttribute('rel')+'|'+s.value);
+	    var id = s.readAttribute('rel');
+	    var optionElt = s.getElementsBySelector('option').find(
+		function(elt) { return elt.selected });
+	    shippingOverrides.push(id + '|' 
+				   + s.value + '|' 
+				   + optionElt.readAttribute('data-methodName') + '|'
+				   + optionElt.readAttribute('data-methodPrice'));
 	});
 	new Insertion.Bottom(this.formAdditional,
 			     this.fieldTemplate.evaluate({
-				 name: 'shippingOverride', 
+				 name: 'shipping_override', 
 				 value: shippingOverrides }));
-	return super;
+	return $super();
     }
 });
+
+var soularpanicGrid = Class.create(foomanGrid || varienGrid, {});

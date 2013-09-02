@@ -3,24 +3,46 @@
 require_once('Fooman/OrderManager/controllers/Sales/OrderManagerController.php');
 
 class Soularpanic_MassRocketShipIt_Sales_OrderManagerController 
-/* extends Mage_Adminhtml_Controller_Action { */
 extends Fooman_OrderManager_Sales_OrderManagerController {
-  /* function massAction() { */
-  /*   Mage::log('rocketshipitcontroller firing', */
-  /* 	      null, */
-  /* 	      'rocketshipit_shipments.log'); */
-  /*   $this->_redirect('adminhtml/sales_order/'); */
-  /* } */
 
-  function shipallAction() {
+  public function shipallAction() {
     Mage::log('sp mass order manager controller catching shipallAction',
 	      null,
 	      'rocketshipit_shipments.log');
-    /* $url = Mage::helper('adminhtml')->getUrl('adminhtml/sales_orderManager/shipall', array('_secure'=>1)); */
-    //$args = $this->getRequest()->getPost();
-    /* $this->_redirectUrl($url, $args); */
-    //$this->_redirect('adminhtml/sales_orderManager/shipall', $args);
+    $orderIds = $this->getRequest()->getPost('order_ids');
+    $shippingOverrides = $this->_getShippingOverrides();
+    foreach ($orderIds as $orderId) {
+      $order = Mage::getModel('sales/order')->load($orderId);
+      if (!($order->canShip())) {
+	continue;
+      }
+      $shippingMethod = $order->getShippingMethod();
+      $shippingOverride = $shippingOverrides[$orderId];
+      $overrideCode = $shippingOverride['code'];
+      if ($overrideCode != $shippingMethod) {
+	$overrideName = $shippingOverride['name'];
+	/* $comment = Mage::getModel('sales/order_shipment_comment'); */
+	/* $comment->setComment('Shipment method overridden from '.$order->getShippingDescription().' to '.$overrideName.' ('.$shippingOverride['cost'].')'); */
+	$order->addStatusHistoryComment('Shipment method overridden from '.$order->getShippingDescription().' to '.$overrideName.' ('.$shippingOverride['cost'].')');
+	$order->setShippingDescription($overrideName);
+	$order->setShippingMethod($overrideCode);
+	$order->save();
+      }
+    }
+    
     parent::shipallAction();
+  }
+
+  private function _getShippingOverrides() {
+    $shippingOverrides = array();
+    $shippingOverridesStr = $this->getRequest()->getPost('shipping_override');
+    foreach (explode(',', $shippingOverridesStr) as $shippingOverrideStr) {
+      list($orderId, $carrierCode, $methodName, $methodCost) = explode('|', $shippingOverrideStr);
+      $shippingOverrides[$orderId] = array('code' => $carrierCode,
+					   'name' => $methodName,
+					   'cost' => $methodCost);
+    }
+    return $shippingOverrides;
   }
 }
 ?>

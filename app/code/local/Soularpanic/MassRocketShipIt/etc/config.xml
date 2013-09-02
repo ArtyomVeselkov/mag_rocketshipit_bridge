@@ -31,13 +31,22 @@
     <events>
       <sales_order_grid_collection_load_before>
 	<observers>
-	  <soulapanic_massrocketshipit>
+	  <soulapanic_massrocketshipit_loadgriddata>
 	    <type>model</type>
 	    <class>massrocketshipit/observer</class>
 	    <method>salesOrderGridCollectionLoadBefore</method>
-	  </soulapanic_massrocketshipit>
+	  </soulapanic_massrocketshipit_loadgriddata>
 	</observers>
       </sales_order_grid_collection_load_before>
+      <core_block_abstract_to_html_after>
+      	<observers>
+      	  <soularpanic_massrocketshipit_changegridjs>
+      	    <type>model</type>
+      	    <class>massrocketshipit/observer</class>
+      	    <method>changeGridJSObject</method>
+      	  </soularpanic_massrocketshipit_changegridjs>
+      	</observers>
+      </core_block_abstract_to_html_after>
     </events>
   </adminhtml>
 

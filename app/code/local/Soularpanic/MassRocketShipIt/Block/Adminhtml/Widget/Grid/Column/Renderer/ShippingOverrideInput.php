@@ -47,7 +47,7 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
     $html = '<select name="'.$colId.'-'.$rowId.'" rel="'.$rowId.'" class="'.$colId.'">';
     foreach($rates->getAllRates() as $rate) {
       $selected = ($rate->getCarrier().'_'.$rate->getMethod() == $shippingMethod) ? 'selected="selected" ' : '';
-      $html.= '<option '.$selected.'value="'.$rate->getCarrier().'_'.$rate->getMethod().'">'.$rate->getMethodTitle().' -- '.$rate->getCost().'</option>';
+      $html.= '<option '.$selected.'value="'.$rate->getCarrier().'_'.$rate->getMethod().'" data-methodName="'.$rate->getMethodTitle().'" data-methodPrice="'.$rate->getCost().'">'.$rate->getMethodTitle().' -- '.$rate->getCost().'</option>';
     }
     $html.='</select>';
     return $html;

@@ -10,7 +10,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     Mage::log('rocketshipit observer firing',
 	      null,
 	      'rocketshipit_shipments.log');
-    die('hold up');
+
     $helper = Mage::helper('rocketshipit');
     
     $shipment = $observer->getEvent()->getShipment();
@@ -51,6 +51,8 @@ class Soularpanic_RocketShipIt_Model_Observer
     $labelImg = $label['pkgs'][0]['label_img'];
     $labelImgDecoded = base64_decode($labelImg);
     $shipment->setShippingLabel($labelImgDecoded);
+    
+    //die('wait!');
   }
 }
 ?>
