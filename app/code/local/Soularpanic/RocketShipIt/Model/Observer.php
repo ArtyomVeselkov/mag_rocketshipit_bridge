@@ -22,7 +22,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     $rsiShipment = $helper->asRSIShipment('UPS', $destAddr);
     $rsiShipment->setParameter('service', $shippingMethod['service']);
 
-    $rsiPackage = new RocketShipPackage('UPS');
+    $rsiPackage = new RocketShipPackage($shippingMethod['carrier']);
     $rsiPackage->setParameter('length','6');
     $rsiPackage->setParameter('width','6');
     $rsiPackage->setParameter('height','6');
@@ -38,7 +38,7 @@ class Soularpanic_RocketShipIt_Model_Observer
 	      'rocketshipit_shipments.log');
 
     if(is_string($label) && strpos($label, 'Error') >= 0) {
-      Mage::throwException($this->__('Label generation failed: '.$label));
+      Mage::throwException('Label generation failed: '.$label);
     }
 
     $rsiTrackNo = $label['trk_main'];

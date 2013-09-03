@@ -24,12 +24,17 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
   }
 
   public function parseShippingMethod($shippingMethod) {
+					 
     $split = explode('_', $shippingMethod);
-    return array('carrier' => $split[0],
-		 'service' => $split[1]);
+    return array('carrier' => $split[1],
+		 'service' => $split[2]);
   }
 
-  public function getRSIRate($courier, $addrObj)
+  public function getFullCarrierCode($carrierSubCode) {
+    return $this->_code.'_'.$carrierSubCode;
+  }
+
+public function getRSIRate($courier, $addrObj)
   {
     $rsiRate = new RocketShipRate($courier);
 
@@ -73,7 +78,8 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
       return $result;
     }
     
-    $carrierName = Mage::getStoreConfig('carriers/'.$carrierCode.'/title');
+    $fullCode = $this->getFullCarrierCode($carrierCode);
+    $carrierName = Mage::getStoreConfig('carriers/'.$fullCode.'/title');
     $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
 
     foreach($response as $rsiMethod) {
@@ -83,7 +89,7 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
 
       $method = Mage::getModel('shipping/rate_result_method');
 
-      $method->setCarrier($carrierCode);
+      $method->setCarrier($fullCode);
       $method->setCarrierTitle($carrierName);
 
       $method->setMethod($rsiMethod['service_code']);

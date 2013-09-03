@@ -78,29 +78,23 @@
     </events>
   </global>
 
-  <!-- <admin> -->
-  <!--   <routers> -->
-  <!--     <adminhtml> -->
-  <!-- 	<args> -->
-  <!-- 	  <modules> -->
-  <!-- 	    <Soularpanic_RocketShipIt before="Fooman_OrderManager">Soularpanic_RocketShipIt</Soularpanic_RocketShipIt> -->
-  <!-- 	  </modules> -->
-  <!-- 	</args> -->
-  <!--     </adminhtml> -->
-  <!--   </routers> -->
-  <!-- </admin> -->
-
   <default>
     <carriers>
-      <!-- <rocketshipit> -->
-      <!-- 	<model>rocketshipit/carrier_shippingmethod</model> -->
-      <!-- </rocketshipit> -->
       <rocketshipit_ups>
 	<model>rocketshipit/carrier_ups</model>
       </rocketshipit_ups>
       <rocketshipit_usps>
       	<model>rocketshipit/carrier_usps</model>
       </rocketshipit_usps>
+      <rocketshipit_stamps>
+	<model>rocketshipit/carrier_stamps</model>
+	<showmethod>1</showmethod>
+	<title>Some other stamps title</title>
+      </rocketshipit_stamps>
+      <!-- <stamps> -->
+      <!-- 	<title>Stamps baby!</title> -->
+      <!-- 	<showmethod>1</showmethod> -->
+      <!-- </stamps> -->
     </carriers>
   </default>
 </config>
