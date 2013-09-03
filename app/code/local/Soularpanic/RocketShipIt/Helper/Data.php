@@ -33,7 +33,7 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
   {
     $rsiRate = new RocketShipRate($courier);
 
-    $addr = nil;
+    $addr = null;
     
     if ($addrObj instanceof Mage_Shipping_Model_Rate_Request) {
       $addr = $this->_extractAddrFromMageShippingModelRateRequest($addrObj);
