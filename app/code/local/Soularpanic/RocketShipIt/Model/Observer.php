@@ -17,19 +17,30 @@ class Soularpanic_RocketShipIt_Model_Observer
     $order = $shipment->getOrder();
 
     $shippingMethod = $helper->parseShippingMethod($order->getShippingMethod());
+    $carrier = $shippingMethod['carrier'];
 
     $destAddr = $shipment->getShippingAddress();
-    $rsiShipment = $helper->asRSIShipment('UPS', $destAddr);
+    $rsiShipment = $helper->asRSIShipment($carrier, $destAddr);
     $rsiShipment->setParameter('service', $shippingMethod['service']);
 
-    $rsiPackage = new RocketShipPackage($shippingMethod['carrier']);
-    $rsiPackage->setParameter('length','6');
-    $rsiPackage->setParameter('width','6');
-    $rsiPackage->setParameter('height','6');
-    
-    $weight = $shipment->getOrder()->getWeight();
-    $rsiPackage->setParameter('weight', $weight);
-    
+    $rsiPackage = null;
+    if ($carrier === 'stamps') {
+      $stampsRate = $helper->getRSIRate($carrier, $destAddr);
+      $stampsResp = $stampsRate->getAllRates();
+      $stampsRates = $stampsResp->Rates->Rate;
+      $stampsRate = $stampsRates[4];
+      $rsiPackage = $stampsRate;
+      //die('under construction...');
+    }
+    else {
+      $rsiPackage = new RocketShipPackage($carrier);
+      $rsiPackage->setParameter('length','6');
+      $rsiPackage->setParameter('width','6');
+      $rsiPackage->setParameter('height','6');
+      
+      $weight = $shipment->getOrder()->getWeight();
+      $rsiPackage->setParameter('weight', $weight);
+    }
     $rsiShipment->addPackageToShipment($rsiPackage);
     $label = $rsiShipment->submitShipment();
     

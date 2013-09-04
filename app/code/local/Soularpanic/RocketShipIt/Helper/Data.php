@@ -24,7 +24,7 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
   }
 
   public function parseShippingMethod($shippingMethod) {
-					 
+    
     $split = explode('_', $shippingMethod);
     return array('carrier' => $split[1],
 		 'service' => $split[2]);
@@ -34,8 +34,7 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     return $this->_code.'_'.$carrierSubCode;
   }
 
-public function getRSIRate($courier, $addrObj)
-  {
+  public function getRSIRate($courier, $addrObj) {
     $rsiRate = new RocketShipRate($courier);
 
     $addr = null;
