@@ -65,8 +65,9 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
     if ($weight != null) {
       $rsiRates->setParameter('weight', $weight);
     }
-    $response = $rsiRates->getSimpleRates();
 
+    $response = $rsiRates->getSimpleRates();
+    
     $result = Mage::getModel('shipping/rate_result');
 
     $errorMsg = $response['error'];
@@ -91,7 +92,8 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
       $method->setCarrier($fullCode);
       $method->setCarrierTitle($carrierName);
 
-      $method->setMethod($rsiMethod['service_code']);
+      $serviceCode = $this->_getServiceCode($carrierCode, $rsiMethod);
+      $method->setMethod($serviceCode);
       $method->setMethodTitle($rsiMethod['desc']);
 
       $method->setCost($rsiMethod[$rateKey]);
@@ -102,6 +104,17 @@ class Soularpanic_RocketShipIt_Helper_Data extends Mage_Core_Helper_Abstract {
 
     return $result;
     
+  }
+
+  function _getServiceCode($carrierCode, $rsiMethod) {
+    $serviceCode = $rsiMethod['service_code'];
+    if ($carrierCode === 'stamps') {
+      $desc = $rsiMethod['desc'];
+      $descArr = explode(' - ', $desc);
+      $packageType = str_replace(' ', '-', $descArr[1]);
+      $serviceCode.=':'.$packageType;
+    }
+    return $serviceCode;
   }
 
   public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {

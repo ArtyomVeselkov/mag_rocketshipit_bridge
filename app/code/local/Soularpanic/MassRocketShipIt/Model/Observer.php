@@ -20,20 +20,20 @@ class Soularpanic_MassRocketShipIt_Model_Observer {
         ) {
       $html = $transport->getHtml();
       $html = str_replace(
-			  array(
-				'sales_order_grid_massactionJsObject = new varienGridMassaction',
-				'sales_order_grid_massactionJsObject = new foomanGridMassaction',
-				'sales_order_gridJsObject = new varienGrid',
-				'sales_order_gridJsObject = new foomanGrid'
-				),
-			  array(
-				'sales_order_grid_massactionJsObject = new soularpanicGridMassaction',
-				'sales_order_grid_massactionJsObject = new soularpanicGridMassaction',
-				'sales_order_gridJsObject = new soularpanicGrid',
-				'sales_order_gridJsObject = new soularpanicGrid'
-				),
-			  $html
-			  );
+	array(
+	  'sales_order_grid_massactionJsObject = new varienGridMassaction',
+	  'sales_order_grid_massactionJsObject = new foomanGridMassaction',
+	  'sales_order_gridJsObject = new varienGrid',
+	  'sales_order_gridJsObject = new foomanGrid'
+	),
+	array(
+	  'sales_order_grid_massactionJsObject = new soularpanicGridMassaction',
+	  'sales_order_grid_massactionJsObject = new soularpanicGridMassaction',
+	  'sales_order_gridJsObject = new soularpanicGrid',
+	  'sales_order_gridJsObject = new soularpanicGrid'
+	),
+	$html
+      );
       $transport->setHtml($html);
     }
   }
