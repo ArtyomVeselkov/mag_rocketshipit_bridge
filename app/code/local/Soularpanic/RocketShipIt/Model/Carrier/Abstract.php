@@ -16,7 +16,7 @@ implements Mage_Shipping_Model_Carrier_Interface
     $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/useNegotiatedRates');
     $handling = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/handling');
 
-    $helper = Mage::helper($this->_superCode);
+    $helper = Mage::helper('rocketshipit/rates');
 
     $simpleRates = $helper->getSimpleRates($carrierCode,
 					   $request,

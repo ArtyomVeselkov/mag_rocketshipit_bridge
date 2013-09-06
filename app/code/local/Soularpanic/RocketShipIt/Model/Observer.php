@@ -11,21 +11,22 @@ class Soularpanic_RocketShipIt_Model_Observer
 	      null,
 	      'rocketshipit_shipments.log');
 
-    $helper = Mage::helper('rocketshipit');
-    
+    $dataHelper = Mage::helper('rocketshipit/data');
+    $rateHelper = Mage::helper('rocketshipit/rate');
+
     $shipment = $observer->getEvent()->getShipment();
     $order = $shipment->getOrder();
 
-    $shippingMethod = $helper->parseShippingMethod($order->getShippingMethod());
+    $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
     $carrier = $shippingMethod['carrier'];
 
     $destAddr = $shipment->getShippingAddress();
-    $rsiShipment = $helper->asRSIShipment($carrier, $destAddr);
+    $rsiShipment = $dataHelper->asRSIShipment($carrier, $destAddr);
     $rsiShipment->setParameter('service', $shippingMethod['service']);
 
     $rsiPackage = null;
     if ($carrier === 'stamps') {
-      $stampsRate = $helper->getRSIRate($carrier, $destAddr);
+      $stampsRate = $rateHelper->getRSIRate($carrier, $destAddr);
       $stampsResp = $stampsRate->getAllRates();
       $stampsRates = $stampsResp->Rates->Rate;
       $stampsRate = $stampsRates[4];
