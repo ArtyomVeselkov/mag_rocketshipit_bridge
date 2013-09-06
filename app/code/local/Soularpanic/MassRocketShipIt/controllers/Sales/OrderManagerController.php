@@ -21,8 +21,6 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
       $overrideCode = $shippingOverride['code'];
       if ($overrideCode != $shippingMethod) {
 	$overrideName = $shippingOverride['name'];
-	/* $comment = Mage::getModel('sales/order_shipment_comment'); */
-	/* $comment->setComment('Shipment method overridden from '.$order->getShippingDescription().' to '.$overrideName.' ('.$shippingOverride['cost'].')'); */
 	$order->addStatusHistoryComment('Shipment method overridden from '.$order->getShippingDescription().' to '.$overrideName.' ('.$shippingOverride['cost'].')');
 	$order->setShippingDescription($overrideName);
 	$order->setShippingMethod($overrideCode);

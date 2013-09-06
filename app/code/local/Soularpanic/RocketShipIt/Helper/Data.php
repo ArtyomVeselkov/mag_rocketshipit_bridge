@@ -6,7 +6,8 @@ extends Mage_Core_Helper_Abstract {
 
   function __construct() {
     $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'_global'.'/path');
-    require_once($rocketShipItPath.'/RocketShipIt.php');
+    //require_once($rocketShipItPath.'/RocketShipIt.php');
+    require_once($rocketShipItPath.'/autoload.php');
   }
 
   function _extractAddrFromMageShippingModelRateRequest(Mage_Shipping_Model_Rate_Request $request) {
@@ -36,7 +37,7 @@ extends Mage_Core_Helper_Abstract {
   }
 
   public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
-    $rsiShipment = new RocketShipShipment($carrierCode);
+    $rsiShipment = new \RocketShipIt\Shipment($carrierCode);
 
     $toName = $address->getName();
     $rsiShipment->setParameter('toCompany', $toName);
