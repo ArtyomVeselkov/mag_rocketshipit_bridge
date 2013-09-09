@@ -66,15 +66,6 @@
 	  </soularpanic_rocketshipit_track_and_label>
 	</observers>
       </sales_order_shipment_save_before>
-      <!-- <sales_order_shipment_save_after> -->
-      <!-- 	<observers> -->
-      <!-- 	  <rocketshipit_track_and_label> -->
-      <!-- 	    <type>singleton</type> -->
-      <!-- 	    <class>rocketshipit/observer</class> -->
-      <!-- 	    <method>postsave</method> -->
-      <!-- 	  </rocketshipit_track_and_label> -->
-      <!-- 	</observers> -->
-      <!-- </sales_order_shipment_save_after> -->
     </events>
   </global>
 
@@ -89,12 +80,7 @@
       <rocketshipit_stamps>
 	<model>rocketshipit/carrier_stamps</model>
 	<showmethod>1</showmethod>
-	<title>Some other stamps title</title>
       </rocketshipit_stamps>
-      <!-- <stamps> -->
-      <!-- 	<title>Stamps baby!</title> -->
-      <!-- 	<showmethod>1</showmethod> -->
-      <!-- </stamps> -->
     </carriers>
   </default>
 </config>

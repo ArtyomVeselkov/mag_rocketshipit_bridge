@@ -3,7 +3,6 @@ class Soularpanic_RocketShipIt_Helper_Rates
 extends Mage_Core_Helper_Abstract {
   public function getRSIRate($courier, $addrObj) {
     $helper = Mage::helper('rocketshipit/data');
-    //$rsiRate = new RocketShipRate($courier);
     $rsiRate = new \RocketShipIt\Rate($courier);
     $addr = null;
     
