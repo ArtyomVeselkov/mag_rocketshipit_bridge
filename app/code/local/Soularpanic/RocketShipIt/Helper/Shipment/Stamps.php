@@ -1,6 +1,25 @@
 <?php 
 class Soularpanic_RocketShipIt_Helper_Shipment_Stamps
-extends Mage_Core_Helper_Abstract {
+extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
+  //extends Mage_Core_Helper_Abstract {
+
+  // public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
+  //   return parent::asRSIShipment($carrierCode, $address);
+  // }
+
+  public function addCustomsData($mageShipment, $rsiShipment) {
+    Mage::log('Stamps shipment helper addCustomsData - start',
+	      null, 'rocketshipit_shipments.log');
+
+
+    $customs = new \RocketShipIt\Customs('stamps');
+    $customs->setParameter('customsQuantity', $qty);
+    $weight = $mageShipment->getOrder()->getWeight();
+    $customs->setParameter('customsWeight', $weight);
+    $value = $mageShipment->getOrder()->getSubtotal();
+    $customs->setParameter('customsValue', $value);
+    
+  }
 
   public function getPackage($shipment) {
     $rateHelper = Mage::helper('rocketshipit/rates');
@@ -17,20 +36,18 @@ extends Mage_Core_Helper_Abstract {
     $serviceArr = $this->_parseStampsShippingMethod($shippingMethod);
     $serviceType = $serviceArr['serviceType'];
     $packageType = $serviceArr['packageType'];
-    /*
-    $serviceArr = explode(':', $shippingMethod['service']);
-    $serviceType = $serviceArr[0];
-    $packageType = str_replace('-', ' ', $serviceArr[1]);
-     */
+    
+    
+
     foreach ($stampsRates as $stampsRate) {
       if ($stampsRate->ServiceType === $serviceType
 	  && $stampsRate->PackageType === $packageType) {
 	$rsiPackage = $stampsRate;
 	$rsiPackage->AddOns = null;
 	$addOns = array();
-	$guess = new \stdClass();
-	$guess->AddOnType = 'US-A-DC';
-	array_push($addOns, $guess);
+	// $guess = new \stdClass();
+	// $guess->AddOnType = 'US-A-DC';
+	// array_push($addOns, $guess);
 	$rsiPackage->AddOns = $addOns;
       }
     }

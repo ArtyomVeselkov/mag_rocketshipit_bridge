@@ -6,14 +6,13 @@ extends Mage_Core_Helper_Abstract {
 
   function __construct() {
     $rocketShipItPath = Mage::getStoreConfig('carriers/'.$this->_code.'_global'.'/path');
-    //require_once($rocketShipItPath.'/RocketShipIt.php');
     require_once($rocketShipItPath.'/autoload.php');
   }
 
   function _extractAddrFromMageShippingModelRateRequest(Mage_Shipping_Model_Rate_Request $request) {
     $addr = array('zip' => $request->getDestPostcode(),
 		  'state' => $request->getDestRegionCode(),
-		  'country' => $request->getCountryId(),
+		  'country' => $request->getDestCountryId(),
 		  'weight' => $request->getPackageWeight());
     return $addr;
   }
@@ -34,36 +33,6 @@ extends Mage_Core_Helper_Abstract {
 
   public function getFullCarrierCode($carrierSubCode) {
     return $this->_code.'_'.$carrierSubCode;
-  }
-
-  public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
-    $rsiShipment = new \RocketShipIt\Shipment($carrierCode);
-
-    $toName = $address->getName();
-    $rsiShipment->setParameter('toCompany', $toName);
-    
-    $toPhone = $address->getTelephone();
-    $rsiShipment->setParameter('toPhone', $toPhone);
-
-    $toStreet1 = $address->getStreet1();
-    $rsiShipment->setParameter('toAddr1', $toStreet1);
-
-    $toStreet2 = $address->getStreet2();
-    $rsiShipment->setParameter('toAddr2', $toStreet2);
-
-    $toStreet3 = $address->getStreet3();
-    $rsiShipment->setParameter('toAddr3', $toStreet3);
-
-    $toCity = $address->getCity();
-    $rsiShipment->setParameter('toCity', $toCity);
-
-    $toState = $address->getRegionCode();
-    $rsiShipment->setParameter('toState', $toState);
-
-    $toZip = $address->getPostcode();
-    $rsiShipment->setParameter('toCode', $toZip);
-
-    return $rsiShipment;
   }
 }
 ?>

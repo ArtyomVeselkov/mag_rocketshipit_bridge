@@ -1,6 +1,16 @@
 <?php 
 class Soularpanic_RocketShipIt_Helper_Shipment_Ups
-extends Mage_Core_Helper_Abstract {
+extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
+  //extends Mage_Core_Helper_Abstract {
+
+  // public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
+  //   return parent::asRSIShipment($carrierCode, $address);
+  // }
+
+  public function addCustomsData($mageShipment, $rsiShipment) {
+    Mage::log('UPS shipment helper addCustomsData - start',
+	      null, 'rocketshipit_shipments.log');
+  }
 
   public function getPackage($shipment) {
     $rsiPackage = new \RocketShipIt\Package('ups');

@@ -33,10 +33,19 @@ extends Mage_Core_Helper_Abstract {
       $rsiRates->setParameter('weight', $weight);
     }
 
-    $response = $rsiRates->getSimpleRates();
-    
+    $response = null;
     $result = Mage::getModel('shipping/rate_result');
 
+    try {
+      $response = $rsiRates->getSimpleRates();
+    }
+    catch (Exception $e) {
+      $error = Mage::getModel('shipping/rate_result_error');
+      $error->addData(array('error_message' => $e->getMessage()));
+      $result->append($error);
+      return $result;
+    }
+    
     $errorMsg = $response['error'];
     if ($errorMsg != null) {
       $error = Mage::getModel('shipping/rate_result_error');
@@ -44,6 +53,7 @@ extends Mage_Core_Helper_Abstract {
       $result->append($error);
       return $result;
     }
+
     $helper = Mage::helper('rocketshipit/data');    
     $fullCode = $helper->getFullCarrierCode($carrierCode);
     $carrierName = Mage::getStoreConfig('carriers/'.$fullCode.'/title');

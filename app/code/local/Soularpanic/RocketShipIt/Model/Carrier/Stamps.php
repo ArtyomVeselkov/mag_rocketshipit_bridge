@@ -10,7 +10,7 @@ implements Mage_Shipping_Model_Carrier_Interface
   }
   
   public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
-    $rates = parent::collectRates();
+    $rates = parent::collectRates($request);
     $allowedRateCodes = $this->_getAllowedRateCodes();
     if ($allowedRateCodes != null) {
       $filteredRates = Mage::getModel('shipping/rate_result');
@@ -84,7 +84,33 @@ implements Mage_Shipping_Model_Carrier_Interface
       'US-PM:Regional-Rate-Box-C' => 'USPS Priority Mail - Regional Rate Box C',
       'US-PM:Large-Package' => 'USPS Priority Mail - Large Package',
       'US-XM:Flat-Rate-Box' => 'USPS Express Mail - Flat Rate Box',
-      'US-PP:Oversized-Package' => 'USPS Parcel Post - Oversized Package'
+      'US-PP:Oversized-Package' => 'USPS Parcel Post - Oversized Package',
+      'US-FCI:Letter' => 'USPS Standard Mail - Letter',
+      'US-FCI:Large-Envelope-or-Flat' => 'USPS Standard Mail - Large Envelope or Flat',
+      'US-FCI:Thick-Envelope' => 'USPS Standard Mail - Thick Envelope',
+      'US-FCI:Package' => 'USPS Standard Mail - Package',
+      'US-FCI:Large-Package' => 'USPS Standard Mail - Large Package',
+      'US-FCI:Oversized-Package' => 'USPS Standard Mail - Oversized Package',
+      'US-PMI:Large-Envelope-or-Flat' => 'USPS Priority Mail International - Large Envelope or Flat',
+      'US-PMI:Thick-Envelope' => 'USPS Priority Mail International - Thick Envelope',
+      'US-PMI:Package' => 'USPS Priority Mail International - Package',
+      'US-PMI:Flat-Rate-Box' => 'USPS Priority Mail International - Flat Rate Box',
+      'US-PMI:Small-Flat-Rate-Box' => 'USPS Priority Mail International - Small Flat Rate Box',
+      'US-PMI:Large-Flat-Rate-Box' => 'USPS Priority Mail International - Large Flat Rate Box',
+      'US-PMI:Flat-Rate-Envelope' => 'USPS Priority Mail International - Flat Rate Envelope',
+      'US-PMI:Flat-Rate-Padded-Envelope' => 'USPS Priority Mail International - Flat Rate Padded Envelope',
+      'US-PMI:Large-Package' => 'USPS Priority Mail International - Large Package',
+      'US-PMI:Oversized-Package' => 'USPS Priority Mail International - Oversized Package',
+      'US-PMI:Legal-Flat-Rate-Envelope' => 'USPS Priority Mail International - Legal Flat Rate Envelope',
+      'US-EMI:Large-Envelope-or-Flat' => 'USPS Express Mail International - Large Envelope or Flat',
+      'US-EMI:Thick-Envelope' => 'USPS Express Mail International - Thick Envelope',
+      'US-EMI:Package' => 'USPS Express Mail International - Package',
+      'US-EMI:Flat-Rate-Box' => 'USPS Express Mail International - Flat Rate Box',
+      'US-EMI:Flat-Rate-Envelope' => 'USPS Express Mail International - Flat Rate Envelope',
+      'US-EMI:Flat-Rate-Padded-Envelope' => 'USPS Express Mail International - Flat Rate Padded Envelope',
+      'US-EMI:Large-Package' => 'USPS Express Mail International - Large Package',
+      'US-EMI:Oversized-Package' => 'USPS Express Mail International - Oversized Package',
+      'US-EMI:Legal-Flat-Rate-Envelope' => 'USPS Express Mail International - Legal Flat Rate Envelope'
     );
   }
 }

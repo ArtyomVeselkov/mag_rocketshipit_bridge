@@ -35,7 +35,7 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
     $addr = $helper->_extractAddrFromMageSalesModelOrderAddress($shippingAddr);
     $req->setDestPostcode($addr['zip']);
     $req->setDestRegionCode($addr['state']);
-    $req->setCountryId($addr['country']);
+    $req->setDestCountryId($addr['country']);
     $req->setPackageWeight($shippingWeight);
     return $req;
   }
