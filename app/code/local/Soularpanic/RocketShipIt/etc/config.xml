@@ -13,7 +13,16 @@
       <rocketshipit>
 	<!-- base class name -->
 	<class>Soularpanic_RocketShipIt_Model</class>
+	<resourceModel>rocketshipit_resource</resourceModel>
       </rocketshipit>
+      <rocketshipit_resource>
+	<class>Soularpanic_RocketShipIt_Model_Resource</class>
+	<entities>
+	  <orderExtras>
+	    <table>rocketshipit_order_details</table>
+	  </orderExtras>
+	</entities>
+      </rocketshipit_resource>
     </models>
 
     <helpers>
@@ -26,6 +35,7 @@
       <rocketshipit_setup>
 	<setup>
 	  <module>Soularpanic_RocketShipIt</module>
+	  <class>Soularpanic_RocketShipIt_Model_Resource_Mysql4_Setup</class>
 	</setup>
 	<connection>
 	  <use>core_setup</use>
@@ -68,6 +78,18 @@
       </sales_order_shipment_save_before>
     </events>
   </global>
+
+  <frontend>
+    <routers>
+      <rocketshipit>
+	<use>standard</use>
+	<args>
+	  <module>Soularpanic_RocketShipIt</module>
+	  <frontName>rocketshipit</frontName>
+	</args>
+      </rocketshipit>
+    </routers>
+  </frontend>
 
   <default>
     <carriers>

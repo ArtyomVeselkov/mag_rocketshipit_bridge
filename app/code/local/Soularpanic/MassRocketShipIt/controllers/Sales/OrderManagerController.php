@@ -11,6 +11,10 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
 	      'rocketshipit_shipments.log');
     $orderIds = $this->getRequest()->getPost('order_ids');
     $shippingOverrides = $this->_getShippingOverrides();
+    $shippingAddOns = $this->_getSimpleField('shipping_addOns');
+    $shippingCustomsVals = $this->_getSimpleField('shipping_customs_value');
+    $shippingCustomsQtys = $this->_getSimpleField('shipping_customs_qty');
+    $shippingCustomsDesc = $this->_getSimpleField('shipping_customs_desc');
     foreach ($orderIds as $orderId) {
       $order = Mage::getModel('sales/order')->load($orderId);
       if (!($order->canShip())) {
@@ -27,8 +31,18 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
 	$order->save();
       }
     }
-    
+    die('hold on');
     parent::shipallAction();
+  }
+
+  private function _getSimpleField($simpleFieldKey) {
+    $simpleArr = array();
+    $simpleFieldsStr = $this->getRequest()->getPost($simpleFieldKey);
+    foreach (explode(',', $simpleFieldsStr) as $simpleFieldStr) {
+      list($orderId, $val) = explode('|', $simpleFieldStr, 2);
+      $simpleArr[$orderId] = $val;
+    }
+    return $simpleArr;
   }
 
   private function _getShippingOverrides() {
