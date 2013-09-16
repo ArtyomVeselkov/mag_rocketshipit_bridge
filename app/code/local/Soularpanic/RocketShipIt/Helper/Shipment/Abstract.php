@@ -19,7 +19,7 @@ extends Mage_Core_Helper_Abstract {
 
     $destCountry = $destAddr->getCountryId();
     if ($destCountry !== 'US') {
-      $this->addCustomsData($shipment, $rsiShipment);
+      $rsiShipment = $this->addCustomsData($shipment, $rsiShipment);
     }
         
     $rsiPackage = $this->getPackage($shipment);
@@ -56,6 +56,9 @@ extends Mage_Core_Helper_Abstract {
 
     $toZip = $address->getPostcode();
     $rsiShipment->setParameter('toCode', $toZip);
+
+    $toCountry = $address->getCountryId();
+    $rsiShipment->setParameter('toCountry', $toCountry);
 
     return $rsiShipment;
   }

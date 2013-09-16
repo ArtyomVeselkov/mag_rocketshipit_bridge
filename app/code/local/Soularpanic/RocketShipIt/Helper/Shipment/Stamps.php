@@ -1,24 +1,35 @@
 <?php 
 class Soularpanic_RocketShipIt_Helper_Shipment_Stamps
 extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
-  //extends Mage_Core_Helper_Abstract {
-
-  // public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
-  //   return parent::asRSIShipment($carrierCode, $address);
-  // }
 
   public function addCustomsData($mageShipment, $rsiShipment) {
     Mage::log('Stamps shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
 
+    $orderId = $mageShipment->getOrder()->getId();
+    $orderData = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
 
     $customs = new \RocketShipIt\Customs('stamps');
-    $customs->setParameter('customsQuantity', $qty);
+    
     $weight = $mageShipment->getOrder()->getWeight();
     $customs->setParameter('customsWeight', $weight);
-    $value = $mageShipment->getOrder()->getSubtotal();
-    $customs->setParameter('customsValue', $value);
+
+    $qty = $orderData->getCustomsQty();
+    $customs->setParameter('customsQuantity', $qty);
     
+    $value = $orderData->getCustomsValue();
+    $customs->setParameter('customsValue', $value);
+    //$rsiShipment->setParameter('declaredValue', $value);
+
+    $desc = $orderData->getCustomsDesc();
+    $customs->setParameter('customsDescription', $desc);
+    $rsiShipment->setParameter('customsOtherDescribe', $desc);
+
+    $customs->setParameter('customsOriginCountry', 'US');
+    $rsiShipment->setParameter('customsContentType', 'Other');
+    
+    $rsiShipment->addCustomsLineToShipment($customs);
+    return $rsiShipment;
   }
 
   public function getPackage($shipment) {
@@ -30,6 +41,13 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
 
     $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
+    if ($stampsRate->weightPounds == '') {
+      $stampsRate->setParameter('weightPounds', $order->getWeight());
+    }
+    if ($destAddr->getCountryId() !== 'US') {
+      $orderData = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
+      $stampsRate->setParameter('declaredValue', $orderData->getCustomsValue());
+    }
     $stampsResp = $stampsRate->getAllRates();
     $stampsRates = $stampsResp->Rates->Rate;
 
@@ -56,14 +74,47 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
   public function extractShippingLabel($shipmentResponse) {
     $rsiTrackNo = $shipmentResponse->TrackingNumber;
-    $labelUrl = $shipmentResponse->URL;
-    $curlObj = curl_init();
-    curl_setopt($curlObj, CURLOPT_URL, $labelUrl);
-    curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curlObj, CURLOPT_CONNECTTIMEOUT, 0);
-    $labelStr = curl_exec($curlObj);
-    curl_close($curlObj);
-    return $labelStr;
+    $labelUrlsStr = $shipmentResponse->URL;
+    $labelUrls = explode(' ', $labelUrlsStr);
+    $labelImages = $this->_fetchLabelImages($labelUrls);
+
+    $labelPdf = $this->_convertImagesToPdf($labelImages);
+    $pdfStr = $labelPdf->render();
+
+    return $pdfStr;
+  }
+
+  function _convertImagesToPdf($labelImages) {
+    $labelPdf = new Zend_Pdf();
+
+    foreach ($labelImages as $labelImage) {
+      $x = imagesx($labelImage);
+      $y = imagesy($labelImage);
+      $page = new Zend_Pdf_Page($x, $y);
+      $filename = Mage::getBaseDir('tmp').'/'.rand().'.png';
+      imageinterlace($labelImage, 0);
+      imagepng($labelImage, $filename);
+      $pdfImg = Zend_Pdf_Image::imageWithPath($filename);
+      $page->drawImage($pdfImg, 0, 0, $x, $y);
+      unlink($filename);
+      $labelPdf->pages[] = $page;
+    }
+    return $labelPdf;
+  }
+
+  function _fetchLabelImages($labelUrls) {
+    $labelResources = array();
+    foreach ($labelUrls as $labelUrl) {
+      $curlObj = curl_init();
+      curl_setopt($curlObj, CURLOPT_URL, $labelUrl);
+      curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($curlObj, CURLOPT_CONNECTTIMEOUT, 0);
+      $labelStr = curl_exec($curlObj);
+      $resource = imagecreatefromstring($labelStr);
+      $labelResources[] = $resource;
+      curl_close($curlObj);
+    }
+    return $labelResources;
   }
 
   public function getServiceType($shippingMethod) {

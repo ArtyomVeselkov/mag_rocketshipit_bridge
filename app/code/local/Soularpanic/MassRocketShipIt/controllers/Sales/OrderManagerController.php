@@ -20,6 +20,21 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
       if (!($order->canShip())) {
 	continue;
       }
+      
+      if ($order->getShippingAddress()->getCountryId() !== 'US') {
+	$customsVal = $shippingCustomsVals[$orderId];
+	$customsQty = $shippingCustomsQtys[$orderId];
+	$customsDesc = $shippingCustomsDesc[$orderId];
+	
+	$orderDetails = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
+	$orderDetails->setOrderId($orderId);
+	$orderDetails->setCustomsDesc($customsDesc);
+	$orderDetails->setCustomsQty($customsQty);
+	$orderDetails->setCustomsValue($customsVal);
+
+	$orderDetails->save();
+      }
+
       $shippingMethod = $order->getShippingMethod();
       $shippingOverride = $shippingOverrides[$orderId];
       $overrideCode = $shippingOverride['code'];
@@ -31,7 +46,7 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
 	$order->save();
       }
     }
-    die('hold on');
+    
     parent::shipallAction();
   }
 

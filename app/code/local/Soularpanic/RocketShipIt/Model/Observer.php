@@ -22,16 +22,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     $carrier = $shippingMethod['carrier'];
     $shipmentHelper = Mage::helper('rocketshipit/shipment_'.$carrier);
     $rsiShipment = $shipmentHelper->prepareShipment($shipment);
-    // $destAddr = $shipment->getShippingAddress();
-    // $rsiShipment = $shipmentHelper->asRSIShipment($carrier, $destAddr);
     
-    // $serviceType = $shipmentHelper->getServiceType($shippingMethod);
-    
-    // $rsiPackage = $shipmentHelper->getPackage($shipment);
-
-    // $rsiShipment->setParameter('service', $serviceType);
-
-    // $rsiShipment->addPackageToShipment($rsiPackage);
     $label = $rsiShipment->submitShipment();
     
     Mage::log('rocketshipit observer generated label: '.print_r($label,true),
@@ -50,7 +41,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     $track->setNumber($rsiTrackNo);
     $track->setCarrierCode($shipment->getOrder()->getShippingMethod());
     $shipment->addTrack($track);
-    die('wait');
+    //die('wait');
   }
 }
 ?>
