@@ -78,29 +78,13 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $labelUrls = explode(' ', $labelUrlsStr);
     $labelImages = $this->_fetchLabelImages($labelUrls);
 
-    $labelPdf = $this->_convertImagesToPdf($labelImages);
+    $labelPdf = $this->convertImagesToPdf($labelImages);
     $pdfStr = $labelPdf->render();
 
     return $pdfStr;
   }
 
-  function _convertImagesToPdf($labelImages) {
-    $labelPdf = new Zend_Pdf();
 
-    foreach ($labelImages as $labelImage) {
-      $x = imagesx($labelImage);
-      $y = imagesy($labelImage);
-      $page = new Zend_Pdf_Page($x, $y);
-      $filename = Mage::getBaseDir('tmp').'/'.rand().'.png';
-      imageinterlace($labelImage, 0);
-      imagepng($labelImage, $filename);
-      $pdfImg = Zend_Pdf_Image::imageWithPath($filename);
-      $page->drawImage($pdfImg, 0, 0, $x, $y);
-      unlink($filename);
-      $labelPdf->pages[] = $page;
-    }
-    return $labelPdf;
-  }
 
   function _fetchLabelImages($labelUrls) {
     $labelResources = array();
