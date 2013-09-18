@@ -36,6 +36,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     $labelImg = $shipmentHelper->extractShippingLabel($label);
     $shipment->setShippingLabel($labelImg);
 
+    $rsiTrackNo = $shipmentHelper->extractTrackingNo($label);
     $track = Mage::getModel('sales/order_shipment_track');
     $track->setTitle($shipment->getOrder()->getShippingDescription());
     $track->setNumber($rsiTrackNo);

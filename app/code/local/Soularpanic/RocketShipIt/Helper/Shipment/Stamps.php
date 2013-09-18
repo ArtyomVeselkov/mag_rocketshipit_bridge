@@ -73,7 +73,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
   }
 
   public function extractShippingLabel($shipmentResponse) {
-    $rsiTrackNo = $shipmentResponse->TrackingNumber;
+    //$rsiTrackNo = $shipmentResponse->TrackingNumber;
     $labelUrlsStr = $shipmentResponse->URL;
     $labelUrls = explode(' ', $labelUrlsStr);
     $labelImages = $this->_fetchLabelImages($labelUrls);
@@ -84,7 +84,9 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $pdfStr;
   }
 
-
+  public function extractTrackingNo($shipmentResponse) {
+    return $shipmentResponse->TrackingNumber;
+  }
 
   function _fetchLabelImages($labelUrls) {
     $labelResources = array();

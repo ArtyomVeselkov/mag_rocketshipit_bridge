@@ -33,9 +33,12 @@ extends Mage_Core_Helper_Abstract {
   public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
     $rsiShipment = new \RocketShipIt\Shipment($carrierCode);
 
-    $toName = $address->getName();
-    $rsiShipment->setParameter('toCompany', $toName);
-    
+    $rsiShipment->setParameter('toName', $address->getName());
+    $toCompany = $address->getCompany();
+    $rsiShipment->setParameter('toCompany', $toCompany);
+    $residential = empty($toCompany) ? '1' : '0';
+    $rsiShipment->setParameter('residentialAddressIndicator', $residential);
+
     $toPhone = $address->getTelephone();
     $rsiShipment->setParameter('toPhone', $toPhone);
 
@@ -51,8 +54,10 @@ extends Mage_Core_Helper_Abstract {
     $toCity = $address->getCity();
     $rsiShipment->setParameter('toCity', $toCity);
 
-    $toState = $address->getRegionCode();
-    $rsiShipment->setParameter('toState', $toState);
+    if ($this->shouldSetState($address)) {
+      $toState = $address->getRegionCode();
+      $rsiShipment->setParameter('toState', $toState);
+    }
 
     $toZip = $address->getPostcode();
     $rsiShipment->setParameter('toCode', $toZip);
@@ -61,6 +66,10 @@ extends Mage_Core_Helper_Abstract {
     $rsiShipment->setParameter('toCountry', $toCountry);
 
     return $rsiShipment;
+  }
+
+  public function shouldSetState(Mage_Sales_Model_Order_Address $address) {
+    return true;
   }
 
   function convertImagesToPdf($labelImages) {

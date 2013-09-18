@@ -2,6 +2,20 @@
 class Soularpanic_RocketShipIt_Helper_Shipment_Ups
 extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
+  public function prepareShipment($shipment) {
+    $rsiShipment = parent::prepareShipment($shipment);
+    $rsiShipment = $this->_handleDiacritics($rsiShipment);
+    return $rsiShipment;
+  }
+
+  public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
+    $rsiShipment = parent::asRSIShipment($carrierCode, $address);
+    if (empty($rsiShipment->toCompany)) {
+      $rsiShipment->setParameter('toCompany', $address->getName());
+    }
+    return $rsiShipment;
+  }
+
   public function addCustomsData($mageShipment, $rsiShipment) {
     Mage::log('UPS shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
@@ -32,22 +46,6 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $rsiShipment->setParameter('soldCode', $billingAddr->getPostcode());
     $rsiShipment->setParameter('soldCountry', $billingAddr->getCountryId());
 
-    // $i = 1;
-    // foreach ($mageShipment->getAllItems() as $orderItem) {
-    //   $lineItem = new \RocketShipIt\Customs('ups');
-
-    //   $lineItem->setParameter('invoiceLineNumber', $i);
-    //   $partNo = substr($orderItem->getSku(), 0, 10);
-    //   $lineItem->setParameter('invoiceLinePartNumber', $partNo);
-    //   $lineItem->setParameter('invoiceLineDescription', $orderItem->getName());
-    //   $value = ($order->getPrice()) * ($order->getQty());
-    //   $lineItem->setParameter('invoiceLineValue', $value);
-    //   $lineItem->setParameter('invoiceLineOriginCountryCode', 'CN');
-      
-    //   $rsiShipment->addCustomsLineToShipment($lineItem);
-    //   $i++;
-    // }
-
     $lineItem = new \RocketShipIt\Customs('ups');
     //$lineItem->setParameter('invoiceLineNumber', $orderExtras->getCustomsQty());
     $lineItem->setParameter('invoiceLineNumber', '1');
@@ -63,15 +61,10 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $rsiShipment;
   }
 
-  function _shouldAddMonetaryValue($shippingAddress) {
-    $country = $shippingAddress->getCountryId();
-    return ($country === 'CA'
-	    || $country === 'PR');
+  public function extractTrackingNo($shipmentResponse) {
+    return $shipmentResponse['trk_main'];
   }
 
-  function _formatCustomsDate($dateStr) {
-    return date('Ymd', strtotime($dateStr));
-  }
 
   public function getPackage($shipment) {
     $rsiPackage = new \RocketShipIt\Package('ups');
@@ -86,14 +79,12 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
   }
 
   public function extractShippingLabel($shipmentResponse) {
-    // $rsiTrackNo = $shipmentResponse['trk_main'];
     $labelImg = $shipmentResponse['pkgs'][0]['label_img'];
     $labelResources = array();
     foreach ($shipmentResponse['pkgs'] as $package) {
       $labelResources[] = imagecreatefromstring(base64_decode($package['label_img']));
     }
     $labelPdf = $this->convertImagesToPdf($labelResources);
-    //$labelImgDecoded = base64_decode($labelImg);
     $customsDocs = $shipmentResponse['shipping_docs'];
     if ($customsDocs) {
       $customsPdf = Zend_Pdf::parse(base64_decode($customsDocs));
@@ -101,16 +92,56 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	$labelPdf->pages[] = clone $customsPage;
       }
     }
-      //$customsDocsDecoded = base64_decode($customsDocs);
-      //return $labelImgDecoded;
-      
-      $pdfStr = $labelPdf->render();
-      return $pdfStr;
+    
+    $pdfStr = $labelPdf->render();
+    return $pdfStr;
+  }
+
+  public function shouldSetState(Mage_Sales_Model_Order_Address $address) {
+    $country = $address->getCountry();
+    return ($country === 'US' ||
+	    $country === 'CA' ||
+	    $country === 'AU');
   }
 
   public function getServiceType($shippingMethod) {
     return $shippingMethod['service'];
   }
+
+  function _handleDiacritics($rsiShipment) {
+    $unsupported = array('Č', 'č', 'Ř', 'ř', 'Š', 'š', 'Ž', 'ž', // czech
+			 'Œ', 'œ', 'Ÿ', // french
+			 'İ', 'ı', 'Ğ', 'ğ', 'Ş', 'ş', // turkish
+			 'Ĳ', 'ĳ' // dutch
+			 );
+    $workaround = array('Ch', 'ch', 'Rzh', 'rzh', 'Sh', 'sh', 'Zh', 'zh',
+			'OE', 'oe', 'Y',
+			'I', 'i', 'G', 'g', 'S', 's',
+			'IJ', 'ij'
+			);
+    $maskArr = array(0x80, 0x10ffff, 0, 0xffffff);
+    foreach ($rsiShipment->parameters as $key=>$val) {
+      if (is_null($val) || $val === '') {
+	continue;
+      }
+      $entityVal = str_replace($unsupported, $workaround, $val);
+      //$entityVal = $val;
+      $entityVal = mb_encode_numericentity($entityVal, $maskArr, 'UTF-8');
+      $rsiShipment->setParameter($key, $entityVal);
+    }
+    return $rsiShipment;
+  }
+
+  function _shouldAddMonetaryValue($shippingAddress) {
+    $country = $shippingAddress->getCountryId();
+    return ($country === 'CA'
+	    || $country === 'PR');
+  }
+
+  function _formatCustomsDate($dateStr) {
+    return date('Ymd', strtotime($dateStr));
+  }
+
 
 }
 ?>
