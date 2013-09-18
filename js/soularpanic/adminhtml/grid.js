@@ -20,11 +20,25 @@ var soularpanicGridMassaction = Class.create(foomanGridMassaction || varienGridM
 	    var val = elt.value;
 	    targetArr.push(id + '|' + val);
 	};
-	
+
 	new Insertion.Bottom(this.formAdditional,
 			     this.fieldTemplate.evaluate({
 				 name: 'shipping_override', 
 				 value: shippingOverrides }));
+
+	var shippingServices = [];
+	table.getElementsBySelector('.soularpanic_shippingmethod_addons')
+	    .each(function(s) {
+		if (s.readAttribute('checked') === 'checked') {
+		    var id = s.readAttribute('rel');
+		    shippingServices.push(id + '|' + s.value);
+		}
+	    });
+	    
+	new Insertion.Bottom(this.formAdditional,
+			     this.fieldTemplate.evaluate({
+				 name: 'shipping_services', 
+				 value: shippingServices }));
 
 	var simpleFields = [
 	    {
@@ -60,21 +74,6 @@ var soularpanicGridMassaction = Class.create(foomanGridMassaction || varienGridM
 				     value: simpleField.arr }));
 	    });
 
-	// var shippingAddOns = [];
-	// table.getElementsBySelector(addOnSel).each(addValue(s, shippingAddOns));
-	    
-	// var customsValues = [];
-	// table.getElementsBySelector(customsValSel).each(addValue(s, customsValues));
-
-	// var customsQtys = [];
-	// table.getElementsBySelector(customsQtySel).each(addValue(s, customsQtys));
-	
-	// var customsDescs = [];
-	// table.getElementsBySelector(customsDescSel).each(addValue(s, customsDescs));
-
-	
-
-	
 
 	return $super();
     }

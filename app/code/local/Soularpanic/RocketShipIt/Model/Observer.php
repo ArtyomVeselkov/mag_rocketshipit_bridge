@@ -42,7 +42,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     $track->setNumber($rsiTrackNo);
     $track->setCarrierCode($shipment->getOrder()->getShippingMethod());
     $shipment->addTrack($track);
-    //die('wait');
+    die('wait');
   }
 }
 ?>

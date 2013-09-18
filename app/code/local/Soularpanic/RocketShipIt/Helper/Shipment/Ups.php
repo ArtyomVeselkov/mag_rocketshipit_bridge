@@ -109,12 +109,12 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
   }
 
   function _handleDiacritics($rsiShipment) {
-    $unsupported = array('Č', 'č', 'Ř', 'ř', 'Š', 'š', 'Ž', 'ž', // czech
+    $unsupported = array('Č', 'č', 'Ř', 'ř', 'Š', 'š', 'Ž', 'ž', 'Ć', 'ć',// czech
 			 'Œ', 'œ', 'Ÿ', // french
 			 'İ', 'ı', 'Ğ', 'ğ', 'Ş', 'ş', // turkish
 			 'Ĳ', 'ĳ' // dutch
 			 );
-    $workaround = array('Ch', 'ch', 'Rzh', 'rzh', 'Sh', 'sh', 'Zh', 'zh',
+    $workaround = array('Ch', 'ch', 'Rzh', 'rzh', 'Sh', 'sh', 'Zh', 'zh', 'C', 'c',
 			'OE', 'oe', 'Y',
 			'I', 'i', 'G', 'g', 'S', 's',
 			'IJ', 'ij'
@@ -125,7 +125,6 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	continue;
       }
       $entityVal = str_replace($unsupported, $workaround, $val);
-      //$entityVal = $val;
       $entityVal = mb_encode_numericentity($entityVal, $maskArr, 'UTF-8');
       $rsiShipment->setParameter($key, $entityVal);
     }

@@ -15,6 +15,7 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
     $shippingCustomsVals = $this->_getSimpleField('shipping_customs_value');
     $shippingCustomsQtys = $this->_getSimpleField('shipping_customs_qty');
     $shippingCustomsDesc = $this->_getSimpleField('shipping_customs_desc');
+    $shippingServices = $this->_getSimpleField('shipping_services');
     foreach ($orderIds as $orderId) {
       $order = Mage::getModel('sales/order')->load($orderId);
       if (!($order->canShip())) {
