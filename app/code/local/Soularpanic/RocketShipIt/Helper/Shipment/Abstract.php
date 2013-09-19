@@ -5,6 +5,7 @@ extends Mage_Core_Helper_Abstract {
   abstract function getPackage($shipment);
   abstract function getServiceType($shippingMethod);
   abstract function addCustomsData($mageShipment, $rsiShipment);
+  abstract function needsCustomsData($rsiShipment);
 
   public function prepareShipment($shipment) {
     $order = $shipment->getOrder();
@@ -18,7 +19,7 @@ extends Mage_Core_Helper_Abstract {
     $rsiShipment = $this->asRSIShipment($carrier, $destAddr);
 
     $destCountry = $destAddr->getCountryId();
-    if ($destCountry !== 'US') {
+    if ($this->needsCustomsData($destAddr)) {
       $rsiShipment = $this->addCustomsData($shipment, $rsiShipment);
     }
         

@@ -22,19 +22,21 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
 	continue;
       }
       
-      if ($order->getShippingAddress()->getCountryId() !== 'US') {
-	$customsVal = $shippingCustomsVals[$orderId];
-	$customsQty = $shippingCustomsQtys[$orderId];
-	$customsDesc = $shippingCustomsDesc[$orderId];
-	
-	$orderDetails = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
-	$orderDetails->setOrderId($orderId);
-	$orderDetails->setCustomsDesc($customsDesc);
-	$orderDetails->setCustomsQty($customsQty);
-	$orderDetails->setCustomsValue($customsVal);
+      //if ($order->getShippingAddress()->getCountryId() !== 'US') {
+      $customsVal = $shippingCustomsVals[$orderId];
+      $customsQty = $shippingCustomsQtys[$orderId];
+      $customsDesc = $shippingCustomsDesc[$orderId];
+      $shippingService = $shippingServices[$orderId];
 
-	$orderDetails->save();
-      }
+      $orderDetails = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
+      $orderDetails->setOrderId($orderId);
+      $orderDetails->setCustomsDesc($customsDesc);
+      $orderDetails->setCustomsQty($customsQty);
+      $orderDetails->setCustomsValue($customsVal);
+      $orderDetails->setCarrierServices($shippingService);
+
+      $orderDetails->save();
+      //}
 
       $shippingMethod = $order->getShippingMethod();
       $shippingOverride = $shippingOverrides[$orderId];

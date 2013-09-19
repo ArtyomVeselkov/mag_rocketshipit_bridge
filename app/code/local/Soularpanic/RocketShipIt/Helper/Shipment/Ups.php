@@ -131,6 +131,10 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $rsiShipment;
   }
 
+  public function needsCustomsData($destAddr) {
+    return ($destAddr->getCountryId() !== 'US');
+  }
+
   function _shouldAddMonetaryValue($shippingAddress) {
     $country = $shippingAddress->getCountryId();
     return ($country === 'CA'
