@@ -43,6 +43,16 @@
       </rocketshipit_setup>
     </resources>
 
+    <sales>
+      <quote>
+	<totals>
+	  <rocketshipit>
+	    <class>rocketshipit/sales_quote_address_total_addons</class>
+	  </rocketshipit>
+	</totals>
+      </quote>
+    </sales>
+
     <events>
       <core_block_abstract_prepare_layout_before>
 	<observers>
@@ -53,6 +63,24 @@
 	  </soularpanic_rocketshipit_addmassbutton>
 	</observers>
       </core_block_abstract_prepare_layout_before>
+      <checkout_controller_onepage_save_shipping_method>
+	<observers>
+	  <soularpanic_rocketshipit_add_carrier_addons>
+	    <type>singleton</type>
+	    <class>rocketshipit/observer</class>
+	    <method>addCarrierAddOns</method>
+	  </soularpanic_rocketshipit_add_carrier_addons>
+	</observers>
+      </checkout_controller_onepage_save_shipping_method>
+      <sales_quote_address_collect_totals_before>
+	<observers>
+	  <soularpanic_rocketshipit_address_totals_recalculate>
+	    <type>singleton</type>
+	    <class>rocketshipit/observer</class>
+	    <method>salesQuoteAddressObserver</method>
+	  </soularpanic_rocketshipit_address_totals_recalculate>
+	</observers>
+      </sales_quote_address_collect_totals_before>
       <sales_order_shipment_save_before>
 	<observers>
 	  <!--
@@ -88,6 +116,13 @@
 	  <frontName>rocketshipit</frontName>
 	</args>
       </rocketshipit>
+      <checkout>
+	<args>
+	  <modules>
+	    <rocketshipit before="Mage_Checkout">Soularpanic_RocketShipIt</rocketshipit>
+	  </modules>
+	</args>
+      </checkout>
     </routers>
   </frontend>
 

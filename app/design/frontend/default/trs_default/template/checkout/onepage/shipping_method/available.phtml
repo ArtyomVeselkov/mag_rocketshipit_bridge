@@ -29,7 +29,6 @@
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>
-    <h2>Hi Josh!</h2>
     <dl class="sp-methods">
     <?php $shippingCodePrice = array(); ?>
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
@@ -71,6 +70,25 @@
         </dd>
     <?php endforeach; ?>
     </dl>
+    <dl>
+      <dt>Extra Services</dt>
+      <?php $shippingAddons = array('none' => 0.00, 'sign' => 5.00, 'signAndInsure' => 7.50); ?>
+      <dd>
+	<ul>
+	  <li>
+	    <input name="shipping_addons" type="radio" value="none" id="shipping_addons_none" checked="checked" />
+	    <label for="shipping_addons_none">None $<?php echo($shippingAddons['none']); ?></label>
+	  </li>
+	  <li>
+	    <input name="shipping_addons" type="radio" value="sign" id="shipping_addons_sign" />
+	    <label for=shipping_addons_sign">Require Signature $<?php echo($shippingAddons['sign']); ?></label>
+	  </li>
+	  <li>
+	    <input name="shipping_addons" type="radio" value="signAndInsure" id="shipping_addons_signAndInsure" />
+	    <label fore="shipping_addons_signAndInsure">Require Signature &amp; Insure Shipment $<?php echo($shippingAddons['signAndInsure']); ?></label>
+	  </li>
+	</ul>
+    </dl>
 <script type="text/javascript">
 //<![CDATA[
     <?php if (!empty($shippingCodePrice)): ?>
@@ -90,6 +108,29 @@
                     if (newPrice != lastPrice) {
                         quoteBaseGrandTotal += (newPrice-lastPrice);
                         lastPrice = newPrice;
+                    }
+                <?php endif; ?>
+                checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+                return false;
+            }
+       });
+    });
+
+ var shippingAddonsPrice = {};
+ <?php foreach($shippingAddons as $key => $val) { echo("shippingAddonsPrice['$key'] = $val;"); } ?>
+ $$('input[type="radio"][name="shipping_addons"]').each(function(el){
+        Event.observe(el, 'click', function(){
+            if (el.checked == true) {
+                var shippingAddonCode = el.getValue();
+                <?php if (!empty($shippingAddons)): ?>
+                    var newAddonPrice = shippingAddonsPrice[shippingAddonCode];
+                    if (!lastAddonPrice) {
+                        lastAddonPrice = newAddonPrice;
+                        quoteBaseGrandTotal += newAddonPrice;
+                    }
+                    if (newAddonPrice != lastAddonPrice) {
+                        quoteBaseGrandTotal += (newAddonPrice-lastAddonPrice);
+                        lastAddonPrice = newAddonPrice;
                     }
                 <?php endif; ?>
                 checkQuoteBaseGrandTotal = quoteBaseGrandTotal;

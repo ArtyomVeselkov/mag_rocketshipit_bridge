@@ -44,5 +44,30 @@ class Soularpanic_RocketShipIt_Model_Observer
     $shipment->addTrack($track);
     //die('wait');
   }
+
+  public function addCarrierAddOns(Varien_Event_Observer $observer) {
+    Mage::log('rocketshipit observer firing - addCarrierAddOns', null, 'rocketshipit_shipments.log');
+    $quote = $observer->getEvent()->getQuote(); //Mage_Sales_Model_Quote
+    $request = $observer->getEvent()->getRequest();
+    $addOnCode = $request->getPost('shipping_addons', '');
+    $shippingAddr = $quote->getShippingAddress();
+    $price = 0.0;
+    if ($addOnCode === 'sign') { $price = 5.0; }
+    elseif ($addOnCode === 'signAndInsure') { $price = 7.5; }
+    $shippingAddr->setHandlingAmount($price);
+    $shippingAddr->setHandlingCode($addOnCode);
+    
+    //$shippingAddr->save();
+    // $quote->setShippingAddress($shippingAddr);
+    // $quote->save();
+    // $shippingAddr->save();
+    //Mage::log("quote: ".print_r($quote, true), null, 'rocketshipit_shipments.log');
+  }
+
+  public function salesQuoteAddressObserver(Varien_Event_Observer $observer) {
+    Mage::log('quote address being recalculated',
+	      null, 'rocketshipit_shipments.log');
+  }
+
 }
 ?>
