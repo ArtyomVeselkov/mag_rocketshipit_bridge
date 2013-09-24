@@ -23,6 +23,9 @@ $installer->run("
     ADD `customs_desc` text DEFAULT NULL,
     ADD `customs_qty` decimal(12,4) DEFAULT NULL,
     ADD `customs_value` decimal(12,4) DEFAULT NULL;
+
+  ALTER TABLE `{$installer->getTable('sales/shipment')}`
+    ADD `rocketshipit_id` varchar(255) DEFAULT NULL;
 ");
 $installer->endSetup();
 ?>

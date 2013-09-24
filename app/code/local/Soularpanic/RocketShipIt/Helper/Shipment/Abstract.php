@@ -7,6 +7,10 @@ extends Mage_Core_Helper_Abstract {
   abstract function addCustomsData($mageShipment, $rsiShipment);
   abstract function needsCustomsData($rsiShipment);
 
+  abstract function extractRocketshipitId($shipmentResponse);
+  abstract function extractTrackingNo($shipmentResponse);
+  abstract function extractShippingLabel($shipmentResponse);
+
   public function prepareShipment($shipment) {
     $order = $shipment->getOrder();
     $destAddr = $shipment->getShippingAddress();

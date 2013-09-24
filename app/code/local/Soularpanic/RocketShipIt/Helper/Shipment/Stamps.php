@@ -6,21 +6,23 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     Mage::log('Stamps shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
 
-    $orderId = $mageShipment->getOrder()->getId();
-    $orderData = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
+    // $orderId = $mageShipment->getOrder()->getId();
+    // $orderData = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
+    $order = $mageShipment->getOrder();
 
     $customs = new \RocketShipIt\Customs('stamps');
     
-    $weight = $mageShipment->getOrder()->getWeight();
+    // $weight = $mageShipment->getOrder()->getWeight();
+    $weight = $order->getWeight();
     $customs->setParameter('customsWeight', $weight);
 
-    $qty = $orderData->getCustomsQty();
+    $qty = $order->getCustomsQty();
     $customs->setParameter('customsQuantity', $qty);
     
-    $value = $orderData->getCustomsValue();
+    $value = $order->getCustomsValue();
     $customs->setParameter('customsValue', $value);
 
-    $desc = $orderData->getCustomsDesc();
+    $desc = $order->getCustomsDesc();
     $customs->setParameter('customsDescription', $desc);
     $rsiShipment->setParameter('customsOtherDescribe', $desc);
 
@@ -46,7 +48,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
     $destAddr = $shipment->getShippingAddress();
     $order = $shipment->getOrder();
-    $orderData = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
+    //$orderData = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
     $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
 
     $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
@@ -54,7 +56,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
       $stampsRate->setParameter('weightPounds', $order->getWeight());
     }
     if ($destAddr->getCountryId() !== 'US') {
-      $stampsRate->setParameter('declaredValue', $orderData->getCustomsValue());
+      $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
     }
     $stampsResp = $stampsRate->getAllRates();
     $stampsRates = $stampsResp->Rates->Rate;
@@ -63,7 +65,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $serviceType = $serviceArr['serviceType'];
     $packageType = $serviceArr['packageType'];
     
-    $addOns = $this->_getAddOns($orderData->getCarrierServices(),
+    $addOns = $this->_getAddOns($order->getHandlingCode(),
 				$serviceType,
 				$destAddr);
 
@@ -91,6 +93,10 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
   public function extractTrackingNo($shipmentResponse) {
     return $shipmentResponse->TrackingNumber;
+  }
+
+  public function extractRocketshipitId($shipmentResponse) {
+    return $shipmentResponse->StampsTxID;
   }
 
   function _carrierRequiresDeliveryConfirmation($carrierCode) {

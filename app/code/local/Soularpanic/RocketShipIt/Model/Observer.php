@@ -42,6 +42,9 @@ class Soularpanic_RocketShipIt_Model_Observer
     $track->setNumber($rsiTrackNo);
     $track->setCarrierCode($shipment->getOrder()->getShippingMethod());
     $shipment->addTrack($track);
+
+    $rsiId = $shipmentHelper->extractRocketshipitId($label);
+    $shipment->setRocketshipitId($rsiId);
     //die('wait');
   }
 
@@ -56,17 +59,6 @@ class Soularpanic_RocketShipIt_Model_Observer
     elseif ($addOnCode === 'signAndInsure') { $price = 7.5; }
     $shippingAddr->setHandlingAmount($price);
     $shippingAddr->setHandlingCode($addOnCode);
-    
-    //$shippingAddr->save();
-    // $quote->setShippingAddress($shippingAddr);
-    // $quote->save();
-    // $shippingAddr->save();
-    //Mage::log("quote: ".print_r($quote, true), null, 'rocketshipit_shipments.log');
-  }
-
-  public function salesQuoteAddressObserver(Varien_Event_Observer $observer) {
-    Mage::log('quote address being recalculated',
-	      null, 'rocketshipit_shipments.log');
   }
 
 }

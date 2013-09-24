@@ -27,12 +27,10 @@ var soularpanicGridMassaction = Class.create(foomanGridMassaction || varienGridM
 				 value: shippingOverrides }));
 
 	var shippingServices = [];
-	table.getElementsBySelector('.soularpanic_shippingmethod_addons')
+	$$('.soularpanic_shippingmethod_addons:checked')
 	    .each(function(s) {
-		if (s.readAttribute('checked') === 'checked') {
-		    var id = s.readAttribute('rel');
-		    shippingServices.push(id + '|' + s.value);
-		}
+		var id = s.readAttribute('rel');
+		shippingServices.push(id + '|' + s.value);
 	    });
 	    
 	new Insertion.Bottom(this.formAdditional,
@@ -41,11 +39,6 @@ var soularpanicGridMassaction = Class.create(foomanGridMassaction || varienGridM
 				 value: shippingServices }));
 
 	var simpleFields = [
-	    {
-		arr: [],
-		selector: '.soularpanic_shippingmethod_addons',
-		postName: 'shipping_addOns'
-	    },
 	    {
 		arr: [],
 		selector: '.soularpanic_shippingmethod_customs_value',

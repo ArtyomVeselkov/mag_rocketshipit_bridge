@@ -20,7 +20,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     Mage::log('UPS shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
     $order = $mageShipment->getOrder();
-    $orderExtras = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
+    //$orderExtras = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
     $shippingAddr = $order->getShippingAddress();
     $billingAddr = $order->getBillingAddress();
 
@@ -30,7 +30,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $invoiceDate = $this->_formatCustomsDate($order->getCreatedAt());
     $rsiShipment->setParameter('invoiceDate', $invoiceDate);
     if ($this->_shouldAddMonetaryValue($shippingAddr)) {
-      $rsiShipment->setParameter('monetaryValue', intval($orderExtras->getCustomsValue()));
+      $rsiShipment->setParameter('monetaryValue', intval($order->getCustomsValue()));
     }
     
 
@@ -47,13 +47,10 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $rsiShipment->setParameter('soldCountry', $billingAddr->getCountryId());
 
     $lineItem = new \RocketShipIt\Customs('ups');
-    //$lineItem->setParameter('invoiceLineNumber', $orderExtras->getCustomsQty());
     $lineItem->setParameter('invoiceLineNumber', '1');
-    //$partNo = substr($orderItem->getSku(), 0, 10);
     $lineItem->setParameter('invoiceLinePartNumber', '2');
-    $lineItem->setParameter('invoiceLineDescription', $orderExtras->getCustomsDesc());
-    //$unitVal = $orderExtras->getCustomsValue() / $orderExtras->getCustomsQty();
-    $lineItem->setParameter('invoiceLineValue', $orderExtras->getCustomsValue());
+    $lineItem->setParameter('invoiceLineDescription', $order->getCustomsDesc());
+    $lineItem->setParameter('invoiceLineValue', $order->getCustomsValue());
     $lineItem->setParameter('invoiceLineOriginCountryCode', 'CN');
     
     $rsiShipment->addCustomsLineToShipment($lineItem);
@@ -65,6 +62,9 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $shipmentResponse['trk_main'];
   }
 
+  public function extractRocketshipitId($shipmentResponse) {
+    return $shipmentResponse['trk_main'];
+  }
 
   public function getPackage($shipment) {
     $rsiPackage = new \RocketShipIt\Package('ups');

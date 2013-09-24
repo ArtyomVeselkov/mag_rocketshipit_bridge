@@ -9,10 +9,15 @@ class Soularpanic_MassRocketShipIt_Model_Observer {
     $select = $collection->getSelect();
     $select->joinLeft(array('flat_order'=>$collection->getTable('sales/order')),
 		      'flat_order.entity_id=main_table.entity_id',
-		      array('shipping_method'=>'shipping_method',
-			    'shipping_weight'=>'weight',
-			    'subtotal'=>'subtotal',
-			    'quantity'=>'total_qty_ordered'));
+		      array('shipping_method' => 'shipping_method',
+			    'shipping_weight' => 'weight',
+			    'subtotal'        => 'subtotal',
+			    'quantity'        => 'total_qty_ordered',
+			    'handling_amount' => 'handling_amount',
+			    'handling_code'   => 'handling_code',
+			    'customs_desc'    => 'customs_desc',
+			    'customs_qty'     => 'customs_qty',
+			    'customs_value'   => 'customs_value'));
   }
 
   public function changeGridJSObject($observer) {

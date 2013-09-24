@@ -15,14 +15,14 @@
 	<class>Soularpanic_RocketShipIt_Model</class>
 	<resourceModel>rocketshipit_resource</resourceModel>
       </rocketshipit>
-      <rocketshipit_resource>
-	<class>Soularpanic_RocketShipIt_Model_Resource</class>
-	<entities>
-	  <orderExtras>
-	    <table>rocketshipit_order_details</table>
-	  </orderExtras>
-	</entities>
-      </rocketshipit_resource>
+      <!-- <rocketshipit_resource> -->
+      <!-- 	<class>Soularpanic_RocketShipIt_Model_Resource</class> -->
+      <!-- 	<entities> -->
+      <!-- 	  <orderExtras> -->
+      <!-- 	    <table>rocketshipit_order_details</table> -->
+      <!-- 	  </orderExtras> -->
+      <!-- 	</entities> -->
+      <!-- </rocketshipit_resource> -->
     </models>
 
     <helpers>
@@ -30,7 +30,7 @@
 	<class>Soularpanic_RocketShipIt_Helper</class>
       </rocketshipit>
     </helpers>
-    
+
     <resources>
       <rocketshipit_setup>
 	<setup>
@@ -42,6 +42,25 @@
 	</connection>
       </rocketshipit_setup>
     </resources>
+
+    <blocks>
+      <adminhtml>
+	<rewrite>
+	  <sales_order_shipment_view>Soularpanic_RocketShipIt_Block_Sales_Order_Shipment_View</sales_order_shipment_view>
+	</rewrite>
+      </adminhtml>
+    </blocks>
+
+    <fieldsets>
+      <sales_convert_quote_address>
+	<handling_amount>
+	  <to_order>*</to_order>
+	</handling_amount>
+	<handling_code>
+	  <to_order>*</to_order>
+	</handling_code>
+      </sales_convert_quote_address>
+    </fieldsets>
 
     <sales>
       <quote>
@@ -72,15 +91,6 @@
 	  </soularpanic_rocketshipit_add_carrier_addons>
 	</observers>
       </checkout_controller_onepage_save_shipping_method>
-      <sales_quote_address_collect_totals_before>
-	<observers>
-	  <soularpanic_rocketshipit_address_totals_recalculate>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>salesQuoteAddressObserver</method>
-	  </soularpanic_rocketshipit_address_totals_recalculate>
-	</observers>
-      </sales_quote_address_collect_totals_before>
       <sales_order_shipment_save_before>
 	<observers>
 	  <!--
@@ -107,6 +117,19 @@
     </events>
   </global>
 
+  <admin>
+    <routers>
+      <adminhtml>
+	<use>admin</use>
+	<args>
+	  <modules>
+	    <rocketshipit after="Mage_Adminhtml">Soularpanic_RocketShipIt</rocketshipit>
+	  </modules>
+	</args>
+      </adminhtml>
+    </routers>
+  </admin>
+
   <frontend>
     <routers>
       <rocketshipit>
@@ -125,6 +148,21 @@
       </checkout>
     </routers>
   </frontend>
+
+  <!-- Need this if I want to change backend .phtmls -->
+  <!-- <stores> -->
+  <!--   <admin> -->
+  <!--     <design> -->
+  <!-- 	<package> -->
+  <!-- 	  <name>default</name> -->
+  <!-- 	</package> -->
+  <!-- 	<theme> -->
+  <!-- 	  <default>trs_default</default> -->
+  <!-- 	</theme> -->
+  <!--     </design> -->
+  <!--   </admin> -->
+  <!-- </stores> -->
+	
 
   <default>
     <carriers>
