@@ -8,7 +8,7 @@ extends Mage_Adminhtml_Block_Sales_Order_Shipment_View {
 			array('shipmentId' => $this->getShipment()->getId()));
     $this->_addButton('cancel', array(
       'label' => 'Cancel Shipment',
-      'class' => 'save',
+      'class' => 'delete',
       'onclick' => "setLocation('$url')"
     ));
   }
