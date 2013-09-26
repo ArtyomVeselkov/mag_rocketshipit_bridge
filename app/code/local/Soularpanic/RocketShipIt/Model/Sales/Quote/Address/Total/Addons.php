@@ -23,13 +23,14 @@ extends Mage_Sales_Model_Quote_Address_Total_Shipping {
     $quote = $address->getQuote();
     
     $currentAmount = $address->getHandlingAmount();
-    $balance = $price - $currentAmount;
-    $initialAmount = $address->getShippingAmount();
-    $this->_setAmount($initialAmount + $price);
+    //$balance = $price - $currentAmount;
+    //$initialAmount = $address->getShippingAmount();
+    $this->_setAmount($address->getShippingAmount() + $price);
+    $this->_setBaseAmount($address->getBaseShippingAmount() + $price);
     $address->setHandlingAmount($price);
 
-    $address->setGrandTotal($address->getGrandTotal() + $price);
-    $address->setBaseGrandTotal($address->getBaseGrandTotal() + $price);
+    // $address->setGrandTotal($address->getGrandTotal() + $price);
+    // $address->setBaseGrandTotal($address->getBaseGrandTotal() + $price);
 
   }
 
