@@ -17,7 +17,7 @@
       </rocketshipit>
       <sales>
 	<rewrite>
-	  <quote_address_total_shipping>Soularpanic_RocketShipIt_Model_Sales_Quote_Address_Total_Addons</quote_address_total_shipping>
+	  <quote_address_total_shipping>Soularpanic_RocketShipIt_Model_Sales_Quote_Address_Total_ShippingAndHandling</quote_address_total_shipping>
 	</rewrite>
       </sales>
     </models>
