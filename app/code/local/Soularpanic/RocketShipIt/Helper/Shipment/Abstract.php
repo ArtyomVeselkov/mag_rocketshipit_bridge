@@ -22,7 +22,7 @@ extends Mage_Core_Helper_Abstract {
 
     $rsiShipment = $this->asRSIShipment($carrier, $destAddr);
 
-    $destCountry = $destAddr->getCountryId();
+    //$destCountry = $destAddr->getCountryId();
     if ($this->needsCustomsData($destAddr)) {
       $rsiShipment = $this->addCustomsData($shipment, $rsiShipment);
     }

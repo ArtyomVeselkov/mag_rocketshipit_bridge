@@ -42,7 +42,7 @@ extends Mage_Adminhtml_Controller_Action {
       return;
     }
 
-    $deleteMsg = sprintf("Deleted %s shipment with ID of %s",
+    $deleteMsg = sprintf("Deleted %s shipment with ID of [%s]",
 			 $carrier, $voidCode);
     $this->deleteShipment($shipment, $deleteMsg);
 

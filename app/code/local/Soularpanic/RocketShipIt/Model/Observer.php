@@ -3,8 +3,6 @@ class Soularpanic_RocketShipIt_Model_Observer
 {
   protected $_code = 'rocketshipit';
 
-  function __construct() { }
-
   public function trackAndLabel(Varien_Event_Observer $observer)
   {
     Mage::log('rocketshipit observer firing',
@@ -23,7 +21,13 @@ class Soularpanic_RocketShipIt_Model_Observer
     $shipmentHelper = Mage::helper('rocketshipit/shipment_'.$carrier);
     $rsiShipment = $shipmentHelper->prepareShipment($shipment);
     
-    $label = $rsiShipment->submitShipment();
+    try {
+      $label = $rsiShipment->submitShipment();
+    }
+    catch (Exception $e) {
+      $dataHelper->log("RSI shipment submission error!\n".$rsiShipment->debug());
+      throw $e;
+    }
     
     Mage::log('rocketshipit observer generated label: '.print_r($label,true),
 	      null,

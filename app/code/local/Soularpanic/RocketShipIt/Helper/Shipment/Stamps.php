@@ -52,12 +52,17 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
 
     $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
-    if ($stampsRate->weightPounds == '') {
+    if ($this->needsCustomsData($destAddr)) {
       $stampsRate->setParameter('weightPounds', $order->getWeight());
-    }
-    if ($destAddr->getCountryId() !== 'US') {
       $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
     }
+    // if ($stampsRate->weightPounds == '') {
+    //   $stampsRate->setParameter('weight', $order->getWeight());
+    //   $stampsRate->setParameter('weightPounds', $order->getWeight());
+    // }
+    // if ($destAddr->getCountryId() !== 'US') {
+    //   $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
+    // }
     $stampsResp = $stampsRate->getAllRates();
     $stampsRates = $stampsResp->Rates->Rate;
 
