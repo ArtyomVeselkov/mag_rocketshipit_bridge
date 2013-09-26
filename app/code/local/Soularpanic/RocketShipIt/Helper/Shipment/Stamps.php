@@ -48,7 +48,6 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
     $destAddr = $shipment->getShippingAddress();
     $order = $shipment->getOrder();
-    //$orderData = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
     $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
 
     $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
@@ -56,13 +55,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
       $stampsRate->setParameter('weightPounds', $order->getWeight());
       $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
     }
-    // if ($stampsRate->weightPounds == '') {
-    //   $stampsRate->setParameter('weight', $order->getWeight());
-    //   $stampsRate->setParameter('weightPounds', $order->getWeight());
-    // }
-    // if ($destAddr->getCountryId() !== 'US') {
-    //   $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
-    // }
+    
     $stampsResp = $stampsRate->getAllRates();
     $stampsRates = $stampsResp->Rates->Rate;
 
@@ -150,9 +143,10 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     }
 
     if ($carrierAddOnCode === 'signAndInsure') {
-      $insure = new \stdClass();
-      $insure->AddOnType = 'SC-A-INS';
-      $addOns[] = $insure;
+      // TODO - we currently self-insure; this should be configurable
+      // $insure = new \stdClass();
+      // $insure->AddOnType = 'SC-A-INS';
+      // $addOns[] = $insure;
 
       $sign = new \stdClass();
       $sign->AddOnType = 'US-A-SC';

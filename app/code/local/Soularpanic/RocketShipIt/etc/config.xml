@@ -15,14 +15,11 @@
 	<class>Soularpanic_RocketShipIt_Model</class>
 	<resourceModel>rocketshipit_resource</resourceModel>
       </rocketshipit>
-      <!-- <rocketshipit_resource> -->
-      <!-- 	<class>Soularpanic_RocketShipIt_Model_Resource</class> -->
-      <!-- 	<entities> -->
-      <!-- 	  <orderExtras> -->
-      <!-- 	    <table>rocketshipit_order_details</table> -->
-      <!-- 	  </orderExtras> -->
-      <!-- 	</entities> -->
-      <!-- </rocketshipit_resource> -->
+      <sales>
+	<rewrite>
+	  <quote_address_total_shipping>Soularpanic_RocketShipIt_Model_Sales_Quote_Address_Total_Addons</quote_address_total_shipping>
+	</rewrite>
+      </sales>
     </models>
 
     <helpers>
@@ -62,15 +59,17 @@
       </sales_convert_quote_address>
     </fieldsets>
 
-    <sales>
-      <quote>
-	<totals>
-	  <rocketshipit>
-	    <class>rocketshipit/sales_quote_address_total_addons</class>
-	  </rocketshipit>
-	</totals>
-      </quote>
-    </sales>
+    <!-- <sales> -->
+    <!--   <quote> -->
+    <!-- 	<totals> -->
+    <!-- 	  <rocketshipit> -->
+    <!-- 	    <class>rocketshipit/sales_quote_address_total_addons</class> -->
+    <!-- 	    <after>shipping</after> -->
+    <!-- 	    <before>grand_total</before> -->
+    <!-- 	  </rocketshipit> -->
+    <!-- 	</totals> -->
+    <!--   </quote> -->
+    <!-- </sales> -->
 
     <events>
       <core_block_abstract_prepare_layout_before>
