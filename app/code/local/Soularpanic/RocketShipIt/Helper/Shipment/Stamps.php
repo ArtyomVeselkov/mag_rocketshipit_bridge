@@ -6,13 +6,10 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     Mage::log('Stamps shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
 
-    // $orderId = $mageShipment->getOrder()->getId();
-    // $orderData = Mage::getModel('rocketshipit/orderExtras')->load($orderId);
     $order = $mageShipment->getOrder();
 
     $customs = new \RocketShipIt\Customs('stamps');
     
-    // $weight = $mageShipment->getOrder()->getWeight();
     $weight = $order->getWeight();
     $customs->setParameter('customsWeight', $weight);
 
@@ -63,16 +60,19 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $serviceType = $serviceArr['serviceType'];
     $packageType = $serviceArr['packageType'];
     
-    $addOns = $this->_getAddOns($order->getHandlingCode(),
-				$serviceType,
-				$destAddr);
+    // $addOns = $this->_getAddOns($order->getHandlingCode(),
+    // 				$serviceType,
+    // 				$destAddr);
+    $addOns = $this->_getAddOns($shipment,
+				$order->getHandlingCode(),
+				$serviceType);
 
     foreach ($stampsRates as $stampsRate) {
       if ($stampsRate->ServiceType === $serviceType
 	  && $stampsRate->PackageType === $packageType) {
 	$rsiPackage = $stampsRate;
-	$rsiPackage->AddOns = null;
 	$rsiPackage->AddOns = $addOns;
+	break;
       }
     }
     return $rsiPackage;
@@ -103,6 +103,12 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	    $carrierCode != 'US-EMI');
   }
   
+  function _carrierAllowsDeliverySignature($carrierCode) {
+    return !($carrierCode === 'US-PMI' ||
+	     $carrierCode === 'US-FCI' ||
+	     $carrierCode === 'US-EMI');
+  }
+
   function _fetchLabelImages($labelUrls) {
     $labelResources = array();
     foreach ($labelUrls as $labelUrl) {
@@ -131,9 +137,11 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 		 'packageType' => $packageType);
   }
 
-  function _getAddOns($carrierAddOnCode, $carrierCode, $destAddr) {
+  //function _getAddOns($handlingCode, $carrierCode, $destAddr) {
+  function _getAddOns($shipment, $handlingCode, $carrierCode) {
+    $destAddr = $shipment->getShippingAddress();
     $needDeliveryConfirmation = $this->_carrierRequiresDeliveryConfirmation($carrierCode);
-
+  
     $addOns = array();
 
     if ($destAddr->getCountryId() === 'US') {
@@ -142,20 +150,23 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
       $addOns[] = $hiddenPostage;
     }
 
-    if ($carrierAddOnCode === 'signAndInsure') {
-      // TODO - we currently self-insure; this should be configurable
-      // $insure = new \stdClass();
-      // $insure->AddOnType = 'SC-A-INS';
-      // $addOns[] = $insure;
+    if ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN_AND_INSURE) 
+    {
+      if (Mage::getStoreConfig('carrier/rocketshipit_global/insurance_use_carrier')) 
+      {
+	$insure = new \stdClass();
+	$insure->AddOnType = 'SC-A-INS';
+	$addOns[] = $insure;
+      }
 
-      $sign = new \stdClass();
-      $sign->AddOnType = 'US-A-SC';
-      $addOns[] = $sign;
+      $addOns = $this->_handleSignatureAddOn($addOns, $carrierCode, $destAddr);
+      // $sign = new \stdClass();
+      // $sign->AddOnType = 'US-A-SC';
+      // $addOns[] = $sign;
     }
-    elseif ($carrierAddOnCode === 'sign') {
-      $sign = new \stdClass();
-      $sign->AddOnType = 'US-A-SC';
-      $addOns[] = $sign;
+    elseif ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN) {
+      $order = $shipment->getOrder();
+      $addOns = $this->_handleSignatureAddOn($addOns, $carrierCode, $order);
     }
     else {
       if ($needDeliveryConfirmation) {
@@ -170,6 +181,21 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
       }
     }
     
+    return $addOns;
+  }
+
+  function _handleSignatureAddOn($addOns, $carrierCode, $order) {
+    $allowsDeliverySignature = $this->_carrierAllowsDeliverySignature($carrierCode);
+    if ($allowsDeliverySignature) {
+      $sign = new \stdClass();
+      $sign->AddOnType = 'US-A-SC';
+      $addOns[] = $sign;
+    }
+    else {
+      $orderId = $order->getIncrementId();
+      $session = Mage::getSingleton('adminhtml/session');
+      $session->addWarning("Signature service was request for order $orderId, but is not available to the destination address.  It has not been added.");
+    }
     return $addOns;
   }
 

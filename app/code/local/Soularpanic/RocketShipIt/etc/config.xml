@@ -149,22 +149,27 @@
   </frontend>
 
   <!-- Need this if I want to change backend .phtmls -->
-  <!-- <stores> -->
-  <!--   <admin> -->
-  <!--     <design> -->
-  <!-- 	<package> -->
-  <!-- 	  <name>default</name> -->
-  <!-- 	</package> -->
-  <!-- 	<theme> -->
-  <!-- 	  <default>trs_default</default> -->
-  <!-- 	</theme> -->
-  <!--     </design> -->
-  <!--   </admin> -->
-  <!-- </stores> -->
-	
+  <stores>
+    <admin>
+      <design>
+  	<package>
+  	  <name>default</name>
+  	</package>
+  	<theme>
+  	  <default>trs_default</default>
+  	</theme>
+      </design>
+    </admin>
+  </stores>
 
   <default>
     <carriers>
+      <rocketshipit_global>
+	<handling_checkout_header>Shipping Options</handling_checkout_header>
+	<none_display>None</none_display>
+	<signature_display>Require Signature</signature_display>
+	<signAndInsure_display>Require Signature &amp; Insure Shipment</signAndInsure_display>
+      </rocketshipit_global>
       <rocketshipit_ups>
 	<model>rocketshipit/carrier_ups</model>
       </rocketshipit_ups>

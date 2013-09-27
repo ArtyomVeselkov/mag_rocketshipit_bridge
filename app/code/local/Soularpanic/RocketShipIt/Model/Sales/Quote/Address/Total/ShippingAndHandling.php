@@ -11,10 +11,12 @@ extends Mage_Sales_Model_Quote_Address_Total_Shipping {
     }
 
 
-    $addOnCode = $address->getHandlingCode();
-    $price = 0.0;
-    if ($addOnCode === 'sign') { $price = 5.0; }
-    elseif ($addOnCode === 'signAndInsure') { $price = 7.5; }
+    // $addOnCode = $address->getHandlingCode();
+    // $price = 0.0;
+    // if ($addOnCode === 'sign') { $price = 5.0; }
+    // elseif ($addOnCode === 'signAndInsure') { $price = 7.5; }
+    $handlingHelper = Mage::helper('rocketshipit/handling');
+    $price = $handlingHelper->calculateHandling($address);
 
     $quote = $address->getQuote();
     

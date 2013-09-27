@@ -20,7 +20,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     Mage::log('UPS shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
     $order = $mageShipment->getOrder();
-    //$orderExtras = Mage::getModel('rocketshipit/orderExtras')->load($order->getId());
+
     $shippingAddr = $order->getShippingAddress();
     $billingAddr = $order->getBillingAddress();
 
@@ -32,8 +32,6 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     if ($this->_shouldAddMonetaryValue($shippingAddr)) {
       $rsiShipment->setParameter('monetaryValue', intval($order->getCustomsValue()));
     }
-    
-
 
     $rsiShipment->setParameter('soldCompany', $billingAddr->getCompany());
     $rsiShipment->setParameter('soldName', $billingAddr->getName());
@@ -72,8 +70,23 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $rsiPackage->setParameter('width','6');
     $rsiPackage->setParameter('height','6');
     
-    $weight = $shipment->getOrder()->getWeight();
+    $order = $shipment->getOrder();
+    $weight = $order->getWeight();
     $rsiPackage->setParameter('weight', $weight);
+    
+    $handlingCode = $order->getHandlingCode();
+    if ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN_AND_INSURE)
+    {
+      if (Mage::getStoreConfig('carrier/rocketshipit_global/insurance_use_carrier')) {
+	$rsiPackage->setParameter('insuredCurrency', 'USD');
+	$rsiPackage->setParameter('monetaryValue', $order->getSubtotal());
+      }
+
+      $rsiPackage = $this->_addSignatureService($rsiPackage, $shipment);
+    }
+    elseif ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN) {
+      $rsiPackage = $this->_addSignatureService($rsiPackage, $shipment);
+    }
 
     return $rsiPackage;
   }
@@ -97,6 +110,11 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $pdfStr;
   }
 
+  public function isSignedDeliveryAvailable(Mage_Sales_Model_Order_Address $address) {
+    $country = $address->getCountry();
+    return ($country === 'US' || $country === 'CA');
+  }
+
   public function shouldSetState(Mage_Sales_Model_Order_Address $address) {
     $country = $address->getCountry();
     return ($country === 'US' ||
@@ -106,6 +124,20 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
   public function getServiceType($shippingMethod) {
     return $shippingMethod['service'];
+  }
+
+  function _addSignatureService($rsiPackage, 
+				$shipment) {
+    $address = $shipment->getShippingAddress();
+    if ($this->isSignedDeliveryAvailable($address)) {
+      $rsiPackage->setParameter('signatureType', '2');
+    }
+    else {
+      $orderId = $shipment->getOrder()->getIncrementId();
+      $session = Mage::getSingleton('adminhtml/session');
+      $session->addWarning("Signature service was request for order $orderId, but is not available to the destination address.  It has not been added.");
+    }
+    return $rsiPackage;
   }
 
   function _handleDiacritics($rsiShipment) {
