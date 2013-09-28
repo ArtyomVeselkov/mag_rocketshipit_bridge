@@ -6,6 +6,8 @@ implements Mage_Shipping_Model_Carrier_Interface
 {
   protected $_superCode = 'rocketshipit';
 
+  abstract public function getCarrierSubCode();
+
   public function collectRates(Mage_Shipping_Model_Rate_Request $request)
   {
     if(!Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/active')) {
@@ -17,12 +19,14 @@ implements Mage_Shipping_Model_Carrier_Interface
     $handling = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/handling');
 
     $helper = Mage::helper('rocketshipit/rates');
+    $rateMask = $this->getAllowedRateMask();
 
     $simpleRates = $helper->getSimpleRates($carrierCode,
 					   $request,
 					   $useNegotiatedRate,
 					   null,
-					   $handling);
+					   $handling,
+					   $rateMask);
     
     return $simpleRates;
   }
@@ -36,6 +40,31 @@ implements Mage_Shipping_Model_Carrier_Interface
     return $this->_superCode.'_'.$this->getCarrierSubCode();
   }
 
-  abstract public function getCarrierSubCode();
+  function getAllowedRateMask() {
+    $filterConfigAttr = $this->_getFilterConfigAttr();
+    if ($filterConfigAttr === null) {
+      return null;
+    }
+
+    $allowedRateCodesStr = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/'.$filterConfigAttr);
+    if (empty($allowedRateCodesStr)) {
+      return null;
+    }
+
+    $allowedRateCodes = explode(',', $allowedRateCodesStr);
+    return $allowedRateCodes;
+  }
+
+  function _getFilterConfigAttr() {
+    $currentUrl = Mage::helper('core/url')->getCurrentUrl();
+    $filterConfigAttr = null;
+    if (strpos($currentUrl, 'checkout') !== false) {
+      $filterConfigAttr = 'checkout_filter';
+    }
+    elseif (strpos($currentUrl, 'admin') !== false) {
+      $filterConfigAttr = 'admin_filter';
+    }
+    return $filterConfigAttr;
+  }
 }
 ?>

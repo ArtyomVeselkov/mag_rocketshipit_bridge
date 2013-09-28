@@ -11,39 +11,17 @@ implements Mage_Shipping_Model_Carrier_Interface
   
   public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
     $rates = parent::collectRates($request);
-    $allowedRateCodes = $this->_getAllowedRateCodes();
-    if ($allowedRateCodes != null) {
-      $filteredRates = Mage::getModel('shipping/rate_result');
-      foreach ($rates->getAllRates() as $rate) {
-	if (in_array($rate->getMethod(), $allowedRateCodes)) {
-	  $filteredRates->append($rate);
-	}
-      }
-      return $filteredRates;
-    }
+    // $allowedRateCodes = $this->_getAllowedRateCodes();
+    // if ($allowedRateCodes != null) {
+    //   $filteredRates = Mage::getModel('shipping/rate_result');
+    //   foreach ($rates->getAllRates() as $rate) {
+    // 	if (in_array($rate->getMethod(), $allowedRateCodes)) {
+    // 	  $filteredRates->append($rate);
+    // 	}
+    //   }
+    //   return $filteredRates;
+    // }
     return $rates;
-  }
-
-  function _getFilterConfigAttr() {
-    $currentUrl = Mage::helper('core/url')->getCurrentUrl();
-    $filterConfigAttr = null;
-    if (strpos($currentUrl, 'checkout') !== false) {
-      $filterConfigAttr = 'checkout_filter';
-    }
-    elseif (strpos($currentUrl, 'admin') !== false) {
-      $filterConfigAttr = 'admin_filter';
-    }
-    return $filterConfigAttr;
-  }
-
-  function _getAllowedRateCodes() {
-    $filterConfigAttr = $this->_getFilterConfigAttr();
-    if ($filterConfigAttr === null) {
-      return null;
-    }
-    $allowedRateCodesStr = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/'.$filterConfigAttr);
-    $allowedRateCodes = explode(',', $allowedRateCodesStr);
-    return $allowedRateCodes;
   }
 
   public function getMethods() {

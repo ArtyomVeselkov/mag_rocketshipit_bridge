@@ -28,7 +28,8 @@ extends Mage_Core_Helper_Abstract {
 				 $addrObj,
 				 $useNegotiatedRate = false, 
 				 $weight = null,
-				 $handling = 0) {
+				 $handling = 0,
+				 $codeMask = null) {
     $rsiRates = $this->getRSIRate($carrierCode, $addrObj);
     if ($weight != null) {
       $rsiRates->setParameter('weight', $weight);
@@ -61,6 +62,12 @@ extends Mage_Core_Helper_Abstract {
     $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
 
     foreach($response as $rsiMethod) {
+      $serviceCode = $this->_getServiceCode($carrierCode, $rsiMethod);
+
+      if (!empty($codeMask) && !in_array($serviceCode, $codeMask)) {
+	continue;
+      }
+
       if($useNegotiatedRate && $rsiMethod['negotiated_rate'] == null) {
 	continue;
       }
@@ -70,7 +77,6 @@ extends Mage_Core_Helper_Abstract {
       $method->setCarrier($fullCode);
       $method->setCarrierTitle($carrierName);
 
-      $serviceCode = $this->_getServiceCode($carrierCode, $rsiMethod);
       $method->setMethod($serviceCode);
       $method->setMethodTitle($rsiMethod['desc']);
 
