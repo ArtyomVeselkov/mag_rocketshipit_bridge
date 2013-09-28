@@ -20,6 +20,11 @@
 	  <quote_address_total_shipping>Soularpanic_RocketShipIt_Model_Sales_Quote_Address_Total_ShippingAndHandling</quote_address_total_shipping>
 	</rewrite>
       </sales>
+      <customer>
+	<rewrite>
+	  <form>Soularpanic_RocketShipIt_Model_Customer_Form</form>
+	</rewrite>
+      </customer>
     </models>
 
     <helpers>
@@ -138,6 +143,7 @@
 	  <frontName>rocketshipit</frontName>
 	</args>
       </rocketshipit>
+      <!-- This allows me to override the onepage controller, but I don't have to do that yet. -->
       <checkout>
 	<args>
 	  <modules>
