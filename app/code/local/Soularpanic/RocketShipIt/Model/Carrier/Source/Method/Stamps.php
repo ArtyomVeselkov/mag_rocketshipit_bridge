@@ -7,14 +7,5 @@ extends Soularpanic_RocketShipIt_Model_Carrier_Source_Method_Abstract {
   function getCode() {
     return self::CODE;
   }
-  // public function toOptionArray() {
-  //   $stamps = Mage::getSingleton('rocketshipit/carrier_stamps');
-  //   $arr = array();
-  //   foreach ($stamps->getMethods() as $k => $v) {
-  //     $arr[] = array('value' => $k,
-  // 		     'label' => $v);
-  //   }
-  //   return $arr;
-  // }
 }
 ?>
