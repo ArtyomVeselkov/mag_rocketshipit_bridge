@@ -21,8 +21,12 @@ extends Soularpanic_RocketShipIt_Helper_Validation_Abstract {
 	$errors[] = "Unable to verify your street address.  Please check it and try again.";
       }
       else {
-	$data['street'][0] = $verifiedAddress['AddressLine'];
-	//$data['street'][1] = $verifiedAddress->Address2;
+	if (is_array($data['street'])) {
+	  $data['street'][0] = $verifiedAddress['AddressLine'];
+	}
+	else {
+	  $data['street'] = $varifiedAddress['AddressLine'];
+	}
 	$data['city'] = $verifiedAddress['PoliticalDivision2'];
 	$verifiedStateCode = $verifiedAddress['PoliticalDivision1'];
 	if ($verifiedStateCode !== $stateCode) {

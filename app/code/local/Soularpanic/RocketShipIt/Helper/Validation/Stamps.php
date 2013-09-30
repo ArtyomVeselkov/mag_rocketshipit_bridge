@@ -15,8 +15,15 @@ extends Soularpanic_RocketShipIt_Helper_Validation_Abstract {
 
     if ($response->AddressMatch === true) {
       $verifiedAddress = $response->Address;
-      $data['street'][0] = $verifiedAddress->Address1;
-      $data['street'][1] = $verifiedAddress->Address2;
+
+      if (is_array($data['street'])) {
+	$data['street'][0] = $verifiedAddress->Address1;
+	$data['street'][1] = $verifiedAddress->Address2;
+      }
+      else {
+	$data['street'] = $verifiedAddress->Address1;
+      }
+	  
       $data['city'] = $verifiedAddress->City;
       $data['postcode'] = $verifiedAddress->ZIPCode;
     }

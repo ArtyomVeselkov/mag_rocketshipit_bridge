@@ -9,21 +9,6 @@ implements Mage_Shipping_Model_Carrier_Interface
     return 'stamps';
   }
   
-  public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
-    $rates = parent::collectRates($request);
-    // $allowedRateCodes = $this->_getAllowedRateCodes();
-    // if ($allowedRateCodes != null) {
-    //   $filteredRates = Mage::getModel('shipping/rate_result');
-    //   foreach ($rates->getAllRates() as $rate) {
-    // 	if (in_array($rate->getMethod(), $allowedRateCodes)) {
-    // 	  $filteredRates->append($rate);
-    // 	}
-    //   }
-    //   return $filteredRates;
-    // }
-    return $rates;
-  }
-
   public function getMethods() {
     return array(
       'US-FC:Postcard' => 'USPS First Class Mail - Postcard',
