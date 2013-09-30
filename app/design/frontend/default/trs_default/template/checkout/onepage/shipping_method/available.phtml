@@ -70,25 +70,31 @@
         </dd>
     <?php endforeach; ?>
     </dl>
+    <?php
+      $handlingHelper = Mage::helper('rocketshipit/handling');
+      $handlingOptions = $handlingHelper->getHandlingOptions($this->getAddress());
+    ?>
+    <?php if (!empty($handlingOptions)): ?>
     <dl>
-      <dt>Extra Services</dt>
-      <?php $shippingAddons = array('none' => 0.00, 'sign' => 5.00, 'signAndInsure' => 7.50); ?>
+      <dt><?php echo($handlingHelper->getSectionHeader()); ?></dt>
       <dd>
 	<ul>
-	  <li>
-	    <input name="shipping_addons" type="radio" value="none" id="shipping_addons_none" checked="checked" />
-	    <label for="shipping_addons_none">None $<?php echo($shippingAddons['none']); ?></label>
-	  </li>
-	  <li>
-	    <input name="shipping_addons" type="radio" value="sign" id="shipping_addons_sign" />
-	    <label for=shipping_addons_sign">Require Signature $<?php echo($shippingAddons['sign']); ?></label>
-	  </li>
-	  <li>
-	    <input name="shipping_addons" type="radio" value="signAndInsure" id="shipping_addons_signAndInsure" />
-	    <label fore="shipping_addons_signAndInsure">Require Signature &amp; Insure Shipment $<?php echo($shippingAddons['signAndInsure']); ?></label>
-	  </li>
+        <?php foreach ($handlingOptions as $handlingKey => $handlingVals): ?>
+	   <li>
+	     <input name="shipping_addons" type="radio" 
+	   	   value="<?php echo($handlingKey); ?>" 
+                    id="shipping_addons_<?php echo($handlingKey); ?>"
+                    <?php if ($handlingHelper->isActiveOption($this->getAddress(), $handlingKey)) { echo('checked="checked"'); } ?>
+             />
+	     <label for="shipping_addons_<?php echo($handlingKey); ?>">
+               <?php echo($handlingVals['display']); ?>
+               $<?php echo(number_format($handlingVals['cost'], 2)); ?>
+	     </label>
+	   </li>
+	 <?php endforeach; ?>
 	</ul>
     </dl>
+    <?php endif; ?>
 <script type="text/javascript">
 //<![CDATA[
     <?php if (!empty($shippingCodePrice)): ?>
