@@ -44,7 +44,9 @@ class Soularpanic_RocketShipIt_Model_Observer
     $track = Mage::getModel('sales/order_shipment_track');
     $track->setTitle($shipment->getOrder()->getShippingDescription());
     $track->setNumber($rsiTrackNo);
-    $track->setCarrierCode($shipment->getOrder()->getShippingMethod());
+    $shippingMethod = $shipment->getOrder()->getShippingMethod();
+    $carrierCode = substr($shippingMethod, 0, strpos($shippingMethod, '_', 13));
+    $track->setCarrierCode($carrierCode);
     $shipment->addTrack($track);
 
     $rsiId = $shipmentHelper->extractRocketshipitId($label);
@@ -52,17 +54,12 @@ class Soularpanic_RocketShipIt_Model_Observer
     //die('wait');
   }
 
-  public function addCarrierAddOns(Varien_Event_Observer $observer) {
-    Mage::log('rocketshipit observer firing - addCarrierAddOns', null, 'rocketshipit_shipments.log');
+  public function addHandlingCodeToOrder(Varien_Event_Observer $observer) {
     $quote = $observer->getEvent()->getQuote(); //Mage_Sales_Model_Quote
     $request = $observer->getEvent()->getRequest();
-    $addOnCode = $request->getPost('shipping_addons', '');
+    $handlingCode = $request->getPost('shipping_addons', '');
     $shippingAddr = $quote->getShippingAddress();
-    $price = 0.0;
-    if ($addOnCode === 'sign') { $price = 5.0; }
-    elseif ($addOnCode === 'signAndInsure') { $price = 7.5; }
-    $shippingAddr->setHandlingAmount($price);
-    $shippingAddr->setHandlingCode($addOnCode);
+    $shippingAddr->setHandlingCode($handlingCode);
   }
 
 }

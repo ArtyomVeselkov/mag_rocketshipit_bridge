@@ -87,13 +87,13 @@
 	</observers>
       </core_block_abstract_prepare_layout_before>
       <checkout_controller_onepage_save_shipping_method>
-	<observers>
-	  <soularpanic_rocketshipit_add_carrier_addons>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addCarrierAddOns</method>
-	  </soularpanic_rocketshipit_add_carrier_addons>
-	</observers>
+      	<observers>
+      	  <soularpanic_rocketshipit_add_carrier_code_to_order>
+      	    <type>singleton</type>
+      	    <class>rocketshipit/observer</class>
+      	    <method>addHandlingCodeToOrder</method>
+	  </soularpanic_rocketshipit_add_carrier_code_to_order>
+      	</observers>
       </checkout_controller_onepage_save_shipping_method>
       <sales_order_shipment_save_before>
 	<observers>

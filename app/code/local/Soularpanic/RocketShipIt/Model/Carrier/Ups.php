@@ -4,6 +4,9 @@ class Soularpanic_RocketShipIt_Model_Carrier_UPS
   extends Soularpanic_RocketShipIt_Model_Carrier_Abstract
   implements Mage_Shipping_Model_Carrier_Interface
 {
+
+  protected $_code = 'rocketshipit_ups';
+  
   public function getCarrierSubCode()
   {
     return 'ups';

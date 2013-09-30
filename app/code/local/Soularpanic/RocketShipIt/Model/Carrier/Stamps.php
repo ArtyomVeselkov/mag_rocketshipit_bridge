@@ -4,6 +4,8 @@ class Soularpanic_RocketShipIt_Model_Carrier_Stamps
 extends Soularpanic_RocketShipIt_Model_Carrier_Abstract
 implements Mage_Shipping_Model_Carrier_Interface
 {
+  protected $_code = 'rocketshipit_stamps';
+
   public function getCarrierSubCode()
   {
     return 'stamps';
