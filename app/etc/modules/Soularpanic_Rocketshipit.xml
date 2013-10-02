@@ -6,7 +6,9 @@
       <active>true</active>
       <codePool>local</codePool>
       <depends>
+	<Mage_Checkout/>
 	<Mage_Adminhtml/>
+	<Fooman_OrderManager/>
       </depends>
     </Soularpanic_RocketShipIt>
   </modules>
