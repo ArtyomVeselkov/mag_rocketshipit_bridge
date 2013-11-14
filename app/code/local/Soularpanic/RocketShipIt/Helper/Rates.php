@@ -47,6 +47,8 @@ extends Mage_Core_Helper_Abstract {
       $result->append($error);
       return $result;
     }
+
+    Mage::log('Simple rate fetch raw results: '.print_r($response, true), null, 'rocketshipit_shipments.log');
     
     $errorMsg = $response['error'];
     if ($errorMsg != null) {
@@ -60,6 +62,8 @@ extends Mage_Core_Helper_Abstract {
     $fullCode = $helper->getFullCarrierCode($carrierCode);
     $carrierName = Mage::getStoreConfig('carriers/'.$fullCode.'/title');
     $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
+
+    Mage::log('Code mask: '.print_r($codeMask, true), null, 'rocketshipit_shipments.log');
 
     foreach($response as $rsiMethod) {
       $serviceCode = $this->_getServiceCode($carrierCode, $rsiMethod);
