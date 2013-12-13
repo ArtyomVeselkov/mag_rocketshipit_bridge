@@ -1,6 +1,12 @@
 <?php 
 class Soularpanic_RocketShipIt_TestController
 extends Mage_Core_Controller_Front_Action {
+
+  public function paypalAction() {
+    $api = Mage::getModel('paypal/api_nvp');
+    echo('hey');
+  }
+
   public function testDiacriticAction() {
     $str = 'Vučetićev prilaz 3 Zagreb, Zagrebačka, 10000';
     $maskArr = array(0x80, 0x10ffff, 0, 0xffffff);

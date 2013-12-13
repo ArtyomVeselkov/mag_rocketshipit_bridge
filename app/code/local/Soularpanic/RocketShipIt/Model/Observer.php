@@ -54,7 +54,7 @@ class Soularpanic_RocketShipIt_Model_Observer
     //die('wait');
   }
 
-  public function addHandlingCodeToOrder(Varien_Event_Observer $observer) {
+  public function addHandlingCodeToQuote(Varien_Event_Observer $observer) {
     $quote = $observer->getEvent()->getQuote(); //Mage_Sales_Model_Quote
     $request = $observer->getEvent()->getRequest();
     $handlingCode = $request->getPost('shipping_addons', '');
@@ -62,5 +62,23 @@ class Soularpanic_RocketShipIt_Model_Observer
     $shippingAddr->setHandlingCode($handlingCode);
   }
 
+  public function addCustomerCommentToQuote(Varien_Event_Observer $observer) {
+    $quote = $observer->getEvent()->getQuote();
+    $request = $observer->getEvent()->getRequest();
+    $comment = $request->getPost('comments', '');
+    if (!empty($comment)) {
+      $quote->setCustomerComment($comment);
+    }
+  }
+
+  public function addCustomerCommentToOrder(Varien_Event_Observer $observer) {
+    $quote = $observer->getEvent()->getQuote();
+    $quoteComment = $quote->getCustomerComment();
+    if (!empty($quoteComment)) {
+      $order = $observer->getEvent()->getOrder();
+      $order->addStatusHistoryComment($quoteComment);
+      $order->save();
+    }
+  }
 }
 ?>
