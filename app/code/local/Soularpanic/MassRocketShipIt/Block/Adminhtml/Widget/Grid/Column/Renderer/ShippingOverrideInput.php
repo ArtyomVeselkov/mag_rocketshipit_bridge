@@ -66,7 +66,7 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
 
 
     $methodClass = "{$colId}_method";
-    $html = "<select name=\"{$colId}-{$rowId}\" rel=\"$rowId\" class=\"$methodClass\">";
+    $html = "<select name=\"{$colId}-{$rowId}\" rel=\"$rowId\" class=\"$methodClass orderGridShippingMethodSelect\">";
     $dataHelper = Mage::helper('rocketshipit/data');
     $rateHelper = Mage::helper('rocketshipit/rates');
 

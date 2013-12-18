@@ -4,6 +4,7 @@
   <default>
     <reference name="head">
       <action method="addJs"><script>soularpanic/adminhtml/grid.js</script></action>
+      <action method="addCss"><css>css/admin-orders.css</css></action>
     </reference>
   </default>
   <adminhtml_sales_order_index>
