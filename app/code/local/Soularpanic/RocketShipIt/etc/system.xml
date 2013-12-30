@@ -62,14 +62,14 @@
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
 	    </signature_active>
-	    <signature_display translate="label">
+	    <sign_display translate="label">
 	      <label>Signature Display Name</label>
 	      <frontend_type>text</frontend_type>
 	      <sort_order>35</sort_order>
 	      <show_in_default>1</show_in_default>
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
-	    </signature_display>
+	    </sign_display>
 	    <signature_type translate="label">
 	      <label>Calculate Signature Handling Fee</label>
 	      <frontend_type>select</frontend_type>

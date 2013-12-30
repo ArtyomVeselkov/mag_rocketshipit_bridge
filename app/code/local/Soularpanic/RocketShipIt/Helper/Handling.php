@@ -17,13 +17,13 @@ extends Mage_Core_Helper_Abstract {
     }
 
     $options[self::NO_HANDLING] = array(
-      self::DISPLAY_KEY => $this->_getConfig('none_display'),
+      self::DISPLAY_KEY => $this->getHandlingDisplay(self::NO_HANDLING),
       self::COST_KEY    => 0.00
     );
       
     if ($this->_getConfig('signature_active')) {
       $options[self::SIGN] = array(
-	self::DISPLAY_KEY => $this->_getConfig('signature_display'),
+	self::DISPLAY_KEY => $this->getHandlingDisplay(self::SIGN),
 	self::COST_KEY    => $this->calculateSignCost($quoteAddress)
       );
     }
@@ -31,7 +31,7 @@ extends Mage_Core_Helper_Abstract {
     if ($this->_getConfig('signAndInsure_active')) {
       $cost = $this->calculateSignCost($quoteAddress) + $this->calculateInsureCost($quoteAddress);
       $options[self::SIGN_AND_INSURE] = array(
-	self::DISPLAY_KEY => $this->_getConfig('signAndInsure_display'),
+	self::DISPLAY_KEY => $this->getHandlingDisplay(self::SIGN_AND_INSURE),
 	self::COST_KEY    => $cost
       );
     }
@@ -39,6 +39,15 @@ extends Mage_Core_Helper_Abstract {
     $this->_log("options: ".print_r($options, true));
 
     return $options;
+  }
+
+  public function getHandlingDisplay($handlingCode) {
+    if ($handlingCode === self::NO_HANDLING
+	|| $handlingCode === self::SIGN
+	|| $handlingCode === self::SIGN_AND_INSURE) {
+      return $this->_getConfig($handlingCode . '_display');
+    }
+    return null;
   }
 
   public function calculateHandling(Mage_Sales_Model_Quote_Address $quoteAddress) {

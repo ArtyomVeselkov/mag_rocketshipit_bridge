@@ -27,18 +27,25 @@ extends Mage_Sales_Model_Quote_Address_Total_Shipping {
   }
 
   public function fetch(Mage_Sales_Model_Quote_Address $address) {
+    $handlingHelper = Mage::helper('rocketshipit/handling');
     $handling = $address->getHandlingAmount();
 
     $amount = $address->getShippingAmount();
     if ($amount != 0 || $address->getShippingDescription()) {
       $title = Mage::helper('sales')->__('Shipping & Handling');
-      if ($address->getShippingDescription()) {
-	$title .= ' (' . $address->getShippingDescription() . ')';
-      }
       $address->addTotal(array(
 	'code' => $this->getCode(),/*'shipping',*/
 	'title' => $title,
-	'value' => $amount + $handling
+	'value' => $amount,
+	'items' => array(
+	  array (
+	    'name' => $address->getShippingDescription(),
+	    'value' => $amount - $handling,
+	  ), array (
+	    'name' => $handlingHelper->getHandlingDisplay($address->getHandlingCode()),
+	    'value' => $handling
+	  )
+	)
       ));
     }
 

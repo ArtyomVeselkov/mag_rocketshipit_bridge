@@ -168,7 +168,6 @@
 	  <frontName>rocketshipit</frontName>
 	</args>
       </rocketshipit>
-      <!-- This allows me to override the onepage controller, but I don't have to do that yet. -->
       <checkout>
 	<args>
 	  <modules>
