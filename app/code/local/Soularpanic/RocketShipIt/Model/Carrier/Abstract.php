@@ -58,7 +58,8 @@ implements Mage_Shipping_Model_Carrier_Interface
   function _getFilterConfigAttr() {
     $currentUrl = Mage::helper('core/url')->getCurrentUrl();
     $filterConfigAttr = null;
-    if (strpos($currentUrl, 'checkout') !== false) {
+    if (strpos($currentUrl, 'checkout') !== false
+	|| strpos($currentUrl, 'paypal') !== false) {
       $filterConfigAttr = 'checkout_filter';
     }
     elseif (strpos($currentUrl, 'admin') !== false) {

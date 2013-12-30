@@ -56,17 +56,21 @@ class Soularpanic_RocketShipIt_Model_Observer
 
   public function addHandlingCodeToQuote(Varien_Event_Observer $observer) {
     $quote = $observer->getEvent()->getQuote(); //Mage_Sales_Model_Quote
-    $request = $observer->getEvent()->getRequest();
-    $handlingCode = $request->getPost('shipping_addons', '');
-    $shippingAddr = $quote->getShippingAddress();
-    $shippingAddr->setHandlingCode($handlingCode);
+    $request = Mage::app()->getRequest(); //$request = $observer->getEvent()->getRequest();
+    $handlingCode = $request->getParam('shipping_addons', '');//$handlingCode = $request->getPost('shipping_addons', '');
+    if ($handlingCode) {
+      $shippingAddr = $quote->getShippingAddress();
+      $shippingAddr->setHandlingCode($handlingCode);
+    }
   }
 
   public function addCustomerCommentToQuote(Varien_Event_Observer $observer) {
     $quote = $observer->getEvent()->getQuote();
-    $request = $observer->getEvent()->getRequest();
-    $comment = $request->getPost('comments', '');
-    if (!empty($comment)) {
+    //$request = $observer->getEvent()->getRequest();
+    $request = Mage::app()->getRequest();
+    //$comment = $request->getPost('comments', '');
+    $comment = $request->getParam('comments', '');
+    if ($comment) {
       $quote->setCustomerComment($comment);
     }
   }
@@ -74,10 +78,22 @@ class Soularpanic_RocketShipIt_Model_Observer
   public function addCustomerCommentToOrder(Varien_Event_Observer $observer) {
     $quote = $observer->getEvent()->getQuote();
     $quoteComment = $quote->getCustomerComment();
-    if (!empty($quoteComment)) {
+    if ($quoteComment) {
       $order = $observer->getEvent()->getOrder();
       $order->addStatusHistoryComment($quoteComment);
       $order->save();
+    }
+  }
+
+  public function addAuditFieldsToQuote(Varien_Event_Observer $observer) {
+    $quote = $observer->getEvent()->getQuote();
+    $request = Mage::app()->getRequest();
+    $audit = $request->getParam('audit');
+    if ($audit) {
+      $use = filter_var($audit['requested'], FILTER_VALIDATE_BOOLEAN) === true;
+      $quote->setCustomerVehicleYear($use ? $audit['year'] : null);
+      $quote->setCustomerVehicleMake($use ? $audit['make'] : null);
+      $quote->setCustomerVehicleModel($use ? $audit['model'] : null);
     }
   }
 }

@@ -97,6 +97,25 @@
 	  </soularpanic_rocketshipit_addmassbutton>
 	</observers>
       </core_block_abstract_prepare_layout_before>
+      <sales_quote_save_before>
+	<observers>
+	  <soularpanic_rocketshipit_paypal_update_quote_audit>
+	    <type>singleton</type>
+	    <class>rocketshipit/observer</class>
+	    <method>addAuditFieldsToQuote</method>
+	  </soularpanic_rocketshipit_paypal_update_quote_audit>
+	  <soularpanic_rocketshipit_paypal_update_quote_handling>
+	    <type>singleton</type>
+	    <class>rocketshipit/observer</class>
+	    <method>addHandlingCodeToQuote</method>
+	  </soularpanic_rocketshipit_paypal_update_quote_handling>
+	  <soularpanic_rocketshipit_paypal_update_quote_comment>
+	    <type>singleton</type>
+	    <class>rocketshipit/observer</class>
+	    <method>addCustomerCommentToQuote</method>
+	  </soularpanic_rocketshipit_paypal_update_quote_comment>
+	</observers>
+      </sales_quote_save_before>
       <checkout_controller_onepage_save_shipping_method>
       	<observers>
       	  <soularpanic_rocketshipit_add_carrier_code_to_quote>
@@ -197,7 +216,7 @@
       <rocketshipit_global>
 	<handling_checkout_header>Shipping Options</handling_checkout_header>
 	<none_display>None</none_display>
-	<signature_display>Require Signature</signature_display>
+	<sign_display>Require Signature</sign_display>
 	<signAndInsure_display>Require Signature &amp; Insure Shipment</signAndInsure_display>
       </rocketshipit_global>
       <rocketshipit_ups>
