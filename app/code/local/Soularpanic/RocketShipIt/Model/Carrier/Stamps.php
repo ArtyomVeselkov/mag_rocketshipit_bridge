@@ -6,6 +6,10 @@ implements Mage_Shipping_Model_Carrier_Interface
 {
   protected $_code = 'rocketshipit_stamps';
 
+  public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
+    return parent::collectRates($request);
+  }
+
   public function getCarrierSubCode()
   {
     return 'stamps';

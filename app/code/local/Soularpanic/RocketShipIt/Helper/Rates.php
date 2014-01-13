@@ -18,6 +18,7 @@ extends Mage_Core_Helper_Abstract {
     $rsiRate->setParameter('toState', $addr['state']);
     $rsiRate->setParameter('toCountry', $addr['country']);
     $rsiRate->setParameter('weight', $addr['weight']);
+    $rsiRate->setParameter('weightPounds', $addr['weight']);
 
     $rsiRate->setParameter('residentialAddressIndicator','0');
 
