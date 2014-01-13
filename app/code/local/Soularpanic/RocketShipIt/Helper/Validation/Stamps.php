@@ -10,7 +10,7 @@ extends Soularpanic_RocketShipIt_Helper_Validation_Abstract {
   function parseValidateResponse($response, &$data) {
     $errors = array();
     if ($response->CityStateZipOK === false) { 
-      $errors[] = "This shit is all fucked.  I have no idea what you were even trying to do here.";
+      $errors[] = "";
     }
 
     if ($response->AddressMatch === true) {
