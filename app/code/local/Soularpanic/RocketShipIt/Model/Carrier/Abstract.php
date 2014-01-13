@@ -20,13 +20,15 @@ implements Mage_Shipping_Model_Carrier_Interface
 
     $helper = Mage::helper('rocketshipit/rates');
     $rateMask = $this->getAllowedRateMask();
+    $freeRates = $this->getFreeRateMask();
 
     $simpleRates = $helper->getSimpleRates($carrierCode,
 					   $request,
 					   $useNegotiatedRate,
 					   null,
 					   $handling,
-					   $rateMask);
+					   $rateMask,
+					   $freeRates);
     
     return $simpleRates;
   }
@@ -40,6 +42,16 @@ implements Mage_Shipping_Model_Carrier_Interface
     return $this->_superCode.'_'.$this->getCarrierSubCode();
   }
 
+  function getFreeRateMask() {
+    $freeRateStr = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/free_shipping_filter');
+    if (!$freeRateStr) {
+      return null;
+    }
+
+    $freeRateArr = explode(',', $freeRateStr);
+    return $freeRateArr;
+  }
+
   function getAllowedRateMask() {
     $filterConfigAttr = $this->_getFilterConfigAttr();
     if ($filterConfigAttr === null) {
@@ -47,7 +59,7 @@ implements Mage_Shipping_Model_Carrier_Interface
     }
 
     $allowedRateCodesStr = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/'.$filterConfigAttr);
-    if (empty($allowedRateCodesStr)) {
+    if (!$allowedRateCodesStr) {
       return null;
     }
 

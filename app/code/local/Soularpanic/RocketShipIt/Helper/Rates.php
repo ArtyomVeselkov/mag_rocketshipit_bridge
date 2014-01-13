@@ -29,7 +29,8 @@ extends Mage_Core_Helper_Abstract {
 				 $useNegotiatedRate = false, 
 				 $weight = null,
 				 $handling = 0,
-				 $codeMask = null) {
+				 $codeMask = null,
+				 $freeCodeMask = null) {
     $rsiRates = $this->getRSIRate($carrierCode, $addrObj);
     if ($weight != null) {
       $rsiRates->setParameter('weight', $weight);
@@ -68,7 +69,7 @@ extends Mage_Core_Helper_Abstract {
     foreach($response as $rsiMethod) {
       $serviceCode = $this->_getServiceCode($carrierCode, $rsiMethod);
 
-      if (!empty($codeMask) && !in_array($serviceCode, $codeMask)) {
+      if ($codeMask && !in_array($serviceCode, $codeMask)) {
 	continue;
       }
 
@@ -84,8 +85,11 @@ extends Mage_Core_Helper_Abstract {
       $method->setMethod($serviceCode);
       $method->setMethodTitle($rsiMethod['desc']);
 
-      $method->setCost($rsiMethod[$rateKey]);
-      $method->setPrice($rsiMethod[$rateKey] + $handling);
+      $free = $addrObj->getFreeShipping() && (!$freeCodeMask || in_array($serviceCode, $freeCodeMask));
+      Mage::log("Free? {$free}; Request: {$addrObj->getFreeShipping()}; free mask: ".print_r($freeCodeMask, true), null, 'rocketshipit_shipments.log');
+
+      $method->setCost($free ? 0 : $rsiMethod[$rateKey]);
+      $method->setPrice($free ? 0 : ($rsiMethod[$rateKey] + $handling));
 
       $result->append($method);
     }
