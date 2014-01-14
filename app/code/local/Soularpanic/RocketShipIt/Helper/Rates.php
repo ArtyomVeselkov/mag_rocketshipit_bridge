@@ -120,16 +120,16 @@ extends Mage_Core_Helper_Abstract {
 
   function _setCachedRateResponse($key, $response) {
     if (Mage::app()->useCache(self::RATE_CACHE_NAME)) {
-      Mage::log("Writing $key to:\n"/*.print_r($key,true)*/, null, 'rsi_cache.log');
-      Mage::app()->saveCache($response, $key, array(self::RATE_CACHE_KEY), 86400);
+      $cacheStr = serialize($response);
+      Mage::app()->saveCache($cacheStr, $key, array(self::RATE_CACHE_KEY), 86400);
     }
   }
 
   function _getCachedRateResponse($key) {
     if (Mage::app()->useCache(self::RATE_CACHE_NAME)) {
       $cachedVal = Mage::app()->loadCache($key);
-      Mage::log("Read $key from cache:\n"/*.print_r($key, true)*/, null, 'rsi_cache.log');
-      return $cachedVal;
+      $cachedObj = unserialize($cachedVal);
+      return $cachedObj;
     }
     return null;
   }
