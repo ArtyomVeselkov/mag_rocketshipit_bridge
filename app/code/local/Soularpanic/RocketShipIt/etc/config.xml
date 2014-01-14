@@ -163,6 +163,16 @@
 	</observers>
       </sales_order_shipment_save_before>
     </events>
+
+    <cache>
+      <types>
+	<rocketshipit>
+	  <label>Rocketshipit Rates Data</label>
+	  <description>Rates fetched with Rocketshipit</description>
+	  <tags>ROCKETSHIPIT_RATES</tags>
+	</rocketshipit>
+      </types>
+    </cache>
   </global>
 
   <admin>

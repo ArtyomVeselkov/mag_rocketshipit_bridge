@@ -2,6 +2,9 @@
 class Soularpanic_RocketShipIt_Helper_Rates
 extends Mage_Core_Helper_Abstract {
 
+  const RATE_CACHE_NAME = 'rocketshipit';
+  const RATE_CACHE_KEY = 'ROCKETSHIPIT_RATES';
+
   public function getRSIRate($courier, $addrObj) {
     $helper = Mage::helper('rocketshipit/data');
     $rsiRate = new \RocketShipIt\Rate($courier);
@@ -37,17 +40,22 @@ extends Mage_Core_Helper_Abstract {
       $rsiRates->setParameter('weight', $weight);
     }
 
-    $response = null;
+    $cacheKey = $this->_getRateResponseCacheKey($rsiRates);
+    $response = $this->_getCachedRateResponse($cacheKey);
+    //$response = null;
     $result = Mage::getModel('shipping/rate_result');
 
-    try {
-      $response = $rsiRates->getSimpleRates();
-    }
-    catch (Exception $e) {
-      $error = Mage::getModel('shipping/rate_result_error');
-      $error->addData(array('error_message' => $e->getMessage()));
-      $result->append($error);
-      return $result;
+    if (!$response) {
+      try {
+	$response = $rsiRates->getSimpleRates();
+	$this->_setCachedRateResponse($cacheKey, $response);
+      }
+      catch (Exception $e) {
+	$error = Mage::getModel('shipping/rate_result_error');
+	$error->addData(array('error_message' => $e->getMessage()));
+	$result->append($error);
+	return $result;
+      }
     }
 
     Mage::log('Simple rate fetch raw results: '.print_r($response, true), null, 'rocketshipit_shipments.log');
@@ -108,6 +116,26 @@ extends Mage_Core_Helper_Abstract {
       $serviceCode.=':'.$packageType;
     }
     return $serviceCode;
+  }
+
+  function _setCachedRateResponse($key, $response) {
+    if (Mage::app()->useCache(self::RATE_CACHE_NAME)) {
+      Mage::log("Writing $key to:\n"/*.print_r($key,true)*/, null, 'rsi_cache.log');
+      Mage::app()->saveCache($response, $key, array(self::RATE_CACHE_KEY), 86400);
+    }
+  }
+
+  function _getCachedRateResponse($key) {
+    if (Mage::app()->useCache(self::RATE_CACHE_NAME)) {
+      $cachedVal = Mage::app()->loadCache($key);
+      Mage::log("Read $key from cache:\n"/*.print_r($key, true)*/, null, 'rsi_cache.log');
+      return $cachedVal;
+    }
+    return null;
+  }
+
+  function _getRateResponseCacheKey($rsiRate) {
+    return md5(serialize($rsiRate));
   }
 }
 ?>
