@@ -15,7 +15,8 @@ implements Mage_Shipping_Model_Carrier_Interface
     }
 
     $carrierCode = $this->getCarrierSubCode();
-    $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/useNegotiatedRates');
+    $useNegotiatedRate = $this->_getUseNegotiatedRates();
+    
     $handling = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/handling');
 
     $helper = Mage::helper('rocketshipit/rates');
@@ -67,17 +68,37 @@ implements Mage_Shipping_Model_Carrier_Interface
     return $allowedRateCodes;
   }
 
+  function _getUseNegotiatedRates() {
+    $consumerType = $this->_getRateConsumerType();
+    $useNegotiatedRate = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/'.$consumerType.'_useNegotiatedRates');    
+    return $useNegotiatedRate;
+  }
+
   function _getFilterConfigAttr() {
-    $currentUrl = Mage::helper('core/url')->getCurrentUrl();
+    $consumerType = $this->_getRateConsumerType();
     $filterConfigAttr = null;
-    if (strpos($currentUrl, 'checkout') !== false
-	|| strpos($currentUrl, 'paypal') !== false) {
+    if ($consumerType === 'customer') {
       $filterConfigAttr = 'checkout_filter';
     }
-    elseif (strpos($currentUrl, 'admin') !== false) {
+
+    if ($consumerType === 'admin') {
       $filterConfigAttr = 'admin_filter';
     }
+    
     return $filterConfigAttr;
+  }
+
+  function _getRateConsumerType() {
+    $currentUrl = Mage::helper('core/url')->getCurrentUrl();
+    $consumerType = 'customer';
+    if (strpos($currentUrl, 'checkout') !== false
+	|| strpos($currentUrl, 'paypal') !== false) {
+      $consumerType = 'customer';
+    }
+    elseif (strpos($currentUrl, 'admin') !== false) {
+      $consumerType = 'admin';
+    }
+    return $consumerType;
   }
 }
 ?>

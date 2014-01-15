@@ -86,6 +86,10 @@ extends Mage_Core_Helper_Abstract {
 	continue;
       }
 
+      if(!$useNegotiatedRate && $rsiMethod['negotiated_rate']) {
+	continue;
+      }
+
       $method = Mage::getModel('shipping/rate_result_method');
 
       $method->setCarrier($fullCode);
