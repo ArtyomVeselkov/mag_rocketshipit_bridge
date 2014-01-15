@@ -17,7 +17,7 @@ implements Mage_Shipping_Model_Carrier_Interface
     $carrierCode = $this->getCarrierSubCode();
     $useNegotiatedRate = $this->_getUseNegotiatedRates();
     
-    $handling = Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/handling');
+    $handling = $this->_getHandlingCost();
 
     $helper = Mage::helper('rocketshipit/rates');
     $rateMask = $this->getAllowedRateMask();
@@ -66,6 +66,15 @@ implements Mage_Shipping_Model_Carrier_Interface
 
     $allowedRateCodes = explode(',', $allowedRateCodesStr);
     return $allowedRateCodes;
+  }
+
+  function _getHandlingCost() {
+    $consumerType = $this->_getRateConsumerType();
+    if ($consumerType === 'customer') {
+      $handling = Mage::getStoreConfig('carriers/rocketshipit_global/handling_base');
+      return $handling;
+    }
+    return 0;
   }
 
   function _getUseNegotiatedRates() {

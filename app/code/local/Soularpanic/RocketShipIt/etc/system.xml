@@ -28,6 +28,14 @@
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
 	    </validation_carrier>
+	    <handling_base translate="label">
+	      <label>Base Handling Fee</label>
+	      <frontent_type>text</frontent_type>
+	      <sort_order>17</sort_order>
+	      <show_in_default>1</show_in_default>
+	      <show_in_website>1</show_in_website>
+	      <show_in_store>1</show_in_store>
+	    </handling_base>
 	    <handling_active translate="label">
 	      <label>Show Handling Options</label>
 	      <frontend_type>select</frontend_type>
