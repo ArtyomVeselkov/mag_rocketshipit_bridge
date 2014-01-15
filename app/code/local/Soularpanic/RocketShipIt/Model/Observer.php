@@ -35,6 +35,7 @@ class Soularpanic_RocketShipIt_Model_Observer
 
     if(is_string($label) && strpos($label, 'Error') >= 0) {
       Mage::throwException('Label generation failed: '.$label);
+      Mage::log($rsiShipment->debug(), null, 'rocketshipit_errors.log');
     }
 
     $labelImg = $shipmentHelper->extractShippingLabel($label);
