@@ -174,11 +174,11 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	$confirm->AddOnType = 'US-A-DC';
 	$addOns[] = $confirm;
       }
-      elseif ($carrierCode == 'US-XM') {
-	$noSig = new \stdClass();
-	$noSig->AddOnType = 'US-A-WDS';
-	$addOns[] = $noSig;
-      }
+      /* elseif ($carrierCode == 'US-XM') {
+      $noSig = new \stdClass();
+      $noSig->AddOnType = 'US-A-WDS';
+      $addOns[] = $noSig;
+      } */
     }
     
     return $addOns;
@@ -186,7 +186,12 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
   function _handleSignatureAddOn($addOns, $carrierCode, $order) {
     $allowsDeliverySignature = $this->_carrierAllowsDeliverySignature($carrierCode);
-    if ($allowsDeliverySignature) {
+    if ($carrierCode == 'US-XM') {
+      $xmSign = new \stdClass();
+      $xmSign->AddOnType = 'US-A-SR';
+      $addOns[] = $xmSign;
+    }
+    elseif ($allowsDeliverySignature) {
       $sign = new \stdClass();
       $sign->AddOnType = 'US-A-SC';
       $addOns[] = $sign;
