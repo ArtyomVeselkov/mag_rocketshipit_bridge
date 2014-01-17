@@ -5,15 +5,85 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
   
   public function render(Varien_Object $row) { 
     $html = '';
+    $html.= $this->buildStatusIcons($row);
     if ($row->canShip()) {
-      $html = $this->buildInputCell($row);
+      $html.= $this->buildInputCell($row);
     }
     else {
-      $html = $this->buildInfoCell($row);
+      $html.= $this->buildInfoCell($row);
     }
     return $html;
   }
 
+  function buildStatusIcons($order) {
+    $icons = '<div class="statusIconsContainer">';
+    if ($this->_isPotentiallyFraud($order)) {
+      $icons.= $this->_makeIcon('fraud');
+    }
+    if ($this->_isFreeShipping($order)) {
+      $icons.= $this->_makeIcon('freeShipping');
+    }
+    if ($this->_isInternational($order)) {
+      $icons.= $this->_makeIcon('international');
+    }
+    $icons.= '</div>';
+    return $icons;
+  }
+
+  function _makeIcon($name) {
+    return sprintf("<span class=\"%sIcon statusIcon\">&nbsp;</span>", $name);
+  }
+
+  function _isInternational($order) {
+    $addr = $order->getShippingAddress();
+    return ($addr->getCountryId() !== 'US');
+  }
+
+  function _isFreeShipping($order) {
+    $amount = $order->getShippingAmount();
+    if ($amount !== null && (int)$amount === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  function _isPotentiallyFraud($order) {
+    if ($this->_addressesMatch($order) 
+	&& $this->_paymentChecksOut($order)) {
+      return false;
+    }
+    return true;
+  }
+
+  function _addressesMatch($order) {
+    $ship = $order->getShippingAddress()->format('text');
+    $bill = $order->getBillingAddress()->format('text');
+    return (strcasecmp($ship, $bill) === 0);
+  }
+
+  function _paymentChecksOut($order) {
+    $raw_payment_info = $order->getPaymentInfo();
+    if ($raw_payment_info) {
+      $payment_info = unserialize($raw_payment_info);
+    }
+    if (!$payment_info) {
+      return true;
+    }
+    
+    $avs = $payment_info['paypal_avs_code'];
+    $okAvsCodes = array('X', 'Y', 'D', 'M');
+    if ($avs && !in_array($avs, $okAvsCodes)) {
+      return false;
+    }
+
+    $cvv2 = $payment_info['paypal_cvv2_match'];
+    if ($cvv2 && $cvv2 !== 'M') {
+      return false;
+    }
+
+    return true;
+  }
+	    
   function buildInfoCell($order) {
     $collection = Mage::getModel('sales/order_shipment_track')
 		   ->getCollection()
