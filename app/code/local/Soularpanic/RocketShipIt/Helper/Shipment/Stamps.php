@@ -97,7 +97,27 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $shipmentResponse->StampsTxID;
   }
 
-  function _carrierRequiresDeliveryConfirmation($carrierCode) {
+  function _carrierRequiresDeliveryConfirmation($carrierCode, $countryCode) {
+    $fciDeliveryConfirmCountryCodes = array('AU' //Australia
+					    ,'BE' //Belgium
+					    ,'BR' //Brazil
+					    ,'CA' //Canada
+					    ,'HR' //Croatia
+					    ,'DK' //Denmark
+					    ,'FR' //France
+					    ,'DE' //Germany
+					    ,'GB' //UK
+					    ,'IL' //Israel
+					    ,'NL' //Netherlands
+					    ,'NZ' //New Zealand
+					    ,'ES' //Spain
+					    ,'CH' //Switzerland
+					    );
+
+    if ($carrierCode === 'US-FCI') {
+      return in_array($countryCode, $fciDeliveryConfirmCountryCodes);
+    }
+
     return ($carrierCode != 'US-XM' &&
 	    $carrierCode != 'US-PMI' &&
 	    $carrierCode != 'US-EMI');
@@ -140,8 +160,8 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
   //function _getAddOns($handlingCode, $carrierCode, $destAddr) {
   function _getAddOns($shipment, $handlingCode, $carrierCode) {
     $destAddr = $shipment->getShippingAddress();
-    $needDeliveryConfirmation = $this->_carrierRequiresDeliveryConfirmation($carrierCode);
-  
+    $needDeliveryConfirmation = $this->_carrierRequiresDeliveryConfirmation($carrierCode, $destAddr->getCountryId());
+    
     $addOns = array();
 
     if ($destAddr->getCountryId() === 'US') {
