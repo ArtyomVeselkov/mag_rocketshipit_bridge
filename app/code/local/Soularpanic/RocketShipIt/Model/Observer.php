@@ -81,7 +81,9 @@ class Soularpanic_RocketShipIt_Model_Observer
     $quoteComment = $quote->getCustomerComment();
     if ($quoteComment) {
       $order = $observer->getEvent()->getOrder();
-      $order->addStatusHistoryComment($quoteComment);
+      $comment = $order->addStatusHistoryComment($quoteComment);
+      $trsHelper = Mage::helper('trs/comment');
+      $comment->setCommentType($trsHelper::CUSTOMER_COMMENT_TYPE);
       $order->save();
     }
   }
