@@ -26,12 +26,20 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
     if ($this->_isInternational($order)) {
       $icons.= $this->_makeIcon('international');
     }
+    if ($this->_isDuplicateShippingAddresses($order)) {
+      $icons.= $this->_makeIcon('duplicateAddress');
+    }
     $icons.= '</div>';
     return $icons;
   }
 
   function _makeIcon($name) {
     return sprintf("<span class=\"%sIcon statusIcon\">&nbsp;</span>", $name);
+  }
+
+  function _isDuplicateShippingAddresses($order) {
+    $addrCount = $order->getAddressCount();
+    return $addrCount > 1;
   }
 
   function _isInternational($order) {
