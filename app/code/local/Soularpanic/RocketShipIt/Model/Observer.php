@@ -77,10 +77,10 @@ class Soularpanic_RocketShipIt_Model_Observer
   }
 
   public function addCustomerCommentToOrder(Varien_Event_Observer $observer) {
-    $quote = $observer->getEvent()->getQuote();
+    $order = $observer->getEvent()->getOrder();
+    $quote = $order->getQuote();
     $quoteComment = $quote->getCustomerComment();
     if ($quoteComment) {
-      $order = $observer->getEvent()->getOrder();
       $comment = $order->addStatusHistoryComment($quoteComment);
       $trsHelper = Mage::helper('trs/comment');
       $comment->setCommentType($trsHelper::CUSTOMER_COMMENT_TYPE);
@@ -99,5 +99,6 @@ class Soularpanic_RocketShipIt_Model_Observer
       $quote->setCustomerVehicleModel($use ? $audit['model'] : null);
     }
   }
+  
 }
 ?>

@@ -130,7 +130,7 @@
 	  </soularpanic_rocketshipit_add_customer_comment_to_quote>
       	</observers>
       </checkout_controller_onepage_save_shipping_method>
-      <checkout_type_onepage_save_order_after>
+      <sales_order_place_after>
 	<observers>
 	  <soularpanic_rocketshipit_add_customer_comment_to_order>
 	    <type>singleton</type>
@@ -138,7 +138,7 @@
 	    <method>addCustomerCommentToOrder</method>
 	  </soularpanic_rocketshipit_add_customer_comment_to_order>
 	</observers>
-      </checkout_type_onepage_save_order_after>
+      </sales_order_place_after>
       <sales_order_shipment_save_before>
 	<observers>
 	  <!--
