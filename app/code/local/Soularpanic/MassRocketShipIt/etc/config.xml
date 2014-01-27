@@ -59,6 +59,13 @@
 	  </modules>
 	</args>
       </adminhtml>
+      <massrocketshipit>
+	<use>admin</use>
+	<args>
+	  <module>Soularpanic_MassRocketShipIt</module>
+	  <frontName>massrocketshipit</frontName>
+	</args>
+      </massrocketshipit>
     </routers>
   </admin>
 

@@ -6,39 +6,23 @@ class Soularpanic_MassRocketShipIt_Sales_OrderManagerController
 extends Fooman_OrderManager_Sales_OrderManagerController {
 
   public function shipallAction() {
-    Mage::log('sp mass order manager controller catching shipallAction',
-	      null,
-	      'rocketshipit_shipments.log');
-
     $this->_processPost();
     parent::shipallAction();
   }
 
   public function invoiceandshipallAction() {
-    Mage::log('sp mass order manager controller catching invoiceandshipallAction',
-	      null,
-	      'rocketshipit_shipments.log');
-
     $this->_processPost();
-    parent::shipallAction();
+    parent::invoiceandshipallAction();
   }
 
   public function captureandshipallAction() {
-    Mage::log('sp mass order manager controller catching captureandshipallAction',
-	      null,
-	      'rocketshipit_shipments.log');
-
     $this->_processPost();
-    parent::shipallAction();
+    parent::captureandshipallAction();
   }
 
   function invoicecaptureshipallAction() {
-    Mage::log('sp mass order manager controller catching invoicecaptureshipallAction',
-	      null,
-	      'rocketshipit_shipments.log');
-
     $this->_processPost();
-    parent::shipallAction();
+    parent::invoicecaptureshipallAction();
   }
 
   private function _processPost() {
