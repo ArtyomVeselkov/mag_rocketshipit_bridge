@@ -9,12 +9,16 @@ class Soularpanic_RocketShipIt_Model_Observer
 	      null,
 	      'rocketshipit_shipments.log');
 
-    $dataHelper = Mage::helper('rocketshipit/data');
-    $rateHelper = Mage::helper('rocketshipit/rates');
-    
-
     $shipment = $observer->getEvent()->getShipment();
     $order = $shipment->getOrder();
+
+    // we should only generate a tracking # on the first shipment->save()
+    if (!($shipment->isObjectNew())) {
+      return;
+    }
+
+    $dataHelper = Mage::helper('rocketshipit/data');
+    $rateHelper = Mage::helper('rocketshipit/rates');
 
     $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
     $carrier = $shippingMethod['carrier'];
