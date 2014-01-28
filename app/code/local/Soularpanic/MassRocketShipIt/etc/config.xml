@@ -47,6 +47,15 @@
       	  </soularpanic_massrocketshipit_changegridjs>
       	</observers>
       </core_block_abstract_to_html_after>
+      <core_block_abstract_prepare_layout_before>
+	<observers>
+	  <soularpanic_massrocketshipit_addmassbuttons>
+	    <type>model</type>
+	    <class>massrocketshipit/observer</class>
+	    <method>addMassButtons</method>
+	  </soularpanic_massrocketshipit_addmassbuttons>
+	</observers>
+      </core_block_abstract_prepare_layout_before>
     </events>
   </adminhtml>
 
@@ -59,13 +68,6 @@
 	  </modules>
 	</args>
       </adminhtml>
-      <massrocketshipit>
-	<use>admin</use>
-	<args>
-	  <module>Soularpanic_MassRocketShipIt</module>
-	  <frontName>massrocketshipit</frontName>
-	</args>
-      </massrocketshipit>
     </routers>
   </admin>
 

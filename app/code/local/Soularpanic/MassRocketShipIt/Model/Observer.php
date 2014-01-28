@@ -44,4 +44,24 @@ class Soularpanic_MassRocketShipIt_Model_Observer {
       $transport->setHtml($html);
     }
   }
+
+  public function addMassButtons($observer) {
+    $block = $observer->getEvent()->getBlock();
+    if (
+      $block instanceof Mage_Adminhtml_Block_Widget_Grid_Massaction
+      || $block instanceof Enterprise_SalesArchive_Block_Adminhtml_Sales_Order_Grid_Massaction
+      || $block instanceof Enterprise_SalesArchive_Block_Adminhtml_sales_orderManager_Grid_Massaction
+    ) {
+      $secure = Mage::app()->getStore()->isCurrentlySecure() ? 'true' : 'false';
+      $controllerName = $block->getRequest()->getControllerName();
+      if($controllerName =='sales_order' ||
+         $controllerName =='adminhtml_sales_order') {
+        $block->addItem('massrocketshipit_batchlabels', array(
+          'label'=> 'Print Packing Slips & Shipping Labels',
+          'url'  => Mage::helper('adminhtml')->getUrl('adminhtml/sales_shippingPrint/batchlabels',$secure ? array('_secure'=>1) : array()),
+        ));
+      }
+    }
+  }
+
 }
