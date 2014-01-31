@@ -31,15 +31,28 @@ extends Mage_Adminhtml_Controller_Action {
       }
       $archive->addFromString("packingslip{$dateStr}.pdf", $pdf->render());
       $archive->close();
+
       if ($flag) {
         /* return $this->_prepareDownloadResponse(
         'packingslip'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(),
         'application/pdf'
         ); */
+	//$downloadContent = new ZipArchive;
+	//$downloadContent->open($archivePath);
+	/* $this->getResponse()
+	->setHeader('Content-Transfer-Encoding', 'binary', true)
+	->setHeader('Content-Description', 'File Transfer' ,true)
+	->setHeader('Expires', '0', true)
+	->setHeader('Cache-Control', 'public', true); */
+	/* $resp =  $this->_prepareDownloadResponse($archiveFileName,
+	array(
+	'type' => 'filename',
+	'value' => $archivePath
+	)); */
+						 //'application/x-zip-compressed');
+	$archiveContent = file_get_contents($archivePath);
 	return $this->_prepareDownloadResponse($archiveFileName,
-					       $archive,
-					       'application/zip'
-					       );
+					       $archiveContent); 
       } else {
         $this->_getSession()->addError($this->__('There are no printable documents related to selected orders.'));
         $this->_redirect('*/*/');
@@ -48,4 +61,3 @@ extends Mage_Adminhtml_Controller_Action {
     $this->_redirect('*/*/');
   }
 }
-?>
