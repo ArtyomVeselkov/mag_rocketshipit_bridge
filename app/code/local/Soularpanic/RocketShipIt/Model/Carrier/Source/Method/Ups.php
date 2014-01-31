@@ -8,4 +8,4 @@ extends Soularpanic_RocketShipIt_Model_Carrier_Source_Method_Abstract {
     return self::CODE;
   }
 }
-?>
+

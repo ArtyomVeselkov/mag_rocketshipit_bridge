@@ -105,4 +105,4 @@ class Soularpanic_RocketShipIt_Model_Observer
   }
   
 }
-?>
+

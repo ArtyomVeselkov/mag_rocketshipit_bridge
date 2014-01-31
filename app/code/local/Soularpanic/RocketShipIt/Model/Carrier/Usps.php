@@ -8,4 +8,4 @@ class Soularpanic_RocketShipIt_Model_Carrier_USPS
     return 'usps';
   }
 }
-?>
+

@@ -142,4 +142,4 @@ extends Mage_Core_Helper_Abstract {
     return md5(serialize($rsiRate));
   }
 }
-?>
+

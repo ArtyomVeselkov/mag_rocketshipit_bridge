@@ -13,4 +13,4 @@ extends Mage_Adminhtml_Block_Sales_Order_Shipment_View {
     ));
   }
 }
-?>
+

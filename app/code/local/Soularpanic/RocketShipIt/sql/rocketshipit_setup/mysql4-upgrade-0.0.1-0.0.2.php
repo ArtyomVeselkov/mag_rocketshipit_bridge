@@ -14,4 +14,4 @@ $installer->run("
     ADD `customer_vehicle_model` varchar(255) DEFAULT NULL;
 ");
 $installer->endSetup();
-?>
+

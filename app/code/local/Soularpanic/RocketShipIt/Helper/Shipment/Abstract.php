@@ -95,4 +95,4 @@ extends Mage_Core_Helper_Abstract {
     return $labelPdf;
   }
 }
-?>
+

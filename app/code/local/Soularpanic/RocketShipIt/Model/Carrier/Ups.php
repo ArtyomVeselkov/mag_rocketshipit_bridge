@@ -29,4 +29,4 @@ class Soularpanic_RocketShipIt_Model_Carrier_UPS
     );
   }
 }
-?>
+

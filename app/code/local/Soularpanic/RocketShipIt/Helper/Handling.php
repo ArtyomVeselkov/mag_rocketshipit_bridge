@@ -113,4 +113,4 @@ extends Mage_Core_Helper_Abstract {
     Mage::log($msg, null, 'rocketshipit_shipments.log');
   }
 }
-?>
+

@@ -85,4 +85,4 @@ extends Fooman_OrderManager_Sales_OrderManagerController {
     return $shippingOverrides;
   }
 }
-?>
+

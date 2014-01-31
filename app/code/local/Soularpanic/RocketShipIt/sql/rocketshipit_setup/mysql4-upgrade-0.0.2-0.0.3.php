@@ -11,4 +11,4 @@ $installer->run("
     WHERE `comment`.`comment` = `quote`.`customer_comment`;
 ");
 $installer->endSetup();
-?>
+

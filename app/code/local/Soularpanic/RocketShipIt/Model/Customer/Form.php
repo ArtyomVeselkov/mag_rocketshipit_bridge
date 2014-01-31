@@ -21,4 +21,4 @@ extends Mage_Customer_Model_Form {
     return $errors;
   }
 }
-?>
+

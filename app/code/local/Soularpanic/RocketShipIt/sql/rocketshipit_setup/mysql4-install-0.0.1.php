@@ -17,4 +17,4 @@ $installer->run("
     ADD `rocketshipit_id` varchar(255) DEFAULT NULL;
 ");
 $installer->endSetup();
-?>
+
