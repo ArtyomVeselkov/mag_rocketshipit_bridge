@@ -44,15 +44,15 @@ extends Mage_Adminhtml_Controller_Action {
 	->setHeader('Content-Description', 'File Transfer' ,true)
 	->setHeader('Expires', '0', true)
 	->setHeader('Cache-Control', 'public', true); */
-	/* $resp =  $this->_prepareDownloadResponse($archiveFileName,
-	array(
-	'type' => 'filename',
-	'value' => $archivePath
-	)); */
+	$this->_prepareDownloadResponse($archiveFileName,
+					array(
+	    'type' => 'filename',
+	    'value' => $archivePath
+	  ));
 						 //'application/x-zip-compressed');
-	$archiveContent = file_get_contents($archivePath);
+	/* $archiveContent = file_get_contents($archivePath);
 	return $this->_prepareDownloadResponse($archiveFileName,
-					       $archiveContent); 
+	$archiveContent); */
       } else {
         $this->_getSession()->addError($this->__('There are no printable documents related to selected orders.'));
         $this->_redirect('*/*/');
