@@ -70,7 +70,9 @@ extends Mage_Adminhtml_Controller_Action {
     }
 
     foreach ($tmpLabels as $tmpLabelKey => $tmpLabelValue) {
-      $documents[$tmpLabelKey] = new Zend_Pdf();
+      if (!$documents[$tmpLabelKey]) {
+	$documents[$tmpLabelKey] = new Zend_Pdf();
+      }
       foreach ($tmpLabelValue->pages as $page) {
 	$documents[$tmpLabelKey]->pages[] = new Zend_Pdf_Page(clone $page);
       }
