@@ -15,7 +15,7 @@
   </adminhtml_sales_order_grid>
   <soularpanic_massrocketshipit_extra_columns>
     <reference name="sales_order.grid">
-      <action method="addColumnAfter">
+      <action method="addColumnConditionalAfter">
 	<columnId>soularpanic_shippingmethod</columnId>
 	<arguments module="ordermanager" translate="header">
 	  <header>Shipping Method</header>
@@ -25,6 +25,7 @@
 	  <filter>Soularpanic_MassRocketShipIt_Block_Adminhtml_Widget_Grid_Column_Renderer_ShippingOverrideInput</filter>
 	</arguments>
 	<after>entity_id</after>
+	<includeUrl>index</includeUrl>
       </action>
     </reference>
   </soularpanic_massrocketshipit_extra_columns>
