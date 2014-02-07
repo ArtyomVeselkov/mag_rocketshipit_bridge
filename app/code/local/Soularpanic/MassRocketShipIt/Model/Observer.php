@@ -2,9 +2,10 @@
 
 class Soularpanic_MassRocketShipIt_Model_Observer {
   public function salesOrderGridCollectionLoadBefore($observer) {
-    Mage::log('before order grid loading observer firing',
-	      null,
-	      'rocketshipit_shipments.log');
+    if (!Mage::helper('trs')->isRequestFrom('index')) {
+      return;
+    }
+
     $collection = $observer->getOrderGridCollection();
     $select = $collection->getSelect();
     $select->joinLeft(array('flat_order'=>$collection->getTable('sales/order')),
