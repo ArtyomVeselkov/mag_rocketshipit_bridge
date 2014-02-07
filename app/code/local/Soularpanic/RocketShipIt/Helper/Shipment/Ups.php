@@ -2,19 +2,40 @@
 class Soularpanic_RocketShipIt_Helper_Shipment_Ups
 extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
-  public function prepareShipment($shipment) {
-    $rsiShipment = parent::prepareShipment($shipment);
-    $rsiShipment = $this->_handleDiacritics($rsiShipment);
-    return $rsiShipment;
+  const SUB_CODE = 'ups';
+
+  public function getPackage($shipment) {
+    $rsiPackage = new \RocketShipIt\Package('ups');
+    $rsiPackage->setParameter('length','6');
+    $rsiPackage->setParameter('width','6');
+    $rsiPackage->setParameter('height','6');
+    
+    $order = $shipment->getOrder();
+    $weight = $order->getWeight();
+    $rsiPackage->setParameter('weight', $weight);
+    
+    $handlingCode = $order->getHandlingCode();
+    if ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN_AND_INSURE)
+    {
+      if (Mage::getStoreConfig('carrier/rocketshipit_global/insurance_use_carrier')) {
+	$rsiPackage->setParameter('insuredCurrency', 'USD');
+	$rsiPackage->setParameter('monetaryValue', $order->getSubtotal());
+      }
+
+      $rsiPackage = $this->_addSignatureService($rsiPackage, $shipment);
+    }
+    elseif ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN) {
+      $rsiPackage = $this->_addSignatureService($rsiPackage, $shipment);
+    }
+
+    return $rsiPackage;
   }
 
-  public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
-    $rsiShipment = parent::asRSIShipment($carrierCode, $address);
-    if (empty($rsiShipment->toCompany)) {
-      $rsiShipment->setParameter('toCompany', $address->getName());
-    }
-    return $rsiShipment;
+
+  public function getServiceType($shippingMethod) {
+    return $shippingMethod['service'];
   }
+
 
   public function addCustomsData($mageShipment, $rsiShipment) {
     Mage::log('UPS shipment helper addCustomsData - start',
@@ -56,6 +77,34 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $rsiShipment;
   }
 
+
+  public function needsCustomsData($destAddr) {
+    return ($destAddr->getCountryId() !== 'US');
+  }
+
+  
+  public function setLabelFormat($rsiShipment;) {
+    $format = $this->_getLabelFormat(self::SUB_CODE);
+    $rsiShipment->setParameter('labelPrintMethodCode', $label);
+    return $rsiShipment;
+  }
+
+  public function prepareShipment($shipment) {
+    $rsiShipment = parent::prepareShipment($shipment);
+    $rsiShipment = $this->_handleDiacritics($rsiShipment);
+    return $rsiShipment;
+  }
+
+  public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
+    $rsiShipment = parent::asRSIShipment($carrierCode, $address);
+    if (empty($rsiShipment->toCompany)) {
+      $rsiShipment->setParameter('toCompany', $address->getName());
+    }
+    return $rsiShipment;
+  }
+
+  
+
   public function extractTrackingNo($shipmentResponse) {
     return $shipmentResponse['trk_main'];
   }
@@ -64,32 +113,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $shipmentResponse['trk_main'];
   }
 
-  public function getPackage($shipment) {
-    $rsiPackage = new \RocketShipIt\Package('ups');
-    $rsiPackage->setParameter('length','6');
-    $rsiPackage->setParameter('width','6');
-    $rsiPackage->setParameter('height','6');
-    
-    $order = $shipment->getOrder();
-    $weight = $order->getWeight();
-    $rsiPackage->setParameter('weight', $weight);
-    
-    $handlingCode = $order->getHandlingCode();
-    if ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN_AND_INSURE)
-    {
-      if (Mage::getStoreConfig('carrier/rocketshipit_global/insurance_use_carrier')) {
-	$rsiPackage->setParameter('insuredCurrency', 'USD');
-	$rsiPackage->setParameter('monetaryValue', $order->getSubtotal());
-      }
-
-      $rsiPackage = $this->_addSignatureService($rsiPackage, $shipment);
-    }
-    elseif ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN) {
-      $rsiPackage = $this->_addSignatureService($rsiPackage, $shipment);
-    }
-
-    return $rsiPackage;
-  }
+  
 
   public function extractShippingLabel($shipmentResponse) {
     $labelImg = $shipmentResponse['pkgs'][0]['label_img'];
@@ -122,9 +146,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	    $country === 'AU');
   }
 
-  public function getServiceType($shippingMethod) {
-    return $shippingMethod['service'];
-  }
+  
 
   function _addSignatureService($rsiPackage, 
 				$shipment) {
@@ -163,9 +185,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $rsiShipment;
   }
 
-  public function needsCustomsData($destAddr) {
-    return ($destAddr->getCountryId() !== 'US');
-  }
+  
 
   function _shouldAddMonetaryValue($shippingAddress) {
     $country = $shippingAddress->getCountryId();
@@ -179,4 +199,3 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
 
 }
-

@@ -2,10 +2,14 @@
 abstract class Soularpanic_RocketShipIt_Helper_Shipment_Abstract 
 extends Mage_Core_Helper_Abstract {
 
+  const THERMAL = 'THERMAL/EPL';
+  const PDF = 'PDF/GIF';
+
   abstract function getPackage($shipment);
   abstract function getServiceType($shippingMethod);
   abstract function addCustomsData($mageShipment, $rsiShipment);
   abstract function needsCustomsData($rsiShipment);
+  abstract function setLabelFormat($rsiShipment);
 
   abstract function extractRocketshipitId($shipmentResponse);
   abstract function extractTrackingNo($shipmentResponse);
@@ -22,7 +26,6 @@ extends Mage_Core_Helper_Abstract {
 
     $rsiShipment = $this->asRSIShipment($carrier, $destAddr);
 
-    //$destCountry = $destAddr->getCountryId();
     if ($this->needsCustomsData($destAddr)) {
       $rsiShipment = $this->addCustomsData($shipment, $rsiShipment);
     }
@@ -30,6 +33,8 @@ extends Mage_Core_Helper_Abstract {
     $rsiPackage = $this->getPackage($shipment);
 
     $rsiShipment->setParameter('service', $serviceType);
+
+    $rsiShipment = $this->setLabelFormat($rsiShipment);
 
     $rsiShipment->addPackageToShipment($rsiPackage);
     return $rsiShipment;
@@ -93,6 +98,10 @@ extends Mage_Core_Helper_Abstract {
       $labelPdf->pages[] = $page;
     }
     return $labelPdf;
+  }
+
+  function _getLabelFormat($carrierSubCode) {
+    return Mage::getStoreConfig("carriers/rocketshipit_{$carrierSubCode}/label_format");
   }
 }
 

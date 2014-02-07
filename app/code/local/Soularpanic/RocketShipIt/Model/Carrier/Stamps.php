@@ -82,5 +82,12 @@ implements Mage_Shipping_Model_Carrier_Interface
       'US-EMI:Legal-Flat-Rate-Envelope' => 'USPS Express Mail International - Legal Flat Rate Envelope'
     );
   }
+
+  public function getLabelFormats() {
+    return array(
+      'Gif' => 'Standard - Gif'
+      ,'Epl' => 'Thermal - EPL'
+    );
+  }
 }
 

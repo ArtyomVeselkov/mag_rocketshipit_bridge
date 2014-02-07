@@ -5,10 +5,6 @@ class Soularpanic_RocketShipIt_Model_Observer
 
   public function trackAndLabel(Varien_Event_Observer $observer)
   {
-    Mage::log('rocketshipit observer firing',
-	      null,
-	      'rocketshipit_shipments.log');
-
     $shipment = $observer->getEvent()->getShipment();
     $order = $shipment->getOrder();
 
@@ -32,10 +28,10 @@ class Soularpanic_RocketShipIt_Model_Observer
       $dataHelper->log("RSI shipment submission error!\n".$rsiShipment->debug());
       throw $e;
     }
-    
-    Mage::log('rocketshipit observer generated label: '.print_r($label,true),
-	      null,
-	      'rocketshipit_shipments.log');
+
+    /* Mage::log('rocketshipit observer generated label: '.print_r($label,true),
+    null,
+    'rocketshipit_shipments.log'); */
 
     if(is_string($label) && strpos($label, 'Error') >= 0) {
       Mage::log("Label generation failed:\n".$rsiShipment->debug(), null, 'rocketshipit_errors.log');
@@ -56,7 +52,7 @@ class Soularpanic_RocketShipIt_Model_Observer
 
     $rsiId = $shipmentHelper->extractRocketshipitId($label);
     $shipment->setRocketshipitId($rsiId);
-    //die('wait');
+    die('wait');
   }
 
   public function addHandlingCodeToQuote(Varien_Event_Observer $observer) {

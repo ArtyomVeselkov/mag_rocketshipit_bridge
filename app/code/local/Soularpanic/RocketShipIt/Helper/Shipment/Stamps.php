@@ -2,6 +2,71 @@
 class Soularpanic_RocketShipIt_Helper_Shipment_Stamps
 extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
+  const SUB_CODE = 'stamps';
+  const LOCAL_FORMAT = 'localFormat';
+  const DB_FORMAT = 'dbFormat';
+  const EXTRACTOR = 'extractor';
+
+  protected $_labelMap;
+
+  function __construct() {
+    $this->_labelMap = array (
+      array (
+	self::LOCAL_FORMAT => 'Epl'
+	,self::DB_FORMAT => self::THERMAL
+	,self::EXTRACTOR => '_extractEplLabel'
+      )
+      ,array (
+	self::LOCAL_FORMAT => 'Gif'
+	,self::DB_FORMAT => self::PDF
+	,self::EXTRACTOR => '_extractGifLabel'
+      )
+    );
+  }
+
+  public function getPackage($shipment) {
+    $rateHelper = Mage::helper('rocketshipit/rates');
+    $dataHelper = Mage::helper('rocketshipit/data');
+
+    $destAddr = $shipment->getShippingAddress();
+    $order = $shipment->getOrder();
+    $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
+
+    $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
+    if ($this->needsCustomsData($destAddr)) {
+      $stampsRate->setParameter('weightPounds', $order->getWeight());
+      $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
+    }
+    
+    $stampsResp = $stampsRate->getAllRates();
+    $stampsRates = $stampsResp->Rates->Rate;
+
+    $serviceArr = $this->_parseStampsShippingMethod($shippingMethod);
+    $serviceType = $serviceArr['serviceType'];
+    $packageType = $serviceArr['packageType'];
+    
+    $addOns = $this->_getAddOns($shipment,
+				$order->getHandlingCode(),
+				$serviceType);
+
+    foreach ($stampsRates as $stampsRate) {
+      if ($stampsRate->ServiceType === $serviceType
+	  && $stampsRate->PackageType === $packageType) {
+	$rsiPackage = $stampsRate;
+	$rsiPackage->AddOns = $addOns;
+	break;
+      }
+    }
+    return $rsiPackage;
+  }
+
+
+  public function getServiceType($shippingMethod) {
+    $method = $this->_parseStampsShippingMethod($shippingMethod);
+    return $method['serviceType'];
+  }
+
+
   public function addCustomsData($mageShipment, $rsiShipment) {
     Mage::log('Stamps shipment helper addCustomsData - start',
 	      null, 'rocketshipit_shipments.log');
@@ -30,6 +95,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     return $rsiShipment;
   }
 
+
   public function needsCustomsData($destAddr) {
     $countryCode = $destAddr->getCountryId();
     $regionCode = $destAddr->getRegionCode();
@@ -39,62 +105,74 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	    $regionCode === 'AA');
   }
 
-  public function getPackage($shipment) {
-    $rateHelper = Mage::helper('rocketshipit/rates');
-    $dataHelper = Mage::helper('rocketshipit/data');
 
-    $destAddr = $shipment->getShippingAddress();
-    $order = $shipment->getOrder();
-    $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
-
-    $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
-    if ($this->needsCustomsData($destAddr)) {
-      $stampsRate->setParameter('weightPounds', $order->getWeight());
-      $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
-    }
-    
-    $stampsResp = $stampsRate->getAllRates();
-    $stampsRates = $stampsResp->Rates->Rate;
-
-    $serviceArr = $this->_parseStampsShippingMethod($shippingMethod);
-    $serviceType = $serviceArr['serviceType'];
-    $packageType = $serviceArr['packageType'];
-    
-    // $addOns = $this->_getAddOns($order->getHandlingCode(),
-    // 				$serviceType,
-    // 				$destAddr);
-    $addOns = $this->_getAddOns($shipment,
-				$order->getHandlingCode(),
-				$serviceType);
-
-    foreach ($stampsRates as $stampsRate) {
-      if ($stampsRate->ServiceType === $serviceType
-	  && $stampsRate->PackageType === $packageType) {
-	$rsiPackage = $stampsRate;
-	$rsiPackage->AddOns = $addOns;
-	break;
-      }
-    }
-    return $rsiPackage;
+  public function setLabelFormat($rsiShipment) {
+    $format = $this->_getLabelFormat(self::SUB_CODE);
+    $rsiShipment->setParameter('imageType', $format);
+    return $rsiShipment;
   }
 
-  public function extractShippingLabel($shipmentResponse) {
-    $labelUrlsStr = $shipmentResponse->URL;
-    $labelUrls = explode(' ', $labelUrlsStr);
-    $labelImages = $this->_fetchLabelImages($labelUrls);
 
-    $labelPdf = $this->convertImagesToPdf($labelImages);
-    $pdfStr = $labelPdf->render();
-
-    return $pdfStr;
+  public function extractRocketshipitId($shipmentResponse) {
+    return $shipmentResponse->StampsTxID;
   }
+
 
   public function extractTrackingNo($shipmentResponse) {
     return $shipmentResponse->TrackingNumber;
   }
 
-  public function extractRocketshipitId($shipmentResponse) {
-    return $shipmentResponse->StampsTxID;
+
+
+  public function extractShippingLabel($shipmentResponse) {
+    $labelUrlsStr = $shipmentResponse->URL;
+    $labelUrls = explode(' ', $labelUrlsStr);
+
+    $localFormat = $this->_getLabelFormat(self::SUB_CODE);
+    $dataHelper = Mage::helper('rocketshipit');
+    $map = $dataHelper->fetchMapEntry(self::LOCAL_FORMAT, $localFormat, $this->_labelMap);
+    
+
+    $labelStr = call_user_func(array($this, $map['extractor']), $labelUrls);
+
+    return $labelStr;
+    //$labelImages = $this->_fetchLabelImages($labelUrls);
+
+    //$labelPdf = $this->convertImagesToPdf($labelImages);
+    //$pdfStr = $labelPdf->render();
+
+    //return $pdfStr;
+  }
+
+
+  /* function _getDbLabelFormat() {
+  $stampsFormat = $this->_getLabelFormat(self::SUB_CODE);
+  $map = array(
+  'Epl' => self::THERMAL
+  ,'Gif' => self::PDF
+  );
+  $dbFormat = $map[$stampsFormat];
+  if (!$dbFormat) {
+  Mage::throwException("No corresponding database value for key \"{$stampsFormat}\".");
+  }
+  return $dbFormat;
+  } */
+
+
+  function _extractEplLabel($urlArr) {
+    $data = $this->_fetchLabelData($urlArr);
+    return $data;
+  }
+
+  function _extractGifLabel($urlArr) {
+    $data = $this->_fetchLabelData($urlArr);
+    $images = array();
+    foreach ($data as $gifStr) {
+      $images[] = imagecreatefromstring($gifStr);
+    }
+    $labelPdf = $this->convertImagesToPdf($images);
+    $labelStr = $labelPdf->render();
+    return $labelStr;
   }
 
   function _carrierRequiresDeliveryConfirmation($carrierCode, $countryCode) {
@@ -129,25 +207,20 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	     $carrierCode === 'US-EMI');
   }
 
-  function _fetchLabelImages($labelUrls) {
-    $labelResources = array();
+  function _fetchLabelData($labelUrls) {
+    $data = array();
     foreach ($labelUrls as $labelUrl) {
       $curlObj = curl_init();
       curl_setopt($curlObj, CURLOPT_URL, $labelUrl);
       curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($curlObj, CURLOPT_CONNECTTIMEOUT, 0);
       $labelStr = curl_exec($curlObj);
-      $resource = imagecreatefromstring($labelStr);
-      $labelResources[] = $resource;
+      $data[] = $labelStr;
       curl_close($curlObj);
     }
-    return $labelResources;
+    return $data;
   }
 
-  public function getServiceType($shippingMethod) {
-    $method = $this->_parseStampsShippingMethod($shippingMethod);
-    return $method['serviceType'];
-  }
 
   function _parseStampsShippingMethod($shippingMethod) {
     $serviceArr = explode(':', $shippingMethod['service']);
@@ -157,7 +230,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 		 'packageType' => $packageType);
   }
 
-  //function _getAddOns($handlingCode, $carrierCode, $destAddr) {
+
   function _getAddOns($shipment, $handlingCode, $carrierCode) {
     $destAddr = $shipment->getShippingAddress();
     $needDeliveryConfirmation = $this->_carrierRequiresDeliveryConfirmation($carrierCode, $destAddr->getCountryId());
@@ -180,9 +253,6 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
       }
 
       $addOns = $this->_handleSignatureAddOn($addOns, $carrierCode, $destAddr);
-      // $sign = new \stdClass();
-      // $sign->AddOnType = 'US-A-SC';
-      // $addOns[] = $sign;
     }
     elseif ($handlingCode === Soularpanic_RocketShipIt_Helper_Handling::SIGN) {
       $order = $shipment->getOrder();
@@ -194,15 +264,11 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	$confirm->AddOnType = 'US-A-DC';
 	$addOns[] = $confirm;
       }
-      /* elseif ($carrierCode == 'US-XM') {
-      $noSig = new \stdClass();
-      $noSig->AddOnType = 'US-A-WDS';
-      $addOns[] = $noSig;
-      } */
     }
     
     return $addOns;
   }
+
 
   function _handleSignatureAddOn($addOns, $carrierCode, $order) {
     $allowsDeliverySignature = $this->_carrierAllowsDeliverySignature($carrierCode);
