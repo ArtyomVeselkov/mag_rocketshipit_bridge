@@ -4,6 +4,23 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
   const SUB_CODE = 'ups';
 
+  protected $_labelMap;
+
+  function __construct() {
+    $this->_labelMap = array (
+      array (
+	self::LOCAL_FORMAT => 'EPL'
+	,self::DB_FORMAT => self::THERMAL
+	,self::EXTRACTOR => '_extractEplLabel'
+      )
+      ,array (
+	self::LOCAL_FORMAT => 'GIF'
+	,self::DB_FORMAT => self::PDF
+	,self::EXTRACTOR => '_extractGifLabel'
+      )
+    );
+  }
+
   public function getPackage($shipment) {
     $rsiPackage = new \RocketShipIt\Package('ups');
     $rsiPackage->setParameter('length','6');
@@ -83,17 +100,19 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
   }
 
   
-  public function setLabelFormat($rsiShipment;) {
+  public function setLabelFormat($rsiShipment) {
     $format = $this->_getLabelFormat(self::SUB_CODE);
-    $rsiShipment->setParameter('labelPrintMethodCode', $label);
+    $rsiShipment->setParameter('labelPrintMethodCode', $format);
     return $rsiShipment;
   }
+
 
   public function prepareShipment($shipment) {
     $rsiShipment = parent::prepareShipment($shipment);
     $rsiShipment = $this->_handleDiacritics($rsiShipment);
     return $rsiShipment;
   }
+
 
   public function asRSIShipment($carrierCode, Mage_Sales_Model_Order_Address $address) {
     $rsiShipment = parent::asRSIShipment($carrierCode, $address);
@@ -102,21 +121,46 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     }
     return $rsiShipment;
   }
-
   
 
   public function extractTrackingNo($shipmentResponse) {
     return $shipmentResponse['trk_main'];
   }
 
+
   public function extractRocketshipitId($shipmentResponse) {
     return $shipmentResponse['trk_main'];
   }
-
   
 
   public function extractShippingLabel($shipmentResponse) {
-    $labelImg = $shipmentResponse['pkgs'][0]['label_img'];
+    $localFormat = $this->_getLabelFormat(self::SUB_CODE);
+    $dataHelper = Mage::helper('rocketshipit');
+    $map = $dataHelper->fetchMapEntry(self::LOCAL_FORMAT, $localFormat, $this->_labelMap);
+
+    $label = call_user_func(array($this, $map[self::EXTRACTOR]), $shipmentResponse);
+    return $label;
+  }
+
+  function _extractEplLabel($shipmentResponse) {
+
+    $labels = array();
+    foreach ($shipmentResponse['pkgs'] as $package) {
+      $labels[] = base64_decode($package['label_img']);
+    }
+
+    $customsDocs = $shipmentResponse['shipping_docs'];
+    if ($customsDocs) {
+      $customsPdf = Zend_Pdf::parse(base64_decode($customsDocs));
+    }
+    $customsStr = $customsPdf ? $customsPdf->render() : null;
+
+    return array(self::LABEL_FORMAT => self::THERMAL,
+		 self::LABEL_DATA => serialize($labels),
+		 self::LABEL_CUSTOMS => $customsStr);
+  }
+
+  function _extractGifLabel($shipmentResponse) {
     $labelResources = array();
     foreach ($shipmentResponse['pkgs'] as $package) {
       $labelResources[] = imagecreatefromstring(base64_decode($package['label_img']));
@@ -125,13 +169,17 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $customsDocs = $shipmentResponse['shipping_docs'];
     if ($customsDocs) {
       $customsPdf = Zend_Pdf::parse(base64_decode($customsDocs));
-      foreach ($customsPdf->pages as $customsPage) {
-	$labelPdf->pages[] = clone $customsPage;
-      }
+      /* foreach ($customsPdf->pages as $customsPage) {
+      $labelPdf->pages[] = clone $customsPage;
+      } */
     }
     
     $pdfStr = $labelPdf->render();
-    return $pdfStr;
+    $customsStr = $customsPdf ? $customsPdf->render() : null;
+
+    return array(self::LABEL_FORMAT => self::PDF,
+		 self::LABEL_DATA => $pdfStr,
+		 self::LABEL_CUSTOMS => $customsStr);
   }
 
   public function isSignedDeliveryAvailable(Mage_Sales_Model_Order_Address $address) {

@@ -6,6 +6,7 @@ extends Mage_Adminhtml_Controller_Action {
   const USPS_SLIPS = 'USPS_PACKING_SLIPS';
   const UPS_LABELS = 'UPS_SHIPPING_LABELS';
   const USPS_LABELS = 'USPS_SHIPPING_LABELS';
+  const UPS_CUSTOMS = 'UPS_CUSTOMS_INVOICES';
 
   public function batchlabelsAction() {
     $orderIds = $this->getRequest()->getPost('order_ids');
@@ -14,7 +15,7 @@ extends Mage_Adminhtml_Controller_Action {
     if (!empty($orderIds)) {
       foreach ($orderIds as $orderId) {
 	$order = Mage::getModel('sales/order')->load($orderId);
-	$documents = $this->_sortDocuments($documents, $order);
+	$documents = $this->_sortAllDocuments($documents, $order);
       }
 
       if ($documents) {
@@ -27,7 +28,7 @@ extends Mage_Adminhtml_Controller_Action {
     $this->_redirect('*/*');
   }
 
-  function _sortDocuments($documents, $order) {
+  function _sortAllDocuments($documents, $order) {
     $shipments = $order->getShipmentsCollection();
     if (!$shipments->getSize()) {
       return $documents;
@@ -37,48 +38,156 @@ extends Mage_Adminhtml_Controller_Action {
 		   ->parseShippingMethod($order->getShippingMethod());
     $carrier = strtoupper($shippingMethod['carrier']);
     
-    if ($carrier === 'STAMPS') {
-      $slipKey = self::USPS_SLIPS;
-      $labelKey = self::USPS_LABELS;
-    }
-    elseif ($carrier === 'UPS') {
-      $slipKey = self::UPS_SLIPS;
-      $labelKey = self::UPS_LABELS;
-    }
-    else {
-      Mage::throwException("Order {$order->getIncrementId()} had an invalid carrier code ({$carrier}) associated with it.");
-    }
+    $keys = $this->_getKeys($carrier);
+    $slipKey = $keys['slip'];
+    $labelKey = $keys['label'];
     
-    $slips = $documents[$slipKey];
-    if (!isset($slips)){
-      $documents[$slipKey] = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
-    } else {
-      $addlSlips = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
-      $slips->pages = array_merge ($slips->pages, $addlSlips->pages);
-    }
+    
+    $documents[$slipKey] = $this->_addPackingSlips($documents[$slipKey], $order);
 
-    $tmpLabels = array();
+    //$documents[$labelKey] = $this->_handleLabels($documents[$labelKey], $order);
+    $tmpPdfLabels = array();
+    $tmpEplLabels = array();
     foreach ($shipments as $shipment) {
-      $labels = $tmpLabels[$labelKey];
-      $shippingLabel = Zend_Pdf::parse($shipment->getShippingLabel());
-      if (!isset($labels)) {
-	$tmpLabels[$labelKey] = $shippingLabel;
-      }
-      else {
-	$labels->pages = array_merge($labels->pages, $shippingLabel->pages);
-      }
-    }
+      $shipmentFormat = $shipment->getShippingLabelFormat();
+      if ($shipmentFormat === 
+	  Soularpanic_RocketShipIt_Helper_Shipment_Abstract::THERMAL) {
+	//$labelObj = unserialize($shipment->getShippingLabel());
+	$this->_printEplLabel($shipment);
 
-    foreach ($tmpLabels as $tmpLabelKey => $tmpLabelValue) {
-      if (!$documents[$tmpLabelKey]) {
-	$documents[$tmpLabelKey] = new Zend_Pdf();
       }
-      foreach ($tmpLabelValue->pages as $page) {
-	$documents[$tmpLabelKey]->pages[] = new Zend_Pdf_Page(clone $page);
+      elseif ($shipmentFormat === 
+	      Soularpanic_RocketShipIt_Helper_Shipment_Abstract::PDF) {
+	$labels = $tmpPdfLabels[$labelKey];
+	$shippingLabel = Zend_Pdf::parse($shipment->getShippingLabel());
+	if (!isset($labels)) {
+	  $tmpPdfLabels[$labelKey] = $shippingLabel;
+	}
+	else {
+	  $labels->pages = array_merge($labels->pages, $shippingLabel->pages);
+	}
+      }
+      $customsInvoiceData = $shipment->getShippingLabelCustoms();
+      if ($customsInvoiceData) {
+	$customsInvoice = Zend_Pdf::parse($customsInvoiceData);
+	$labels = $tmpPdfLabels[$labelKey];
+	if (!isset($labels)) {
+	  $tmpPdfLabels[$labelKey] = $customsInvoice;
+	}
+	else {
+	  $labels->pages = array_merge($labels->pages, $customsInvoice->pages);
+	}
       }
     }
+    foreach ($tmpPdfLabels as $tmpPdfLabelKey => $tmpPdfLabelValue) {
+      if (!$documents[$tmpPdfLabelKey]) {
+	$documents[$tmpPdfLabelKey] = new Zend_Pdf();
+      }
+      foreach ($tmpPdfLabelValue->pages as $page) {
+	$documents[$tmpPdfLabelKey]->pages[] = new Zend_Pdf_Page(clone $page);
+      }
+    } 
 
     return $documents;
+  }
+
+  function _handleLabels($currentLabels, $order) {
+    $shipments = $order->getShipmentsCollection();
+    $pdfAccum = null;
+    foreach ($shipments as $shipment) {
+      $shipmentFormat = $shipment->getShippingLabelFormat();
+      if ($shipmentFormat ===
+	  Soularpanic_RocketShipIt_Helper_Shipment_Abstract::THERMAL) {
+	$this->_printEplLabel($shipment);
+      }
+      /* elseif ($shipmentFormat ===
+      Soularpanic_RocketShipIt_Helper_Shipment_Abstract::PDF) {
+      $pdfAccum = $this->_addPdfLabels($pdfAccum, $shipment);
+      } */
+      $pdfAccum = $this->_addPdfLabels($pdfAccum, $shipment);
+    }
+
+    $mergedLabels = $this->_pdfCopyMerge($currentLabels, $pdfAccum);
+    /* $mergedLabels = $currentLabels;
+    if (!isset($mergedLabels)) {
+    $mergedLabels = $pdfAccum;
+    }
+    else {
+    $mergedLabels->pages = array_merge($mergedLabels->pages, $pdfAccum->pages);
+    } */
+    return $mergedLabels;
+  }
+
+  function _printEplLabel($shipment) {
+    $label = unserialize($shipment->getShippingLabel());
+    $printer = Mage::helper('rocketshipit/print');
+    $printerUrl = $printer->getThermalUrl();
+    foreach ($label as $page) {
+      $resp = $printer->printThermal($page, $printerUrl);
+      Mage::log("Thermal print response for shipment {$shipment->getId()}: $resp"
+		,null, 'rsi_thermal.log');
+    }
+  }
+
+  function _pdfCopyMerge($currentLabels, $addlLabels) {
+    $mergedLabels = $currentLabels;
+    if ($addlLabels) {
+      if (!$mergedLabels) {
+	$mergedLabels = new Zend_Pdf();
+      }
+      $extractor = new Zend_Pdf_Resource_Extractor();
+      foreach ($addlLabels->pages as $page) {
+	//$clonedPage = new Zend_Pdf_Page($page);
+	//$clonedPage = Zend_Pdf::newPage($page);
+	//$clonedPage = $extractor->clonePage($page);
+	$clonedPage = clone $page;
+	$mergedLabels->pages[] = $clonedPage;
+      }
+    }
+    return $mergedLabels;
+  }
+
+  function _addPdfLabels($currentLabels, $shipment) {
+    $shippingLabelData = $shipment->getShippingLabel();
+    $customsInvoiceData = $shipment->getShippingLabelCustoms();
+    
+    $mergedLabels = $currentLabels;
+    if ($shippingLabelData) {
+      $label = Zend_Pdf::parse($shippingLabelData);
+      if (!isset($mergedLabels)) {
+	$mergedLabels = $label;
+      }
+      else {
+	$mergedLabels->pages = array_merge($mergedLabels->pages, $label->pages);
+      }
+    }
+
+    if ($customsInvoiceData) {
+      $customs = Zend_Pdf::parse($customsInvoiceData);
+      if (!isset($mergedLabels)) {
+	$mergedLabels = $customs;
+      }
+      else {
+	$mergedLabels->pages = array_merge($mergedLabels->pages, $customs->pages);
+      }
+    }
+    
+    return $mergedLabels;
+  }
+
+  function _addPackingSlips($currentSlips, $order) {
+    $shipments = $order->getShipmentsCollection();
+    $addlSlips = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
+
+    if (!isset($currentSlips)) {
+      $mergedSlips = $addlSlips;
+    }
+    else {
+      $mergedSlips = $currentSlips;
+      $mergedSlips->pages = array_merge($mergedSlips->pages, $addlSlips->pages);
+    }
+
+    return $mergedSlips;
   }
 
   function _prepareDocumentsForDownload($documents) {
@@ -92,6 +201,22 @@ extends Mage_Adminhtml_Controller_Action {
 				    array('type' => 'filename',
 					  'value' => $archivePath
 					  ));
+  }
+
+  function _getKeys($carrier) {
+    if ($carrier === 'STAMPS') {
+      $slipKey = self::USPS_SLIPS;
+      $labelKey = self::USPS_LABELS;
+    }
+    elseif ($carrier === 'UPS') {
+      $slipKey = self::UPS_SLIPS;
+      $labelKey = self::UPS_LABELS;
+    }
+    else {
+      Mage::throwException("Order {$order->getIncrementId()} had an invalid carrier code ({$carrier}) associated with it.");
+    }
+    return array('slip' => $slipKey,
+		 'label' => $labelKey);
   }
 
   function _prepareArchive($path, $documents) {

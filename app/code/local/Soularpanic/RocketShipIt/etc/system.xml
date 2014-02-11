@@ -140,6 +140,14 @@
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
 	    </insurance_use_carrier>
+	    <thermal_printer_address translate="label">
+	      <label>Thermal Printer Address</label>
+	      <frontend_type>text</frontend_type>
+	      <sort_order>120</sort_order>
+	      <show_in_default>1</show_in_default>
+	      <show_in_website>1</show_in_website>
+	      <show_in_store>1</show_in_store>
+	    </thermal_printer_address>
 	  </fields>
 	</rocketshipit_global>
 	<rocketshipit_ups translate="label" module="shipping">
@@ -228,25 +236,6 @@
 	    </free_shipping_filter>
 	  </fields>
 	</rocketshipit_ups>
-	<rocketshipit_usps translate="label" module="shipping">
-	  <label>RocketShipIt - USPS</label>
-	  <frontend_type>text</frontend_type>
-	  <sort_order>9002</sort_order>
-	  <show_in_default>1</show_in_default>
-	  <show_in_website>1</show_in_website>
-	  <show_in_store>1</show_in_store>
-	  <fields>
-	    <active translate="label">
-	      <label>Enabled</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>1</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </active>
-	  </fields>
-	</rocketshipit_usps>
 	<rocketshipit_stamps translate="label" module="shipping">
 	  <label>RocketShipIt - Stamps</label>
 	  <frontend_type>text</frontend_type>

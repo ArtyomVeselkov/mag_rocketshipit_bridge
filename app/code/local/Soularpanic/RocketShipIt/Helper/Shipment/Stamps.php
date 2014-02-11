@@ -3,9 +3,6 @@ class Soularpanic_RocketShipIt_Helper_Shipment_Stamps
 extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 
   const SUB_CODE = 'stamps';
-  const LOCAL_FORMAT = 'localFormat';
-  const DB_FORMAT = 'dbFormat';
-  const EXTRACTOR = 'extractor';
 
   protected $_labelMap;
 
@@ -123,7 +120,6 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
   }
 
 
-
   public function extractShippingLabel($shipmentResponse) {
     $labelUrlsStr = $shipmentResponse->URL;
     $labelUrls = explode(' ', $labelUrlsStr);
@@ -133,36 +129,18 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $map = $dataHelper->fetchMapEntry(self::LOCAL_FORMAT, $localFormat, $this->_labelMap);
     
 
-    $labelStr = call_user_func(array($this, $map['extractor']), $labelUrls);
+    $labelStr = call_user_func(array($this, $map[self::EXTRACTOR]), $labelUrls);
 
-    return $labelStr;
-    //$labelImages = $this->_fetchLabelImages($labelUrls);
-
-    //$labelPdf = $this->convertImagesToPdf($labelImages);
-    //$pdfStr = $labelPdf->render();
-
-    //return $pdfStr;
+    return array(self::LABEL_FORMAT => $map[self::DB_FORMAT],
+		 self::LABEL_DATA => $labelStr);
   }
-
-
-  /* function _getDbLabelFormat() {
-  $stampsFormat = $this->_getLabelFormat(self::SUB_CODE);
-  $map = array(
-  'Epl' => self::THERMAL
-  ,'Gif' => self::PDF
-  );
-  $dbFormat = $map[$stampsFormat];
-  if (!$dbFormat) {
-  Mage::throwException("No corresponding database value for key \"{$stampsFormat}\".");
-  }
-  return $dbFormat;
-  } */
 
 
   function _extractEplLabel($urlArr) {
     $data = $this->_fetchLabelData($urlArr);
-    return $data;
+    return serialize($data);
   }
+
 
   function _extractGifLabel($urlArr) {
     $data = $this->_fetchLabelData($urlArr);
@@ -174,6 +152,7 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $labelStr = $labelPdf->render();
     return $labelStr;
   }
+
 
   function _carrierRequiresDeliveryConfirmation($carrierCode, $countryCode) {
     $fciDeliveryConfirmCountryCodes = array('AU' //Australia
@@ -200,12 +179,14 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
 	    $carrierCode != 'US-PMI' &&
 	    $carrierCode != 'US-EMI');
   }
+
   
   function _carrierAllowsDeliverySignature($carrierCode) {
     return !($carrierCode === 'US-PMI' ||
 	     $carrierCode === 'US-FCI' ||
 	     $carrierCode === 'US-EMI');
   }
+
 
   function _fetchLabelData($labelUrls) {
     $data = array();

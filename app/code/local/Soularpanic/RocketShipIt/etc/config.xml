@@ -3,15 +3,13 @@
 <config>
   <modules>
     <Soularpanic_RocketShipIt>
-      <version>0.0.3</version>
+      <version>0.0.4</version>
     </Soularpanic_RocketShipIt>
   </modules>
 
   <global>
     <models>
-      <!-- model group alias for the module -->
       <rocketshipit>
-	<!-- base class name -->
 	<class>Soularpanic_RocketShipIt_Model</class>
 	<resourceModel>rocketshipit_resource</resourceModel>
       </rocketshipit>
@@ -75,18 +73,6 @@
       </sales_convert_quote>
     </fieldsets>
 
-    <!-- <sales> -->
-    <!--   <quote> -->
-    <!-- 	<totals> -->
-    <!-- 	  <rocketshipit> -->
-    <!-- 	    <class>rocketshipit/sales_quote_address_total_addons</class> -->
-    <!-- 	    <after>shipping</after> -->
-    <!-- 	    <before>grand_total</before> -->
-    <!-- 	  </rocketshipit> -->
-    <!-- 	</totals> -->
-    <!--   </quote> -->
-    <!-- </sales> -->
-
     <events>
       <core_block_abstract_prepare_layout_before>
 	<observers>
@@ -141,22 +127,8 @@
       </sales_order_place_after>
       <sales_order_shipment_save_before>
 	<observers>
-	  <!--
-	      Unique id for event's observers node. By convention, the name of the
-	      module in lowercase, but since I expect that we'll have multiple 
-	      observers with our module, I'm adding some sort of functional 
-	      identifier thingy
-	  -->
 	  <soularpanic_rocketshipit_track_and_label>
-	  <!-- <rocketshipit_foo> -->
-	  <!-- <soularpaonic_rocketshipit_ship_before> -->
-            <!--<namespace_modulename_ship_before>-->
             <type>singleton</type>
-            <!-- <class>Namespace_Modulename_Model_Observer</class> -->
-	    <!-- 
-		 Model to be instantiated. I think the first part should be the alias
-		 defined above and the second part is the file name.
-	    -->
 	    <class>rocketshipit/observer</class>
             <method>trackAndLabel</method>
 	  </soularpanic_rocketshipit_track_and_label>

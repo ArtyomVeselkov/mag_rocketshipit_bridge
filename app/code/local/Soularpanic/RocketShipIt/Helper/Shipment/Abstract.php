@@ -2,6 +2,14 @@
 abstract class Soularpanic_RocketShipIt_Helper_Shipment_Abstract 
 extends Mage_Core_Helper_Abstract {
 
+  const LOCAL_FORMAT = 'localFormat';
+  const DB_FORMAT = 'dbFormat';
+  const EXTRACTOR = 'extractor';
+
+  const LABEL_DATA = 'labelData';
+  const LABEL_FORMAT = 'labelFormat';
+  const LABEL_CUSTOMS = 'labelCustoms';
+
   const THERMAL = 'THERMAL/EPL';
   const PDF = 'PDF/GIF';
 
