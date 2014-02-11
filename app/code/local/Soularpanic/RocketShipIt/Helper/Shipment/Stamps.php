@@ -30,8 +30,9 @@ extends Soularpanic_RocketShipIt_Helper_Shipment_Abstract {
     $shippingMethod = $dataHelper->parseShippingMethod($order->getShippingMethod());
 
     $stampsRate = $rateHelper->getRSIRate('stamps', $destAddr);
+    $stampsRate->setParameter('weightPounds', $order->getWeight());
+
     if ($this->needsCustomsData($destAddr)) {
-      $stampsRate->setParameter('weightPounds', $order->getWeight());
       $stampsRate->setParameter('declaredValue', $order->getCustomsValue());
     }
     

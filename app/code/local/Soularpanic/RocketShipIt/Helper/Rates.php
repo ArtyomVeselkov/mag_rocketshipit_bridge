@@ -38,6 +38,9 @@ extends Mage_Core_Helper_Abstract {
     $rsiRates = $this->getRSIRate($carrierCode, $addrObj);
     if ($weight != null) {
       $rsiRates->setParameter('weight', $weight);
+      if (strtoupper($carrierCode) === 'STAMPS') {
+	$rsiRates->setParameter('weightPounds', $weight);
+      }
     }
 
     $cacheKey = $this->_getRateResponseCacheKey($rsiRates);
