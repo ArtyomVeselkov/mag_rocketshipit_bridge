@@ -28,5 +28,12 @@ class Soularpanic_RocketShipIt_Model_Carrier_UPS
       '65' => 'UPS Worldwide Saver'
     );
   }
+
+  public function getLabelFormats() {
+    return array(
+      'GIF' => 'Standard - Gif'
+      ,'EPL' => 'Thermal - EPL'
+    );
+  }
 }
 

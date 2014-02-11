@@ -48,4 +48,16 @@ extends Mage_Core_Helper_Abstract {
   public function log($msg, $level = null) {
     Mage::log($msg, $level, 'rocketshipit_shipments.log');
   }
+
+  public function fetchMapEntry($entryKey, $entryValue, $map) {
+    $foundEntry = null;
+    foreach ($map as $entry) {
+      if ($entry[$entryKey] === $entryValue) {
+	$foundEntry = $entry;
+	break;
+      }
+    }
+
+    return $foundEntry;
+  }
 }
