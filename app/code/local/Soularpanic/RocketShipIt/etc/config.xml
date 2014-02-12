@@ -203,6 +203,7 @@
       </rocketshipit_global>
       <rocketshipit_ups>
 	<model>rocketshipit/carrier_ups</model>
+	<label_format>GIF</label_format>
       </rocketshipit_ups>
       <rocketshipit_usps>
       	<model>rocketshipit/carrier_usps</model>
@@ -210,6 +211,7 @@
       <rocketshipit_stamps>
 	<model>rocketshipit/carrier_stamps</model>
 	<showmethod>1</showmethod>
+	<label_format>Gif</label_format>
       </rocketshipit_stamps>
     </carriers>
   </default>
