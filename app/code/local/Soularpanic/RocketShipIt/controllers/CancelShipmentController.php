@@ -42,8 +42,8 @@ extends Mage_Adminhtml_Controller_Action {
       return;
     }
 
-    $deleteMsg = sprintf("Deleted %s shipment with ID of [%s]",
-			 $carrier, $voidCode);
+    $msg = "Deleted %s shipment with Shipment # [%s] and RocketshipIt ID of [%s]";
+    $deleteMsg = sprintf($msg, $carrier, $shipment->getIncrementId(), $voidCode);
     $this->deleteShipment($shipment, $deleteMsg);
 
     $this->_redirect('adminhtml/sales_shipment/');
@@ -73,6 +73,8 @@ extends Mage_Adminhtml_Controller_Action {
 
     $shipment->delete();
     $order->save();
+
+    $this->_getSession()->addSuccess($deleteMsg);
   }
 
   function _errorOut($errorMsg) {
