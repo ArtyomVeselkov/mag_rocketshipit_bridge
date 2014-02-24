@@ -38,8 +38,8 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
   }
 
   function _isDuplicateShippingAddresses($order) {
-    $addrCount = $order->getAddressCount();
-    return $addrCount > 1;
+    $otherPending = $order->getOtherPending();
+    return $otherPending;
   }
 
   function _isInternational($order) {
