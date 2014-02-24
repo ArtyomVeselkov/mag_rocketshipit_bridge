@@ -5,7 +5,7 @@ class Soularpanic_RocketShipIt_Model_Observer
 
   public function trackAndLabel(Varien_Event_Observer $observer)
   {
-    if (!Mage::getStoreConfig('carriers/rocketshipit/automatically_track_and_label')) {
+    if (!Mage::getStoreConfig('carriers/rocketshipit_global/automatically_track_and_label')) {
       return;
     }
 

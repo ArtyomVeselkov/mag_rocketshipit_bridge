@@ -17,29 +17,35 @@ extends Mage_Adminhtml_Controller_Action {
 
     $voidCode = $shipment->getRocketshipitId();
 
-    if (empty($voidCode)) {
-      $this->_errorOut("Error: There is no recorded RocketShipIt Transaction ID for this shipment ({$shipment->getIncrementId()}); I cannot void it.");
-      return;
-    }
+    /* if (empty($voidCode)) {
+    $this->_errorOut("Error: There is no recorded RocketShipIt Transaction ID for this shipment ({$shipment->getIncrementId()}); I cannot void it.");
+    return;
+    } */
 
-    $void = new \RocketShipIt\Void($carrier);
-    try {
-      $voidResp = $void->voidShipment($voidCode);
-    }
-    catch (Exception $e) {
-      $this->_log("Error: ".$e->getMessage());
-      $this->_errorOut("Error calling void service: ".$e->getMessage());
-      return;
-    }
-    $this->_log("void response: " . print_r($voidResp, true));
-    
 
-    $error = $voidResp['VoidShipmentResponse']['Response']['Error'];
-    if (!empty($error)) {
-      $reason = $error['ErrorDescription'];
-      $this->_log("Cannot cancel because ($reason)");
-      $this->_errorOut($reason);
-      return;
+    if ($voidCode) {
+      $void = new \RocketShipIt\Void($carrier);
+      try {
+	$voidResp = $void->voidShipment($voidCode);
+      }
+      catch (Exception $e) {
+	$this->_log("Error: ".$e->getMessage());
+	$this->_errorOut("Error calling void service: ".$e->getMessage());
+	return;
+      }
+      $this->_log("void response: " . print_r($voidResp, true));
+      
+
+      $error = $voidResp['VoidShipmentResponse']['Response']['Error'];
+      if (!empty($error)) {
+	$reason = $error['ErrorDescription'];
+	$this->_log("Cannot cancel because ($reason)");
+	$this->_errorOut($reason);
+	return;
+      }
+    }
+    else {
+      $this->_getSession()->addWarning("Shipment {$shipment->getIncrementId()} had no RocketShipIt code to void.  The shipment was deleted.");
     }
 
     $msg = "Deleted %s shipment with Shipment # [%s] and RocketshipIt ID of [%s]";
