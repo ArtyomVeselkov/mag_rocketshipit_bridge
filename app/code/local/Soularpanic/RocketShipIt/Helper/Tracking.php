@@ -11,6 +11,7 @@ extends Mage_Core_Helper_Abstract {
 	$url = "http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=$number";
 	break;
       case 'stamps':
+      case 'usps':
 	$url = "https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=$number";
 	break;
       default:

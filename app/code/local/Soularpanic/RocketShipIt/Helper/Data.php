@@ -25,7 +25,10 @@ extends Mage_Core_Helper_Abstract {
   }
 
   public function parseShippingMethod($shippingMethod) {
-    
+    if (strpos($shippingMethod, '_') === FALSE) {
+      return array('carrier' => $shippingMethod);
+    }
+
     $split = explode('_', $shippingMethod);
     return array('carrier' => $split[1],
 		 'service' => $split[2]);
