@@ -6,7 +6,8 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Select {
   public function render(Varien_Object $row) { 
     $html = '';
     $html.= $this->buildStatusIcons($row);
-    if ($row->canShip()) {
+    $buildInputs = Mage::getStoreConfig('carriers/rocketshipit_global/show_admin_grid_inputs');
+    if ($row->canShip() && $buildInputs) {
       $html.= $this->buildInputCell($row);
     }
     else {

@@ -157,6 +157,15 @@
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
 	    </automatically_track_and_label>
+	    <show_admin_grid_inputs>
+	      <label>Display Shipping Inputs in Order Grid?</label>
+	      <frontend_type>select</frontend_type>
+	      <source_model>adminhtml/system_config_source_yesno</source_model>
+	      <sort_order>140</sort_order>
+	      <show_in_default>1</show_in_default>
+	      <show_in_website>1</show_in_website>
+	      <show_in_store>1</show_in_store>
+	    </show_admin_grid_inputs>
 	  </fields>
 	</rocketshipit_global>
 	<rocketshipit_ups translate="label" module="shipping">
