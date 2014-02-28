@@ -23,7 +23,7 @@ extends Mage_Core_Helper_Abstract {
     $rsiRate->setParameter('weight', $addr['weight']);
     $rsiRate->setParameter('weightPounds', $addr['weight']);
 
-    $rsiRate->setParameter('residentialAddressIndicator','0');
+    $rsiRate->setParameter('residentialAddressIndicator','1');
 
     return $rsiRate;
   }
@@ -51,6 +51,7 @@ extends Mage_Core_Helper_Abstract {
     if (!$response) {
       try {
 	$response = $rsiRates->getSimpleRates();
+	//Mage::log("debug: ".$rsiRates->debug(), null, 'rocketshipit_debug.log');
 	$this->_setCachedRateResponse($cacheKey, $response);
       }
       catch (Exception $e) {
