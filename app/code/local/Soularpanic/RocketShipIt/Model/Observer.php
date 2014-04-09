@@ -14,7 +14,8 @@ class Soularpanic_RocketShipIt_Model_Observer
     $order = $shipment->getOrder();
 
     // we should only generate a tracking # on the first shipment->save()
-    if (!($shipment->isObjectNew())) {
+    if (!$shipment->isObjectNew()
+        || strpos($order->getShippingMethod(), 'rocketshipit') !== 0) {
       return;
     }
 
