@@ -29,40 +29,39 @@ extends Mage_Core_Helper_Abstract {
   }
 
   public function getSimpleRates($carrierCode,
-				 $addrObj,
-				 $useNegotiatedRate = false, 
-				 $weight = null,
-				 $handling = 0,
-				 $codeMask = null,
-				 $freeCodeMask = null) {
+				                 $addrObj,
+				                 $useNegotiatedRate = false, 
+				                 $weight = null,
+				                 $handling = 0,
+				                 $codeMask = null,
+				                 $freeCodeMask = null) {
     $rsiRates = $this->getRSIRate($carrierCode, $addrObj);
     if ($weight != null) {
       $rsiRates->setParameter('weight', $weight);
       if (strtoupper($carrierCode) === 'STAMPS') {
-	$rsiRates->setParameter('weightPounds', $weight);
+	    $rsiRates->setParameter('weightPounds', $weight);
       }
     }
 
     $cacheKey = $this->_getRateResponseCacheKey($rsiRates);
     $response = $this->_getCachedRateResponse($cacheKey);
-    //$response = null;
     $result = Mage::getModel('shipping/rate_result');
 
     if (!$response) {
       try {
-	$response = $rsiRates->getSimpleRates();
-	//Mage::log("debug: ".$rsiRates->debug(), null, 'rocketshipit_debug.log');
-	$this->_setCachedRateResponse($cacheKey, $response);
+	    $response = $rsiRates->getSimpleRates();
+	    Mage::helper('rocketshipit/data')->log("debug: ".$rsiRates->debug());
+	    $this->_setCachedRateResponse($cacheKey, $response);
       }
       catch (Exception $e) {
-	$error = Mage::getModel('shipping/rate_result_error');
-	$error->addData(array('error_message' => $e->getMessage()));
-	$result->append($error);
-	return $result;
+	    $error = Mage::getModel('shipping/rate_result_error');
+	    $error->addData(array('error_message' => $e->getMessage()));
+	    $result->append($error);
+	    return $result;
       }
     }
 
-    Mage::log('Simple rate fetch raw results: '.print_r($response, true), null, 'rocketshipit_shipments.log');
+    //Mage::helper('rocketshipit/data')->log('Simple rate fetch raw results: '.print_r($response, true));
     
     $errorMsg = $response['error'];
     if ($errorMsg != null) {
@@ -77,21 +76,21 @@ extends Mage_Core_Helper_Abstract {
     $carrierName = Mage::getStoreConfig('carriers/'.$fullCode.'/title');
     $rateKey = $useNegotiatedRate ? 'negotiated_rate' : 'rate';
 
-    Mage::log('Code mask: '.print_r($codeMask, true), null, 'rocketshipit_shipments.log');
+    //Mage::helper('rocketshipit/data')->log('Code mask: '.print_r($codeMask, true));
 
     foreach($response as $rsiMethod) {
       $serviceCode = $this->_getServiceCode($carrierCode, $rsiMethod);
 
       if ($codeMask && !in_array($serviceCode, $codeMask)) {
-	continue;
+	    continue;
       }
 
       if($useNegotiatedRate && $rsiMethod['negotiated_rate'] == null) {
-	continue;
+	    continue;
       }
 
       if(!$useNegotiatedRate && $rsiMethod['negotiated_rate']) {
-	continue;
+	    continue;
       }
 
       $method = Mage::getModel('shipping/rate_result_method');
@@ -102,17 +101,26 @@ extends Mage_Core_Helper_Abstract {
       $method->setMethod($serviceCode);
       $method->setMethodTitle($rsiMethod['desc']);
 
-      $free = $addrObj->getFreeShipping() && (!$freeCodeMask || in_array($serviceCode, $freeCodeMask));
-      Mage::log("Free? {$free}; Request: {$addrObj->getFreeShipping()}; free mask: ".print_r($freeCodeMask, true), null, 'rocketshipit_shipments.log');
+      Mage::helper('rocketshipit/data')->log("Free coupon flag? {$addrObj->getFreeShipping()}; Request: {$addrObj->getFreeShipping()}; free mask: ".print_r($freeCodeMask, true));
 
-      $method->setCost($free ? 0 : $rsiMethod[$rateKey]);
-      $method->setPrice($free ? 0 : ($rsiMethod[$rateKey] + $handling));
 
-      $result->append($method);
+      if ($addrObj->getFreeShipping()) {
+        if ((!$freeCodeMask) || in_array($serviceCode, $freeCodeMask)) {
+          $method->setCost(0);
+          $method->setPrice(0);
+
+          $result->append($method);
+        }
+      }
+      else {
+        $method->setCost($rsiMethod[$rateKey]);
+        $method->setPrice($rsiMethod[$rateKey] + $handling);
+
+        $result->append($method);
+      }
     }
 
     return $result;
-    
   }
 
   function _getServiceCode($carrierCode, $rsiMethod) {

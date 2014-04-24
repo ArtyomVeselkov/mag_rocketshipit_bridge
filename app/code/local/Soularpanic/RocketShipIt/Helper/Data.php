@@ -11,16 +11,16 @@ extends Mage_Core_Helper_Abstract {
 
   function _extractAddrFromMageShippingModelRateRequest(Mage_Shipping_Model_Rate_Request $request) {
     $addr = array('zip' => $request->getDestPostcode(),
-		  'state' => $request->getDestRegionCode(),
-		  'country' => $request->getDestCountryId(),
-		  'weight' => $request->getPackageWeight());
+		          'state' => $request->getDestRegionCode(),
+		          'country' => $request->getDestCountryId(),
+		          'weight' => $request->getPackageWeight());
     return $addr;
   }
 
   function _extractAddrFromMageSalesModelOrderAddress(Mage_Sales_Model_Order_Address $addrObj) {
     $addr = array('zip' => $addrObj->getPostcode(),
-		  'state' => $addrObj->getRegionCode(),
-		  'country' => $addrObj->getCountryId());
+		          'state' => $addrObj->getRegionCode(),
+		          'country' => $addrObj->getCountryId());
     return $addr;
   }
 
@@ -31,7 +31,7 @@ extends Mage_Core_Helper_Abstract {
 
     $split = explode('_', $shippingMethod);
     return array('carrier' => $split[1],
-		 'service' => $split[2]);
+		         'service' => $split[2]);
   }
 
   public function getFullCarrierCode($carrierSubCode) {
@@ -49,15 +49,17 @@ extends Mage_Core_Helper_Abstract {
    *    DEBUG   = 7;  // Debug: debug messages
    */
   public function log($msg, $level = null) {
-    Mage::log($msg, $level, 'rocketshipit_shipments.log');
+    if (Mage::getStoreConfig("carriers/{$this->getFullCarrierCode('global')}/debug")) {
+      Mage::log($msg, $level, 'rocketshipit_shipments.log');
+    }
   }
 
   public function fetchMapEntry($entryKey, $entryValue, $map) {
     $foundEntry = null;
     foreach ($map as $entry) {
       if ($entry[$entryKey] === $entryValue) {
-	$foundEntry = $entry;
-	break;
+	    $foundEntry = $entry;
+	    break;
       }
     }
 

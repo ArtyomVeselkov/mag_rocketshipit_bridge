@@ -10,7 +10,15 @@ implements Mage_Shipping_Model_Carrier_Interface
 
   public function collectRates(Mage_Shipping_Model_Rate_Request $request)
   {
-    if(!Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/active')) {
+    /* if(!Mage::getStoreConfig('carriers/'.$this->getFullCarrierCode().'/active')) {
+    return false;
+    } */
+
+    if (!$this->getConfigData('active')) {
+      return false;
+    }
+
+    if (!$this->mayShipToDestination($request)) {
       return false;
     }
 
@@ -24,12 +32,12 @@ implements Mage_Shipping_Model_Carrier_Interface
     $freeRates = $this->getFreeRateMask();
 
     $simpleRates = $helper->getSimpleRates($carrierCode,
-					   $request,
-					   $useNegotiatedRate,
-					   null,
-					   $handling,
-					   $rateMask,
-					   $freeRates);
+					                       $request,
+					                       $useNegotiatedRate,
+					                       null,
+					                       $handling,
+					                       $rateMask,
+					                       $freeRates);
     
     return $simpleRates;
   }
@@ -41,6 +49,17 @@ implements Mage_Shipping_Model_Carrier_Interface
   public function getFullCarrierCode()
   {
     return $this->_superCode.'_'.$this->getCarrierSubCode();
+  }
+
+  function mayShipToDestination(Mage_Shipping_Model_Rate_Request $request) {
+    if (!$this->getConfigData('sallowspecific')) {
+      return true;
+    }
+
+    $allowedCountries = explode(',', $this->getConfigData('specificcountry'));
+    $destCountry = $request->getDestCountryId();
+
+    return in_array($destCountry, $allowedCountries);
   }
 
   function getFreeRateMask() {
@@ -101,7 +120,7 @@ implements Mage_Shipping_Model_Carrier_Interface
     $currentUrl = Mage::helper('core/url')->getCurrentUrl();
     $consumerType = 'customer';
     if (strpos($currentUrl, 'checkout') !== false
-	|| strpos($currentUrl, 'paypal') !== false) {
+	    || strpos($currentUrl, 'paypal') !== false) {
       $consumerType = 'customer';
     }
     elseif (strpos($currentUrl, 'admin') !== false) {
@@ -110,4 +129,3 @@ implements Mage_Shipping_Model_Carrier_Interface
     return $consumerType;
   }
 }
-

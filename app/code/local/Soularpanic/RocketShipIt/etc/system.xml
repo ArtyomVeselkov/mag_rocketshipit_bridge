@@ -3,325 +3,402 @@
   <sections>
     <carriers>
       <groups>
-	<rocketshipit_global translate="label" module="shipping">
-	  <label>RocketShipIt - Global</label>
-	  <frontend_type>text</frontend_type>
-	  <sort_order>9000</sort_order>
-	  <show_in_default>1</show_in_default>
-	  <show_in_website>1</show_in_website>
-	  <show_in_store>1</show_in_store>
-	  <fields>
-	    <path translate="label">
-	      <label>RocketShipIt Path</label>
+	    <rocketshipit_global translate="label" module="shipping">
+	      <label>RocketShipIt - Global</label>
 	      <frontend_type>text</frontend_type>
-	      <sort_order>10</sort_order>
+	      <sort_order>9010</sort_order>
 	      <show_in_default>1</show_in_default>
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
-	    </path>
-	    <validation_carrier translate="label">
-	      <label>Validation Carrier Service?</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>rocketshipit/carrier_source_carriers</source_model>
-	      <sort_order>15</sort_order>
+	      <fields>
+	        <path translate="label">
+	          <label>RocketShipIt Path</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>10</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </path>
+	        <validation_carrier translate="label">
+	          <label>Validation Carrier Service?</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>rocketshipit/carrier_source_carriers</source_model>
+	          <sort_order>15</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </validation_carrier>
+	        <handling_base translate="label">
+	          <label>Base Handling Fee</label>
+	          <frontent_type>text</frontent_type>
+	          <sort_order>17</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </handling_base>
+	        <handling_active translate="label">
+	          <label>Show Handling Options</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>20</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </handling_active>
+	        <handling_checkout_header translate="label">
+	          <label>Handling Options Checkout Header</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>21</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </handling_checkout_header>
+	        <none_display translate="label">
+	          <label>No Handling Display Name</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>25</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </none_display>
+	        <signature_active translate="label">
+	          <label>Show Signature Handling Option</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>30</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </signature_active>
+	        <sign_display translate="label">
+	          <label>Signature Display Name</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>35</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </sign_display>
+	        <signature_type translate="label">
+	          <label>Calculate Signature Handling Fee</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>shipping/source_handlingType</source_model>
+	          <sort_order>40</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </signature_type>
+	        <signature_value translate="label">
+	          <label>Signature Value</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>50</sort_order>
+	          <validate>validate-number validate-zero-or-greater</validate>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </signature_value>
+	        <signAndInsure_active translate="label">
+	          <label>Show Signature and Insurance Handling Option</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>80</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </signAndInsure_active>
+	        <signAndInsure_display translate="label">
+	          <label>Sign &amp; Insure Display Name</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>85</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </signAndInsure_display>
+	        <insurance_type translate="label">
+	          <label>Calculate Insurance Handling Fee</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>shipping/source_handlingType</source_model>
+	          <sort_order>90</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </insurance_type>
+	        <insurance_value translate="label">
+	          <label>Insurance Value</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>100</sort_order>
+	          <validate>validate-number validate-zero-or-greater</validate>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </insurance_value>
+	        <insurance_use_carrier translate="label">
+	          <label>Insure Through Carrier?</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>110</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </insurance_use_carrier>
+	        <thermal_printer_address translate="label">
+	          <label>Thermal Printer Address</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>120</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </thermal_printer_address>
+	        <automatically_track_and_label translate="label">
+	          <label>Automatically Track and Label New Shipments?</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>130</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </automatically_track_and_label>
+	        <show_admin_grid_inputs>
+	          <label>Display Shipping Inputs in Order Grid?</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>140</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </show_admin_grid_inputs>
+            <debug>
+              <label>Enable Debugging</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>150</sort_order>
+              <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+            </debug>
+	      </fields>
+	    </rocketshipit_global>
+	    <rocketshipit_dhl translate="label" module="shipping">
+          <label>RocketShipIt - DHL</label>
+          <frontend_type>text</frontend_type>
+	      <sort_order>9020</sort_order>
 	      <show_in_default>1</show_in_default>
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
-	    </validation_carrier>
-	    <handling_base translate="label">
-	      <label>Base Handling Fee</label>
-	      <frontent_type>text</frontent_type>
-	      <sort_order>17</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </handling_base>
-	    <handling_active translate="label">
-	      <label>Show Handling Options</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>20</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </handling_active>
-	    <handling_checkout_header translate="label">
-	      <label>Handling Options Checkout Header</label>
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>10</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </active>
+            <title translate="label">
+	          <label>Display Name</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>15</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </title>
+          </fields>
+        </rocketshipit_dhl>
+	    <rocketshipit_stamps translate="label" module="shipping">
+	      <label>RocketShipIt - Stamps</label>
 	      <frontend_type>text</frontend_type>
-	      <sort_order>21</sort_order>
+	      <sort_order>9030</sort_order>
 	      <show_in_default>1</show_in_default>
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
-	    </handling_checkout_header>
-	    <none_display translate="label">
-	      <label>No Handling Display Name</label>
+	      <fields>
+	        <active translate="label">
+	          <label>Enabled</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>10</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </active>
+	        <title translate="label">
+	          <label>Display Name</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>15</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </title>
+	        <label_format translate="label">
+	          <label>Label Format</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>rocketshipit/carrier_source_label_stamps</source_model>
+	          <sort_order>37</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>0</can_be_empty>
+	        </label_format>
+	        <admin_filter translate="label">
+	          <label>Available to Admin</label>
+	          <frontend_type>multiselect</frontend_type>
+	          <source_model>rocketshipit/carrier_source_method_stamps</source_model>
+	          <sort_order>20</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </admin_filter>
+	        <checkout_filter translate="label">
+	          <label>Available on Checkout</label>
+	          <frontend_type>multiselect</frontend_type>
+	          <source_model>rocketshipit/carrier_source_method_stamps</source_model>
+	          <sort_order>30</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </checkout_filter>
+	        <free_shipping_filter translate="label">
+	          <label>Free Shipping Applies to</label>
+	          <frontend_type>multiselect</frontend_type>
+	          <source_model>rocketshipit/carrier_source_method_stamps</source_model>
+	          <sort_order>40</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </free_shipping_filter>
+            <sallowspecific translate="label">
+              <label>Ship to Applicable Countries</label>
+              <frontend_type>select</frontend_type>
+              <sort_order>200</sort_order>
+              <frontend_class>shipping-applicable-country</frontend_class>
+              <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </sallowspecific>
+            <specificcountry translate="label">
+              <label>Ship to Specific Countries</label>
+              <frontend_type>multiselect</frontend_type>
+              <sort_order>210</sort_order>
+              <source_model>adminhtml/system_config_source_country</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <can_be_empty>1</can_be_empty>
+            </specificcountry>
+          </fields>
+	    </rocketshipit_stamps>
+        <rocketshipit_ups translate="label" module="shipping">
+	      <label>RocketShipIt - UPS</label>
 	      <frontend_type>text</frontend_type>
-	      <sort_order>25</sort_order>
+	      <sort_order>9040</sort_order>
 	      <show_in_default>1</show_in_default>
 	      <show_in_website>1</show_in_website>
 	      <show_in_store>1</show_in_store>
-	    </none_display>
-	    <signature_active translate="label">
-	      <label>Show Signature Handling Option</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>30</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </signature_active>
-	    <sign_display translate="label">
-	      <label>Signature Display Name</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>35</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </sign_display>
-	    <signature_type translate="label">
-	      <label>Calculate Signature Handling Fee</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>shipping/source_handlingType</source_model>
-	      <sort_order>40</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </signature_type>
-	    <signature_value translate="label">
-	      <label>Signature Value</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>50</sort_order>
-	      <validate>validate-number validate-zero-or-greater</validate>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </signature_value>
-	    <signAndInsure_active translate="label">
-	      <label>Show Signature and Insurance Handling Option</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>80</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </signAndInsure_active>
-	    <signAndInsure_display translate="label">
-	      <label>Sign &amp; Insure Display Name</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>85</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </signAndInsure_display>
-	    <insurance_type translate="label">
-	      <label>Calculate Insurance Handling Fee</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>shipping/source_handlingType</source_model>
-	      <sort_order>90</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </insurance_type>
-	    <insurance_value translate="label">
-	      <label>Insurance Value</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>100</sort_order>
-	      <validate>validate-number validate-zero-or-greater</validate>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </insurance_value>
-	    <insurance_use_carrier translate="label">
-	      <label>Insure Through Carrier?</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>110</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </insurance_use_carrier>
-	    <thermal_printer_address translate="label">
-	      <label>Thermal Printer Address</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>120</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </thermal_printer_address>
-	    <automatically_track_and_label translate="label">
-	      <label>Automatically Track and Label New Shipments?</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>130</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </automatically_track_and_label>
-	    <show_admin_grid_inputs>
-	      <label>Display Shipping Inputs in Order Grid?</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>140</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </show_admin_grid_inputs>
-	  </fields>
-	</rocketshipit_global>
-	<rocketshipit_ups translate="label" module="shipping">
-	  <label>RocketShipIt - UPS</label>
-	  <frontend_type>text</frontend_type>
-	  <sort_order>9001</sort_order>
-	  <show_in_default>1</show_in_default>
-	  <show_in_website>1</show_in_website>
-	  <show_in_store>1</show_in_store>
-	  <fields>
-	    <active translate="label">
-	      <label>Enabled</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>10</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </active>
-	    <title translate="label">
-	      <label>Display Name</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>20</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </title>
-	    <admin_useNegotiatedRates translate="label">
-	      <label>Use Negotiated Rates for Admin</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>30</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </admin_useNegotiatedRates>
-	    <customer_useNegotiatedRates translate="label">
-	      <label>Use Negotiated Rates for Customer</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>35</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </customer_useNegotiatedRates>
-	    <label_format translate="label">
-	      <label>Label Format</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>rocketshipit/carrier_source_label_ups</source_model>
-	      <sort_order>37</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>0</can_be_empty>
-	    </label_format>
-	    <admin_filter translate="label">
-	      <label>Available to Admin</label>
-	      <frontend_type>multiselect</frontend_type>
-	      <source_model>rocketshipit/carrier_source_method_ups</source_model>
-	      <sort_order>40</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </admin_filter>
-	    <checkout_filter translate="label">
-	      <label>Available on Checkout</label>
-	      <frontend_type>multiselect</frontend_type>
-	      <source_model>rocketshipit/carrier_source_method_ups</source_model>
-	      <sort_order>50</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </checkout_filter>
-	    <free_shipping_filter translate="label">
-	      <label>Free Shipping Applies to</label>
-	      <frontend_type>multiselect</frontend_type>
-	      <source_model>rocketshipit/carrier_source_method_ups</source_model>
-	      <sort_order>60</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </free_shipping_filter>
-	  </fields>
-	</rocketshipit_ups>
-	<rocketshipit_stamps translate="label" module="shipping">
-	  <label>RocketShipIt - Stamps</label>
-	  <frontend_type>text</frontend_type>
-	  <sort_order>9003</sort_order>
-	  <show_in_default>1</show_in_default>
-	  <show_in_website>1</show_in_website>
-	  <show_in_store>1</show_in_store>
-	  <fields>
-	    <active translate="label">
-	      <label>Enabled</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>adminhtml/system_config_source_yesno</source_model>
-	      <sort_order>10</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	    </active>
-	    <title translate="label">
-	      <label>Display Name</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>15</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </title>
-	    <label_format translate="label">
-	      <label>Label Format</label>
-	      <frontend_type>select</frontend_type>
-	      <source_model>rocketshipit/carrier_source_label_stamps</source_model>
-	      <sort_order>37</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>0</can_be_empty>
-	    </label_format>
-	    <admin_filter translate="label">
-	      <label>Available to Admin</label>
-	      <frontend_type>multiselect</frontend_type>
-	      <source_model>rocketshipit/carrier_source_method_stamps</source_model>
-	      <sort_order>20</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </admin_filter>
-	    <checkout_filter translate="label">
-	      <label>Available on Checkout</label>
-	      <frontend_type>multiselect</frontend_type>
-	      <source_model>rocketshipit/carrier_source_method_stamps</source_model>
-	      <sort_order>30</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </checkout_filter>
-	    <free_shipping_filter translate="label">
-	      <label>Free Shipping Applies to</label>
-	      <frontend_type>multiselect</frontend_type>
-	      <source_model>rocketshipit/carrier_source_method_stamps</source_model>
-	      <sort_order>40</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <can_be_empty>1</can_be_empty>
-	    </free_shipping_filter>
-	  </fields>
-	</rocketshipit_stamps>
+	      <fields>
+	        <active translate="label">
+	          <label>Enabled</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>10</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </active>
+	        <title translate="label">
+	          <label>Display Name</label>
+	          <frontend_type>text</frontend_type>
+	          <sort_order>20</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </title>
+	        <admin_useNegotiatedRates translate="label">
+	          <label>Use Negotiated Rates for Admin</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>30</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </admin_useNegotiatedRates>
+	        <customer_useNegotiatedRates translate="label">
+	          <label>Use Negotiated Rates for Customer</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>adminhtml/system_config_source_yesno</source_model>
+	          <sort_order>35</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	        </customer_useNegotiatedRates>
+	        <label_format translate="label">
+	          <label>Label Format</label>
+	          <frontend_type>select</frontend_type>
+	          <source_model>rocketshipit/carrier_source_label_ups</source_model>
+	          <sort_order>37</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>0</can_be_empty>
+	        </label_format>
+	        <admin_filter translate="label">
+	          <label>Available to Admin</label>
+	          <frontend_type>multiselect</frontend_type>
+	          <source_model>rocketshipit/carrier_source_method_ups</source_model>
+	          <sort_order>40</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </admin_filter>
+	        <checkout_filter translate="label">
+	          <label>Available on Checkout</label>
+	          <frontend_type>multiselect</frontend_type>
+	          <source_model>rocketshipit/carrier_source_method_ups</source_model>
+	          <sort_order>50</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </checkout_filter>
+	        <free_shipping_filter translate="label">
+	          <label>Free Shipping Applies to</label>
+	          <frontend_type>multiselect</frontend_type>
+	          <source_model>rocketshipit/carrier_source_method_ups</source_model>
+	          <sort_order>60</sort_order>
+	          <show_in_default>1</show_in_default>
+	          <show_in_website>1</show_in_website>
+	          <show_in_store>1</show_in_store>
+	          <can_be_empty>1</can_be_empty>
+	        </free_shipping_filter>
+            <sallowspecific translate="label">
+              <label>Ship to Applicable Countries</label>
+              <frontend_type>select</frontend_type>
+              <sort_order>200</sort_order>
+              <frontend_class>shipping-applicable-country</frontend_class>
+              <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </sallowspecific>
+            <specificcountry translate="label">
+              <label>Ship to Specific Countries</label>
+              <frontend_type>multiselect</frontend_type>
+              <sort_order>210</sort_order>
+              <source_model>adminhtml/system_config_source_country</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <can_be_empty>1</can_be_empty>
+            </specificcountry>
+	      </fields>
+	    </rocketshipit_ups>
       </groups>
     </carriers>
   </sections>

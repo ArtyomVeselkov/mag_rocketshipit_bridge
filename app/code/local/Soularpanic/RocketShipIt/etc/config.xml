@@ -10,97 +10,97 @@
   <global>
     <models>
       <rocketshipit>
-	<class>Soularpanic_RocketShipIt_Model</class>
-	<resourceModel>rocketshipit_resource</resourceModel>
+	    <class>Soularpanic_RocketShipIt_Model</class>
+	    <resourceModel>rocketshipit_resource</resourceModel>
       </rocketshipit>
       <sales>
-	<rewrite>
-	  <quote_address_total_shipping>Soularpanic_RocketShipIt_Model_Sales_Quote_Address_Total_ShippingAndHandling</quote_address_total_shipping>
-	</rewrite>
+	    <rewrite>
+	      <quote_address_total_shipping>Soularpanic_RocketShipIt_Model_Sales_Quote_Address_Total_ShippingAndHandling</quote_address_total_shipping>
+	    </rewrite>
       </sales>
       <customer>
-	<rewrite>
-	  <form>Soularpanic_RocketShipIt_Model_Customer_Form</form>
-	</rewrite>
+	    <rewrite>
+	      <form>Soularpanic_RocketShipIt_Model_Customer_Form</form>
+	    </rewrite>
       </customer>
     </models>
 
     <helpers>
       <rocketshipit>
-	<class>Soularpanic_RocketShipIt_Helper</class>
+	    <class>Soularpanic_RocketShipIt_Helper</class>
       </rocketshipit>
     </helpers>
 
     <resources>
       <rocketshipit_setup>
-	<setup>
-	  <module>Soularpanic_RocketShipIt</module>
-	  <class>Soularpanic_RocketShipIt_Model_Resource_Mysql4_Setup</class>
-	</setup>
-	<connection>
-	  <use>core_setup</use>
-	</connection>
+	    <setup>
+	      <module>Soularpanic_RocketShipIt</module>
+	      <class>Soularpanic_RocketShipIt_Model_Resource_Mysql4_Setup</class>
+	    </setup>
+	    <connection>
+	      <use>core_setup</use>
+	    </connection>
       </rocketshipit_setup>
     </resources>
 
     <blocks>
       <adminhtml>
-	<rewrite>
-	  <sales_order_shipment_view>Soularpanic_RocketShipIt_Block_Sales_Order_Shipment_View</sales_order_shipment_view>
-	</rewrite>
+	    <rewrite>
+	      <sales_order_shipment_view>Soularpanic_RocketShipIt_Block_Sales_Order_Shipment_View</sales_order_shipment_view>
+	    </rewrite>
       </adminhtml>
     </blocks>
 
     <fieldsets>
       <sales_convert_quote_address>
-	<handling_amount>
-	  <to_order>*</to_order>
-	</handling_amount>
-	<handling_code>
-	  <to_order>*</to_order>
-	</handling_code>
+	    <handling_amount>
+	      <to_order>*</to_order>
+	    </handling_amount>
+	    <handling_code>
+	      <to_order>*</to_order>
+	    </handling_code>
       </sales_convert_quote_address>
       <sales_convert_quote>
-	<customer_vehicle_year>
-	  <to_order>*</to_order>
-	</customer_vehicle_year>
-	<customer_vehicle_make>
-	  <to_order>*</to_order>
-	</customer_vehicle_make>
-	<customer_vehicle_model>
-	  <to_order>*</to_order>
-	</customer_vehicle_model>
+	    <customer_vehicle_year>
+	      <to_order>*</to_order>
+	    </customer_vehicle_year>
+	    <customer_vehicle_make>
+	      <to_order>*</to_order>
+	    </customer_vehicle_make>
+	    <customer_vehicle_model>
+	      <to_order>*</to_order>
+	    </customer_vehicle_model>
       </sales_convert_quote>
     </fieldsets>
 
     <events>
       <core_block_abstract_prepare_layout_before>
-	<observers>
-	  <soularpanic_rocketshipit_addmassbutton>
-	    <type>model</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addMassButtons</method>
-	  </soularpanic_rocketshipit_addmassbutton>
-	</observers>
+	    <observers>
+	      <soularpanic_rocketshipit_addmassbutton>
+	        <type>model</type>
+	        <class>rocketshipit/observer</class>
+	        <method>addMassButtons</method>
+	      </soularpanic_rocketshipit_addmassbutton>
+	    </observers>
       </core_block_abstract_prepare_layout_before>
       <sales_quote_save_before>
-	<observers>
-	  <soularpanic_rocketshipit_paypal_update_quote_audit>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addAuditFieldsToQuote</method>
-	  </soularpanic_rocketshipit_paypal_update_quote_audit>
-	  <soularpanic_rocketshipit_paypal_update_quote_handling>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addHandlingCodeToQuote</method>
-	  </soularpanic_rocketshipit_paypal_update_quote_handling>
-	  <soularpanic_rocketshipit_paypal_update_quote_comment>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addCustomerCommentToQuote</method>
-	  </soularpanic_rocketshipit_paypal_update_quote_comment>
-	</observers>
+	    <observers>
+	      <soularpanic_rocketshipit_paypal_update_quote_audit>
+	        <type>singleton</type>
+	        <class>rocketshipit/observer</class>
+	        <method>addAuditFieldsToQuote</method>
+	      </soularpanic_rocketshipit_paypal_update_quote_audit>
+	      <soularpanic_rocketshipit_paypal_update_quote_handling>
+	        <type>singleton</type>
+	        <class>rocketshipit/observer</class>
+	        <method>addHandlingCodeToQuote</method>
+	      </soularpanic_rocketshipit_paypal_update_quote_handling>
+	      <soularpanic_rocketshipit_paypal_update_quote_comment>
+	        <type>singleton</type>
+	        <class>rocketshipit/observer</class>
+	        <method>addCustomerCommentToQuote</method>
+	      </soularpanic_rocketshipit_paypal_update_quote_comment>
+	    </observers>
       </sales_quote_save_before>
       <checkout_controller_onepage_save_shipping_method>
       	<observers>
@@ -108,41 +108,41 @@
       	    <type>singleton</type>
       	    <class>rocketshipit/observer</class>
       	    <method>addHandlingCodeToQuote</method>
-	  </soularpanic_rocketshipit_add_carrier_code_to_quote>
-	  <soularpanic_rocketshipit_add_customer_comment_to_quote>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addCustomerCommentToQuote</method>
-	  </soularpanic_rocketshipit_add_customer_comment_to_quote>
+	      </soularpanic_rocketshipit_add_carrier_code_to_quote>
+	      <soularpanic_rocketshipit_add_customer_comment_to_quote>
+	        <type>singleton</type>
+	        <class>rocketshipit/observer</class>
+	        <method>addCustomerCommentToQuote</method>
+	      </soularpanic_rocketshipit_add_customer_comment_to_quote>
       	</observers>
       </checkout_controller_onepage_save_shipping_method>
       <sales_order_place_after>
-	<observers>
-	  <soularpanic_rocketshipit_add_customer_comment_to_order>
-	    <type>singleton</type>
-	    <class>rocketshipit/observer</class>
-	    <method>addCustomerCommentToOrder</method>
-	  </soularpanic_rocketshipit_add_customer_comment_to_order>
-	</observers>
+	    <observers>
+	      <soularpanic_rocketshipit_add_customer_comment_to_order>
+	        <type>singleton</type>
+	        <class>rocketshipit/observer</class>
+	        <method>addCustomerCommentToOrder</method>
+	      </soularpanic_rocketshipit_add_customer_comment_to_order>
+	    </observers>
       </sales_order_place_after>
       <sales_order_shipment_save_before>
-	<observers>
-	  <soularpanic_rocketshipit_track_and_label>
+	    <observers>
+	      <soularpanic_rocketshipit_track_and_label>
             <type>singleton</type>
-	    <class>rocketshipit/observer</class>
+	        <class>rocketshipit/observer</class>
             <method>trackAndLabel</method>
-	  </soularpanic_rocketshipit_track_and_label>
-	</observers>
+	      </soularpanic_rocketshipit_track_and_label>
+	    </observers>
       </sales_order_shipment_save_before>
     </events>
 
     <cache>
       <types>
-	<rocketshipit>
-	  <label>Rocketshipit Rates Data</label>
-	  <description>Rates fetched with Rocketshipit</description>
-	  <tags>ROCKETSHIPIT_RATES</tags>
-	</rocketshipit>
+	    <rocketshipit>
+	      <label>Rocketshipit Rates Data</label>
+	      <description>Rates fetched with Rocketshipit</description>
+	      <tags>ROCKETSHIPIT_RATES</tags>
+	    </rocketshipit>
       </types>
     </cache>
   </global>
@@ -150,12 +150,12 @@
   <admin>
     <routers>
       <adminhtml>
-	<use>admin</use>
-	<args>
-	  <modules>
-	    <rocketshipit after="Mage_Adminhtml">Soularpanic_RocketShipIt</rocketshipit>
-	  </modules>
-	</args>
+	    <use>admin</use>
+	    <args>
+	      <modules>
+	        <rocketshipit after="Mage_Adminhtml">Soularpanic_RocketShipIt</rocketshipit>
+	      </modules>
+	    </args>
       </adminhtml>
     </routers>
   </admin>
@@ -163,18 +163,18 @@
   <frontend>
     <routers>
       <rocketshipit>
-	<use>standard</use>
-	<args>
-	  <module>Soularpanic_RocketShipIt</module>
-	  <frontName>rocketshipit</frontName>
-	</args>
+	    <use>standard</use>
+	    <args>
+	      <module>Soularpanic_RocketShipIt</module>
+	      <frontName>rocketshipit</frontName>
+	    </args>
       </rocketshipit>
       <checkout>
-	<args>
-	  <modules>
-	    <rocketshipit before="Mage_Checkout">Soularpanic_RocketShipIt</rocketshipit>
-	  </modules>
-	</args>
+	    <args>
+	      <modules>
+	        <rocketshipit before="Mage_Checkout">Soularpanic_RocketShipIt</rocketshipit>
+	      </modules>
+	    </args>
       </checkout>
     </routers>
   </frontend>
@@ -183,12 +183,12 @@
   <stores>
     <admin>
       <design>
-  	<package>
-  	  <name>default</name>
-  	</package>
-  	<theme>
-  	  <default>trs_default</default> 
-  	</theme>
+  	    <package>
+  	      <name>default</name>
+  	    </package>
+  	    <theme>
+  	      <default>trs_default</default> 
+  	    </theme>
       </design>
     </admin>
   </stores>
@@ -196,23 +196,27 @@
   <default>
     <carriers>
       <rocketshipit_global>
-	<handling_checkout_header>Shipping Options</handling_checkout_header>
-	<none_display>None</none_display>
-	<sign_display>Require Signature</sign_display>
-	<signAndInsure_display>Require Signature &amp; Insure Shipment</signAndInsure_display>
+	    <handling_checkout_header>Shipping Options</handling_checkout_header>
+	    <none_display>None</none_display>
+	    <sign_display>Require Signature</sign_display>
+	    <signAndInsure_display>Require Signature &amp; Insure Shipment</signAndInsure_display>
       </rocketshipit_global>
       <rocketshipit_ups>
-	<model>rocketshipit/carrier_ups</model>
-	<label_format>GIF</label_format>
+	    <model>rocketshipit/carrier_ups</model>
+	    <label_format>GIF</label_format>
       </rocketshipit_ups>
       <rocketshipit_usps>
       	<model>rocketshipit/carrier_usps</model>
       </rocketshipit_usps>
       <rocketshipit_stamps>
-	<model>rocketshipit/carrier_stamps</model>
-	<showmethod>1</showmethod>
-	<label_format>Gif</label_format>
+	    <model>rocketshipit/carrier_stamps</model>
+	    <showmethod>1</showmethod>
+	    <label_format>Gif</label_format>
       </rocketshipit_stamps>
+      <rocketshipit_dhl>
+        <model>rocketshipit/carrier_DHL</model>
+        <title>RocketShipIt DHL</title>
+      </rocketshipit_dhl>
     </carriers>
   </default>
 </config>
