@@ -98,8 +98,13 @@ extends Mage_Core_Helper_Abstract {
       $method->setCarrier($fullCode);
       $method->setCarrierTitle($carrierName);
 
+      $methodTitle = $rsiMethod['desc'];
+      if (strpos($methodTitle, $carrierName) === 0) {
+        $methodTitle = trim(substr($methodTitle, strlen($carrierName)));
+      }
+
       $method->setMethod($serviceCode);
-      $method->setMethodTitle($rsiMethod['desc']);
+      $method->setMethodTitle($methodTitle);
 
       Mage::helper('rocketshipit/data')->log("Free coupon flag? {$addrObj->getFreeShipping()}; Request: {$addrObj->getFreeShipping()}; free mask: ".print_r($freeCodeMask, true));
 
@@ -108,6 +113,9 @@ extends Mage_Core_Helper_Abstract {
         if ((!$freeCodeMask) || in_array($serviceCode, $freeCodeMask)) {
           $method->setCost(0);
           $method->setPrice(0);
+
+          $method->setCarrierTitle('');
+          $method->setMethodTitle('TRS Free Shipping');
 
           $result->append($method);
         }
