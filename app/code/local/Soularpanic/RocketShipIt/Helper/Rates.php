@@ -111,21 +111,24 @@ extends Mage_Core_Helper_Abstract {
 
       if ($addrObj->getFreeShipping()) {
         if ((!$freeCodeMask) || in_array($serviceCode, $freeCodeMask)) {
-          $method->setCost(0);
-          $method->setPrice(0);
+          $freeMethod = Mage::getModel('shipping/rate_result_method');
 
-          $method->setCarrierTitle('');
-          $method->setMethodTitle('TRS Free Shipping');
+          $freeMethod->setCost(0);
+          $freeMethod->setPrice(0);
 
-          $result->append($method);
+          $freeMethod->setCarrier($fullCode);
+          $freeMethod->setCarrierTitle('');
+
+          $freeMethod->setMethod($serviceCode);
+          $freeMethod->setMethodTitle('TRS Free Shipping');
+
+          $result->append($freeMethod);
         }
       }
-      else {
-        $method->setCost($rsiMethod[$rateKey]);
-        $method->setPrice($rsiMethod[$rateKey] + $handling);
+      $method->setCost($rsiMethod[$rateKey]);
+      $method->setPrice($rsiMethod[$rateKey] + $handling);
 
-        $result->append($method);
-      }
+      $result->append($method);
     }
 
     return $result;
