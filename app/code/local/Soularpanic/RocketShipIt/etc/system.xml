@@ -1,406 +1,1099 @@
 <?xml version="1.0"?>
 <config>
-  <sections>
-    <carriers>
-      <groups>
-	    <rocketshipit_global translate="label" module="shipping">
-	      <label>RocketShipIt - Global</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>9010</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <fields>
-	        <path translate="label">
-	          <label>RocketShipIt Path</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>10</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </path>
-	        <validation_carrier translate="label">
-	          <label>Validation Carrier Service?</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>rocketshipit/carrier_source_carriers</source_model>
-	          <sort_order>15</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </validation_carrier>
-	        <handling_base translate="label">
-	          <label>Base Handling Fee</label>
-	          <frontent_type>text</frontent_type>
-	          <sort_order>17</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </handling_base>
-	        <handling_active translate="label">
-	          <label>Show Handling Options</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>20</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </handling_active>
-	        <handling_checkout_header translate="label">
-	          <label>Handling Options Checkout Header</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>21</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </handling_checkout_header>
-	        <none_display translate="label">
-	          <label>No Handling Display Name</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>25</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </none_display>
-	        <signature_active translate="label">
-	          <label>Show Signature Handling Option</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>30</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </signature_active>
-	        <sign_display translate="label">
-	          <label>Signature Display Name</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>35</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </sign_display>
-	        <signature_type translate="label">
-	          <label>Calculate Signature Handling Fee</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>shipping/source_handlingType</source_model>
-	          <sort_order>40</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </signature_type>
-	        <signature_value translate="label">
-	          <label>Signature Value</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>50</sort_order>
-	          <validate>validate-number validate-zero-or-greater</validate>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </signature_value>
-	        <signAndInsure_active translate="label">
-	          <label>Show Signature and Insurance Handling Option</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>80</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </signAndInsure_active>
-	        <signAndInsure_display translate="label">
-	          <label>Sign &amp; Insure Display Name</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>85</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </signAndInsure_display>
-	        <insurance_type translate="label">
-	          <label>Calculate Insurance Handling Fee</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>shipping/source_handlingType</source_model>
-	          <sort_order>90</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </insurance_type>
-	        <insurance_value translate="label">
-	          <label>Insurance Value</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>100</sort_order>
-	          <validate>validate-number validate-zero-or-greater</validate>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </insurance_value>
-	        <insurance_use_carrier translate="label">
-	          <label>Insure Through Carrier?</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>110</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </insurance_use_carrier>
-	        <thermal_printer_address translate="label">
-	          <label>Thermal Printer Address</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>120</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </thermal_printer_address>
-	        <automatically_track_and_label translate="label">
-	          <label>Automatically Track and Label New Shipments?</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>130</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </automatically_track_and_label>
-	        <show_admin_grid_inputs>
-	          <label>Display Shipping Inputs in Order Grid?</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>140</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </show_admin_grid_inputs>
-            <debug>
-              <label>Enable Debugging</label>
-              <frontend_type>select</frontend_type>
-              <source_model>adminhtml/system_config_source_yesno</source_model>
-              <sort_order>150</sort_order>
-              <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-            </debug>
-	      </fields>
-	    </rocketshipit_global>
-	    <rocketshipit_dhl translate="label" module="shipping">
-          <label>RocketShipIt - DHL</label>
-          <frontend_type>text</frontend_type>
-	      <sort_order>9020</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-          <fields>
-            <active translate="label">
-              <label>Enabled</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>10</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </active>
-            <title translate="label">
-	          <label>Display Name</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>15</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </title>
-          </fields>
-        </rocketshipit_dhl>
-	    <rocketshipit_stamps translate="label" module="shipping">
-	      <label>RocketShipIt - Stamps</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>9030</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <fields>
-	        <active translate="label">
-	          <label>Enabled</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>10</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </active>
-	        <title translate="label">
-	          <label>Display Name</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>15</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </title>
-	        <label_format translate="label">
-	          <label>Label Format</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>rocketshipit/carrier_source_label_stamps</source_model>
-	          <sort_order>37</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>0</can_be_empty>
-	        </label_format>
-	        <admin_filter translate="label">
-	          <label>Available to Admin</label>
-	          <frontend_type>multiselect</frontend_type>
-	          <source_model>rocketshipit/carrier_source_method_stamps</source_model>
-	          <sort_order>20</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </admin_filter>
-	        <checkout_filter translate="label">
-	          <label>Available on Checkout</label>
-	          <frontend_type>multiselect</frontend_type>
-	          <source_model>rocketshipit/carrier_source_method_stamps</source_model>
-	          <sort_order>30</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </checkout_filter>
-	        <free_shipping_filter translate="label">
-	          <label>Free Shipping Applies to</label>
-	          <frontend_type>multiselect</frontend_type>
-	          <source_model>rocketshipit/carrier_source_method_stamps</source_model>
-	          <sort_order>40</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </free_shipping_filter>
-            <sallowspecific translate="label">
-              <label>Ship to Applicable Countries</label>
-              <frontend_type>select</frontend_type>
-              <sort_order>200</sort_order>
-              <frontend_class>shipping-applicable-country</frontend_class>
-              <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
-              <show_in_store>0</show_in_store>
-            </sallowspecific>
-            <specificcountry translate="label">
-              <label>Ship to Specific Countries</label>
-              <frontend_type>multiselect</frontend_type>
-              <sort_order>210</sort_order>
-              <source_model>adminhtml/system_config_source_country</source_model>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
-              <show_in_store>0</show_in_store>
-              <can_be_empty>1</can_be_empty>
-            </specificcountry>
-          </fields>
-	    </rocketshipit_stamps>
-        <rocketshipit_ups translate="label" module="shipping">
-	      <label>RocketShipIt - UPS</label>
-	      <frontend_type>text</frontend_type>
-	      <sort_order>9040</sort_order>
-	      <show_in_default>1</show_in_default>
-	      <show_in_website>1</show_in_website>
-	      <show_in_store>1</show_in_store>
-	      <fields>
-	        <active translate="label">
-	          <label>Enabled</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>10</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </active>
-	        <title translate="label">
-	          <label>Display Name</label>
-	          <frontend_type>text</frontend_type>
-	          <sort_order>20</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </title>
-	        <admin_useNegotiatedRates translate="label">
-	          <label>Use Negotiated Rates for Admin</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>30</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </admin_useNegotiatedRates>
-	        <customer_useNegotiatedRates translate="label">
-	          <label>Use Negotiated Rates for Customer</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>adminhtml/system_config_source_yesno</source_model>
-	          <sort_order>35</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	        </customer_useNegotiatedRates>
-	        <label_format translate="label">
-	          <label>Label Format</label>
-	          <frontend_type>select</frontend_type>
-	          <source_model>rocketshipit/carrier_source_label_ups</source_model>
-	          <sort_order>37</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>0</can_be_empty>
-	        </label_format>
-	        <admin_filter translate="label">
-	          <label>Available to Admin</label>
-	          <frontend_type>multiselect</frontend_type>
-	          <source_model>rocketshipit/carrier_source_method_ups</source_model>
-	          <sort_order>40</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </admin_filter>
-	        <checkout_filter translate="label">
-	          <label>Available on Checkout</label>
-	          <frontend_type>multiselect</frontend_type>
-	          <source_model>rocketshipit/carrier_source_method_ups</source_model>
-	          <sort_order>50</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </checkout_filter>
-	        <free_shipping_filter translate="label">
-	          <label>Free Shipping Applies to</label>
-	          <frontend_type>multiselect</frontend_type>
-	          <source_model>rocketshipit/carrier_source_method_ups</source_model>
-	          <sort_order>60</sort_order>
-	          <show_in_default>1</show_in_default>
-	          <show_in_website>1</show_in_website>
-	          <show_in_store>1</show_in_store>
-	          <can_be_empty>1</can_be_empty>
-	        </free_shipping_filter>
-            <sallowspecific translate="label">
-              <label>Ship to Applicable Countries</label>
-              <frontend_type>select</frontend_type>
-              <sort_order>200</sort_order>
-              <frontend_class>shipping-applicable-country</frontend_class>
-              <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
-              <show_in_store>0</show_in_store>
-            </sallowspecific>
-            <specificcountry translate="label">
-              <label>Ship to Specific Countries</label>
-              <frontend_type>multiselect</frontend_type>
-              <sort_order>210</sort_order>
-              <source_model>adminhtml/system_config_source_country</source_model>
-              <show_in_default>1</show_in_default>
-              <show_in_website>1</show_in_website>
-              <show_in_store>0</show_in_store>
-              <can_be_empty>1</can_be_empty>
-            </specificcountry>
-	      </fields>
-	    </rocketshipit_ups>
-      </groups>
-    </carriers>
-  </sections>
+    <sections>
+        <carriers>
+            <groups>
+                <rocketshipit_global translate="label" module="shipping">
+                    <label>RocketShipIt - Global</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>9010</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <path translate="label">
+                            <label>RocketShipIt Path</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </path>
+                        <validation_carrier translate="label">
+                            <label>Validation Carrier Service?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rocketshipit/carrier_source_carriers</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </validation_carrier>
+                        <handling_base translate="label">
+                            <label>Base Handling Fee</label>
+                            <frontent_type>text</frontent_type>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </handling_base>
+                        <handling_active translate="label">
+                            <label>Show Handling Options</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </handling_active>
+                        <handling_checkout_header translate="label">
+                            <label>Handling Options Checkout Header</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </handling_checkout_header>
+                        <none_display translate="label">
+                            <label>No Handling Display Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </none_display>
+                        <signature_active translate="label">
+                            <label>Show Signature Handling Option</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signature_active>
+                        <sign_display translate="label">
+                            <label>Signature Display Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sign_display>
+                        <signature_type translate="label">
+                            <label>Calculate Signature Handling Fee</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>shipping/source_handlingType</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signature_type>
+                        <signature_value translate="label">
+                            <label>Signature Value</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signature_value>
+                        <signAndInsure_active translate="label">
+                            <label>Show Signature and Insurance Handling Option</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signAndInsure_active>
+                        <signAndInsure_display translate="label">
+                            <label>Sign &amp; Insure Display Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signAndInsure_display>
+                        <insurance_type translate="label">
+                            <label>Calculate Insurance Handling Fee</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>shipping/source_handlingType</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </insurance_type>
+                        <insurance_value translate="label">
+                            <label>Insurance Value</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </insurance_value>
+                        <insurance_use_carrier translate="label">
+                            <label>Insure Through Carrier?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </insurance_use_carrier>
+                        <thermal_printer_address translate="label">
+                            <label>Thermal Printer Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </thermal_printer_address>
+                        <automatically_track_and_label translate="label">
+                            <label>Automatically Track and Label New Shipments?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </automatically_track_and_label>
+                        <show_admin_grid_inputs>
+                            <label>Display Shipping Inputs in Order Grid?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_admin_grid_inputs>
+                        <debug>
+                            <label>Enable Debugging</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debug>
+                    </fields>
+                </rocketshipit_global>
+                <rocketshipit_dhl translate="label" module="shipping">
+                    <label>RocketShipIt - DHL</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>9020</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Display Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title>
+                    </fields>
+                </rocketshipit_dhl>
+                <rocketshipit_stamps translate="label" module="shipping">
+                    <label>RocketShipIt - Stamps</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>9030</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Display Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title>
+                        <label_format translate="label">
+                            <label>Label Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rocketshipit/carrier_source_label_stamps</source_model>
+                            <sort_order>37</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </label_format>
+                        <admin_filter translate="label">
+                            <label>Available to Admin</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rocketshipit/carrier_source_method_stamps</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </admin_filter>
+                        <checkout_filter translate="label">
+                            <label>Available on Checkout</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rocketshipit/carrier_source_method_stamps</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </checkout_filter>
+                        <free_shipping_filter translate="label">
+                            <label>Free Shipping Applies to</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rocketshipit/carrier_source_method_stamps</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </free_shipping_filter>
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>200</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>210</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <show_carrier_title>
+                            <label>Show Carrier Title</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_carrier_title>
+                        <title_first_class_mail_-_postcard>
+                            <label>First Class Mail - Postcard</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_mail_-_postcard>
+                        <title_first_class_mail_-_letter>
+                            <label>First Class Mail - Letter</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>231</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_mail_-_letter>
+                        <title_first_class_mail_-_large_envelope_or_flat>
+                            <label>First Class Mail - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>232</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_mail_-_large_envelope_or_flat>
+                        <title_first_class_mail_-_large_package>
+                            <label>First Class Mail - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>233</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_mail_-_large_package>
+                        <title_first_class_mail_-_thick_envelope>
+                            <label>First Class Mail - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>234</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_mail_-_thick_envelope>
+                        <title_first_class_mail_-_package>
+                            <label>First Class Mail - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>235</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_mail_-_package>
+                        <title_media_mail_-_large_envelope_or_flat>
+                            <label>Media Mail - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>236</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_media_mail_-_large_envelope_or_flat>
+                        <title_media_mail_-_thick_envelope>
+                            <label>Media Mail - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>237</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_media_mail_-_thick_envelope>
+                        <title_media_mail_-_large_package>
+                            <label>Media Mail - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>238</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_media_mail_-_large_package>
+                        <title_media_mail_-_package>
+                            <label>Media Mail - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>239</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_media_mail_-_package>
+                        <title_priority_mail_-_flat_rate_envelope>
+                            <label>Priority Mail - Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_flat_rate_envelope>
+                        <title_priority_mail_-_flat_rate_padded_envelope>
+                            <label>Priority Mail - Flat Rate Padded Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>241</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_flat_rate_padded_envelope>
+                        <title_priority_mail_-_small_flat_rate_box>
+                            <label>Priority Mail - Small Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>242</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_small_flat_rate_box>
+                        <title_priority_mail_-_legal_flat_rate_envelope>
+                            <label>Priority Mail - Legal Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>243</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_legal_flat_rate_envelope>
+                        <title_priority_mail_-_letter>
+                            <label>Priority Mail - Letter</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>244</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_letter>
+                        <title_priority_mail_-_large_envelope_or_flat>
+                            <label>Priority Mail - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>245</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_large_envelope_or_flat>
+                        <title_priority_mail_-_thick_envelope>
+                            <label>Priority Mail - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>246</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_thick_envelope>
+                        <title_priority_mail_-_package>
+                            <label>Priority Mail - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>247</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_package>
+                        <title_parcel_post_-_thick_envelope>
+                            <label>Parcel Post - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>248</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_parcel_post_-_thick_envelope>
+                        <title_parcel_post_-_package>
+                            <label>Parcel Post - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>249</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_parcel_post_-_package>
+                        <title_priority_mail_-_regional_rate_box_a>
+                            <label>Priority Mail - Regional Rate Box A</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_regional_rate_box_a>
+                        <title_priority_mail_-_regional_rate_box_b>
+                            <label>Priority Mail - Regional Rate Box B</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>251</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_regional_rate_box_b>
+                        <title_priority_mail_-_flat_rate_box>
+                            <label>Priority Mail - Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>252</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_flat_rate_box>
+                        <title_priority_mail_-_large_flat_rate_box>
+                            <label>Priority Mail - Large Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>253</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_large_flat_rate_box>
+                        <title_parcel_post_-_large_package>
+                            <label>Parcel Post - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>254</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_parcel_post_-_large_package>
+                        <title_express_mail_-_legal_flat_rate_envelope>
+                            <label>Express Mail - Legal Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>255</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_legal_flat_rate_envelope>
+                        <title_express_mail_-_flat_rate_envelope>
+                            <label>Express Mail - Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>256</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_flat_rate_envelope>
+                        <title_express_mail_-_flat_rate_padded_envelope>
+                            <label>Express Mail - Flat Rate Padded Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>257</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_flat_rate_padded_envelope>
+                        <title_express_mail_-_large_envelope_or_flat>
+                            <label>Express Mail - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>258</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_large_envelope_or_flat>
+                        <title_express_mail_-_letter>
+                            <label>Express Mail - Letter</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>259</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_letter>
+                        <title_express_mail_-_large_package>
+                            <label>Express Mail - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>260</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_large_package>
+                        <title_express_mail_-_thick_envelope>
+                            <label>Express Mail - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>261</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_thick_envelope>
+                        <title_express_mail_-_package>
+                            <label>Express Mail - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>262</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_package>
+                        <title_priority_mail_-_regional_rate_box_c>
+                            <label>Priority Mail - Regional Rate Box C</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>263</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_regional_rate_box_c>
+                        <title_priority_mail_-_large_package>
+                            <label>Priority Mail - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>264</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_-_large_package>
+                        <title_express_mail_-_flat_rate_box>
+                            <label>Express Mail - Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>265</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_-_flat_rate_box>
+                        <title_parcel_post_-_oversized_package>
+                            <label>Parcel Post - Oversized Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>266</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_parcel_post_-_oversized_package>
+                        <title_first_class_international_mail_-_letter>
+                            <label>First Class International Mail - Letter</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>267</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_international_mail_-_letter>
+                        <title_first_class_international_mail_-_large_envelope_or_flat>
+                            <label>First Class International Mail - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>268</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_international_mail_-_large_envelope_or_flat>
+                        <title_first_class_international_mail_-_thick_envelope>
+                            <label>First Class International Mail - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>269</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_international_mail_-_thick_envelope>
+                        <title_first_class_international_mail_-_package>
+                            <label>First Class International Mail - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_international_mail_-_package>
+                        <title_first_class_international_mail_-_large_package>
+                            <label>First Class International Mail - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>271</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_international_mail_-_large_package>
+                        <title_first_class_international_mail_-_oversized_package>
+                            <label>First Class International Mail - Oversized Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>272</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_first_class_international_mail_-_oversized_package>
+                        <title_priority_mail_international_-_large_envelope_or_flat>
+                            <label>Priority Mail International - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>273</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_large_envelope_or_flat>
+                        <title_priority_mail_international_-_thick_envelope>
+                            <label>Priority Mail International - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>274</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_thick_envelope>
+                        <title_priority_mail_international_-_package>
+                            <label>Priority Mail International - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>275</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_package>
+                        <title_priority_mail_international_-_flat_rate_box>
+                            <label>Priority Mail International - Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>276</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_flat_rate_box>
+                        <title_priority_mail_international_-_small_flat_rate_box>
+                            <label>Priority Mail International - Small Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>277</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_small_flat_rate_box>
+                        <title_priority_mail_international_-_large_flat_rate_box>
+                            <label>Priority Mail International - Large Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>278</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_large_flat_rate_box>
+                        <title_priority_mail_international_-_flat_rate_envelope>
+                            <label>Priority Mail International - Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>279</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_flat_rate_envelope>
+                        <title_priority_mail_international_-_flat_rate_padded_envelope>
+                            <label>Priority Mail International - Flat Rate Padded Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>280</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_flat_rate_padded_envelope>
+                        <title_priority_mail_international_-_large_package>
+                            <label>Priority Mail International - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>281</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_large_package>
+                        <title_priority_mail_international_-_oversized_package>
+                            <label>Priority Mail International - Oversized Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>282</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_oversized_package>
+                        <title_priority_mail_international_-_legal_flat_rate_envelope>
+                            <label>Priority Mail International - Legal Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>283</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_priority_mail_international_-_legal_flat_rate_envelope>
+                        <title_express_mail_international_-_large_envelope_or_flat>
+                            <label>Express Mail International - Large Envelope or Flat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>284</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_large_envelope_or_flat>
+                        <title_express_mail_international_-_thick_envelope>
+                            <label>Express Mail International - Thick Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>285</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_thick_envelope>
+                        <title_express_mail_international_-_package>
+                            <label>Express Mail International - Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>286</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_package>
+                        <title_express_mail_international_-_flat_rate_box>
+                            <label>Express Mail International - Flat Rate Box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>287</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_flat_rate_box>
+                        <title_express_mail_international_-_flat_rate_envelope>
+                            <label>Express Mail International - Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>288</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_flat_rate_envelope>
+                        <title_express_mail_international_-_flat_rate_padded_envelope>
+                            <label>Express Mail International - Flat Rate Padded Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>289</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_flat_rate_padded_envelope>
+                        <title_express_mail_international_-_large_package>
+                            <label>Express Mail International - Large Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>290</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_large_package>
+                        <title_express_mail_international_-_oversized_package>
+                            <label>Express Mail International - Oversized Package</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>291</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_oversized_package>
+                        <title_express_mail_international_-_legal_flat_rate_envelope>
+                            <label>Express Mail International - Legal Flat Rate Envelope</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>292</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_express_mail_international_-_legal_flat_rate_envelope>
+                    </fields>
+                </rocketshipit_stamps>
+                <rocketshipit_ups translate="label" module="shipping">
+                    <label>RocketShipIt - UPS</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>9040</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Display Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title>
+                        <admin_useNegotiatedRates translate="label">
+                            <label>Use Negotiated Rates for Admin</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </admin_useNegotiatedRates>
+                        <customer_useNegotiatedRates translate="label">
+                            <label>Use Negotiated Rates for Customer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_useNegotiatedRates>
+                        <label_format translate="label">
+                            <label>Label Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rocketshipit/carrier_source_label_ups</source_model>
+                            <sort_order>37</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </label_format>
+                        <admin_filter translate="label">
+                            <label>Available to Admin</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rocketshipit/carrier_source_method_ups</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </admin_filter>
+                        <checkout_filter translate="label">
+                            <label>Available on Checkout</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rocketshipit/carrier_source_method_ups</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </checkout_filter>
+                        <free_shipping_filter translate="label">
+                            <label>Free Shipping Applies to</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rocketshipit/carrier_source_method_ups</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </free_shipping_filter>
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>200</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>210</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <show_carrier_title>
+                            <label>Show Carrier Title</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_carrier_title>
+                        <title_next_day_air>
+                            <label>Next Day Air</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_next_day_air>
+                        <title_2nd_day_air>
+                            <label>2nd Day Air</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>231</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_2nd_day_air>
+                        <title_ground>
+                            <label>Ground</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>232</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_ground>
+                        <title_worldwide_express>
+                            <label>Worldwide Express</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>233</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_worldwide_express>
+                        <title_worldwide_expedited>
+                            <label>Worldwide Expedited</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>234</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_worldwide_expedited>
+                        <title_standard>
+                            <label>Standard</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>235</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_standard>
+                        <title_3_day_select>
+                            <label>3 Day Select</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>236</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_3_day_select>
+                        <title_next_day_air_saver>
+                            <label>Next Day Air Saver</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>237</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_next_day_air_saver>
+                        <title_next_day_air_early_a.m.>
+                            <label>Next Day Air Early A.M.</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>238</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_next_day_air_early_a.m.>
+                        <title_worldwide_express_plus>
+                            <label>Worldwide Express Plus</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>239</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_worldwide_express_plus>
+                        <title_second_day_air_a.m.>
+                            <label>Second Day Air A.M.</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_second_day_air_a.m.>
+                        <title_worldwide_saver>
+                            <label>Worldwide Saver</label>
+                            <frontend_type>Text</frontend_type>
+                            <sort_order>241</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </title_worldwide_saver>
+                    </fields>
+                </rocketshipit_ups>
+            </groups>
+        </carriers>
+    </sections>
 </config>
 
