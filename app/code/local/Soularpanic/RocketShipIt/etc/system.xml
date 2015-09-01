@@ -633,60 +633,60 @@
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
                         </title_parcel_post_-_oversized_package>
-                        <title_first_class_international_mail_-_letter>
-                            <label>First Class International Mail - Letter</label>
+                        <title_standard_mail_-_letter>
+                            <label>First Class International Mail / Standard Mail - Letter</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>267</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
-                        </title_first_class_international_mail_-_letter>
-                        <title_first_class_international_mail_-_large_envelope_or_flat>
-                            <label>First Class International Mail - Large Envelope or Flat</label>
+                        </title_standard_mail_-_letter>
+                        <title_standard_mail_-_large_envelope_or_flat>
+                            <label>First Class International Mail / Standard Mail - Large Envelope or Flat</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>268</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
-                        </title_first_class_international_mail_-_large_envelope_or_flat>
-                        <title_first_class_international_mail_-_thick_envelope>
-                            <label>First Class International Mail - Thick Envelope</label>
+                        </title_standard_mail_-_large_envelope_or_flat>
+                        <title_standard_mail_-_thick_envelope>
+                            <label>First Class International Mail / Standard Mail - Thick Envelope</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>269</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
-                        </title_first_class_international_mail_-_thick_envelope>
-                        <title_first_class_international_mail_-_package>
-                            <label>First Class International Mail - Package</label>
+                        </title_standard_mail_-_thick_envelope>
+                        <title_standard_mail_-_package>
+                            <label>First Class International Mail / Standard Mail - Package</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>270</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
-                        </title_first_class_international_mail_-_package>
-                        <title_first_class_international_mail_-_large_package>
-                            <label>First Class International Mail - Large Package</label>
+                        </title_standard_mail_-_package>
+                        <title_standard_mail_-_large_package>
+                            <label>First Class International Mail / Standard Mail - Large Package</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>271</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
-                        </title_first_class_international_mail_-_large_package>
-                        <title_first_class_international_mail_-_oversized_package>
-                            <label>First Class International Mail - Oversized Package</label>
+                        </title_standard_mail_-_large_package>
+                        <title_standard_mail_-_oversized_package>
+                            <label>First Class International Mail / Standard Mail - Oversized Package</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>272</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <can_be_empty>1</can_be_empty>
-                        </title_first_class_international_mail_-_oversized_package>
+                        </title_standard_mail_-_oversized_package>
                         <title_priority_mail_international_-_large_envelope_or_flat>
                             <label>Priority Mail International - Large Envelope or Flat</label>
                             <frontend_type>text</frontend_type>
