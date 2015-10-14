@@ -129,7 +129,7 @@ class Soularpanic_RocketShipIt_Helper_Rates
                     $freeMethod->setCarrierTitle('');
 
                     $freeMethod->setMethod($serviceCode);
-                    $freeMethod->setMethodTitle('TRS Free Shipping');
+                    $freeMethod->setMethodTitle('Free Shipping');
 
                     $result->append($freeMethod);
                 }
